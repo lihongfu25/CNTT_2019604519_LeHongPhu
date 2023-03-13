@@ -1,0 +1,126 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+:root {
+    --color-1: #4890ff;
+    --color-2: #2e5f80;
+    --color-3: #777777;
+    --color-4: #000000;
+    --color-5: #ffffff;
+    --color-6: #1a73e8;
+    --color-7: #ff3333;
+    --color-8: #00a826;
+    --color-9: #faad14;
+    --color-10: #1a1a1a;
+}
+.form {
+    &-control,
+    &-check-input {
+        &:focus {
+            box-shadow: none !important;
+            border-color: var(--color-1);
+        }
+    }
+    &-check-input {
+        &:checked {
+            background-color: var(--color-1);
+            border-color: var(--color-1);
+        }
+    }
+}
+.color {
+    &-1 {
+        color: var(--color-1) !important;
+    }
+    &-2 {
+        color: var(--color-2) !important;
+    }
+    &-3 {
+        color: var(--color-3) !important;
+    }
+    &-4 {
+        color: var(--color-4) !important;
+    }
+    &-5 {
+        color: var(--color-5) !important;
+    }
+    &-6 {
+        color: var(--color-6) !important;
+    }
+    &-7 {
+        color: var(--color-7) !important;
+    }
+    &-8 {
+        color: var(--color-8) !important;
+    }
+    &-9 {
+        color: var(--color-9) !important;
+    }
+    &-10 {
+        color: var(--color-10) !important;
+    }
+}
+.hover {
+    &-text {
+        &--color-1 {
+            &:hover {
+                color: var(--color-1) !important;
+            }
+        }
+        &--underline {
+            text-decoration: none !important;
+            &:hover {
+                text-decoration: underline !important;
+            }
+        }
+    }
+}
+.z {
+    &-1 {
+        z-index: 1;
+    }
+    &-2 {
+        z-index: 2;
+    }
+    &-3 {
+        z-index: 3;
+    }
+    &-4 {
+        z-index: 4;
+    }
+    &-5 {
+        z-index: 5;
+    }
+}
+.btn {
+    height: 38px !important;
+    &--color-1 {
+        background-color: var(--color-1);
+        color: var(--color-5);
+        border: none;
+        &:hover {
+            background-color: var(--color-2);
+            color: var(--color-5);
+        }
+        &--outline {
+            border: 1px solid var(--color-1);
+            background-color: var(--color-5);
+            color: var(--color-1);
+            &:hover {
+                background-color: var(--color-1);
+                color: var(--color-5);
+            }
+        }
+    }
+}
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0rem);
+    }
+}

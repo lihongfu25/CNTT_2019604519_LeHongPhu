@@ -1,0 +1,51 @@
+.loading-page {
+    animation: appear 0.3s ease;
+    .loader {
+        width: 150px;
+        height: 150px;
+        display: block;
+        overflow: hidden;
+        &,
+        & * {
+            will-change: transform;
+        }
+        div {
+            height: 100%;
+        }
+        /* loader 1 */
+        &.loader1 {
+            &,
+            & div {
+                border-radius: 50%;
+                padding: 8px;
+                border: 2px solid transparent;
+                -webkit-animation: rotate1076 linear 3.5s infinite;
+                animation: rotate1076 linear 3.5s infinite;
+                border-top-color: var(--color-2);
+                border-bottom-color: var(--color-1);
+            }
+        }
+    }
+
+    @keyframes rotate1076 {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        50% {
+            transform: rotate(180deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes appear {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+}
