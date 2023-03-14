@@ -33,10 +33,8 @@ const VerifyEmail = () => {
     const handleSubmit = () => {
         const verify = async () => {
             setLoading(true);
-            await applyActionCode(auth, searchParams.get("oobCode"))
-                .then((res) => {
-                    console.log(res);
-                })
+            applyActionCode(auth, searchParams.get("oobCode"))
+                .then(() => {})
                 .catch((error) => {
                     console.log(error);
                 })

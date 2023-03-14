@@ -36,7 +36,7 @@ const Login = () => {
         submit();
     };
     return (
-        <div className='login__form bg-light fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
+        <div className='login__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
             <div className='login__form__heading mb-3 col-3'>
                 <img
                     src={BASE_URL + "images/logo2.png"}
