@@ -6,7 +6,7 @@ import {
     ResetPassword,
     VerifyEmail,
 } from "../screen";
-import { Dashboard } from "../pages";
+import { Dashboard, Project, Task, User, Report, Profile } from "../pages";
 const routes = [
     {
         path: "/",
@@ -15,6 +15,26 @@ const routes = [
             {
                 index: true,
                 element: <Dashboard />,
+            },
+            {
+                path: "project",
+                element: <Project />,
+            },
+            {
+                path: "task",
+                element: <Task />,
+            },
+            {
+                path: "user",
+                element: <User />,
+            },
+            {
+                path: "report",
+                element: <Report />,
+            },
+            {
+                path: "my-profile",
+                element: <Profile />,
             },
         ],
     },

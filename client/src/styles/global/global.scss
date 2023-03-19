@@ -10,6 +10,74 @@
     --color-8: #00a826;
     --color-9: #faad14;
     --color-10: #1a1a1a;
+
+    --fs-1: 2.5rem;
+    --fs-2: 2rem;
+    --fs-3: 1.75rem;
+    --fs-4: 1.5rem;
+    --fs-5: 1.25rem;
+    --fs-6: 1rem;
+    --fs-7: 0.875rem;
+    --fs-8: 0.75rem;
+    --fs-9: 0.625rem;
+
+    --fw-1: 300;
+    --fw-2: 400;
+    --fw-3: 500;
+    --fw-4: 600;
+    --fw-5: 700;
+    --fw-6: 800;
+}
+
+.fs {
+    &-1 {
+        font-size: var(--fs-1);
+    }
+    &-2 {
+        font-size: var(--fs-2);
+    }
+    &-3 {
+        font-size: var(--fs-3);
+    }
+    &-4 {
+        font-size: var(--fs-4);
+    }
+    &-5 {
+        font-size: var(--fs-5);
+    }
+    &-6 {
+        font-size: var(--fs-6);
+    }
+    &-7 {
+        font-size: var(--fs-7);
+    }
+    &-8 {
+        font-size: var(--fs-8);
+    }
+    &-9 {
+        font-size: var(--fs-9);
+    }
+}
+
+.fw {
+    &-1 {
+        font-weight: var(--fw-1);
+    }
+    &-2 {
+        font-weight: var(--fw-2);
+    }
+    &-3 {
+        font-weight: var(--fw-3);
+    }
+    &-4 {
+        font-weight: var(--fw-4);
+    }
+    &-5 {
+        font-weight: var(--fw-5);
+    }
+    &-6 {
+        font-weight: var(--fw-6);
+    }
 }
 .form {
     &-control,
@@ -75,19 +143,24 @@
 }
 .z {
     &-1 {
-        z-index: 1;
+        z-index: 1 !important;
     }
     &-2 {
-        z-index: 2;
+        z-index: 2 !important;
     }
     &-3 {
-        z-index: 3;
+        z-index: 3 !important;
     }
     &-4 {
-        z-index: 4;
+        z-index: 4 !important;
     }
     &-5 {
-        z-index: 5;
+        z-index: 5 !important;
+    }
+}
+.w {
+    &-0 {
+        width: 0 !important;
     }
 }
 .btn {
@@ -114,6 +187,29 @@
 .fade-in {
     animation: fadeIn 0.5s ease;
 }
+.appear {
+    animation: appear 0.3s ease;
+}
+.transition-ease {
+    transition: all 0.5s ease;
+}
+.ratio {
+    &-40x40 {
+        width: 40px;
+        height: 40px;
+        aspect-ratio: 1/1;
+    }
+    &-50x50 {
+        width: 50px;
+        height: 50px;
+        aspect-ratio: 1/1;
+    }
+    &-100x100 {
+        width: 100px;
+        height: 100px;
+        aspect-ratio: 1/1;
+    }
+}
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -122,5 +218,13 @@
     100% {
         opacity: 1;
         transform: translateY(0rem);
+    }
+}
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

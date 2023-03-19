@@ -1,0 +1,25 @@
+.main-layout {
+    &__nav {
+        &.expand {
+            width: 272px;
+        }
+        &.collapse {
+            width: 100px;
+        }
+    }
+    &__header {
+        height: 80px;
+    }
+    .nav__btn {
+        height: 50px;
+        background-color: transparent;
+        color: var(--color-3);
+        &.active {
+            background-color: var(--color-2);
+            color: var(--color-5);
+        }
+        &__text {
+            white-space: nowrap;
+        }
+    }
+}

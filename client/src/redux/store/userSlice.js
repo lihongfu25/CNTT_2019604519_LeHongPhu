@@ -1,16 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    id: null,
-    full_name: "",
-    email: "",
-    phone: "",
-    address: "",
+    userId: "12312",
+    fullName: "Lê Hồng Phú",
+    email: "phulh@vmms.com.vn",
+    phone: null,
     gender: null,
     date_of_birth: null,
     username: "",
     avatar: "images/a986302c6bb2e21c396a98aebf115ffe.png",
-    role_id: "",
+    roleId: "r0",
 };
 
 export const userSlice = createSlice({
@@ -18,8 +17,8 @@ export const userSlice = createSlice({
     initialState: initialState,
     reducers: {
         userUpdateProfile: (state, action) => {
-            state.id = action.payload.id;
-            state.full_name = action.payload.full_name;
+            state.userId = action.payload.userId;
+            state.fullName = action.payload.fullName;
             state.username = action.payload.username;
             state.email = action.payload.email;
             state.phone = action.payload.phone;
@@ -27,11 +26,11 @@ export const userSlice = createSlice({
             state.gender = action.payload.gender;
             state.date_of_birth = action.payload.date_of_birth;
             state.avatar = action.payload.avatar;
-            state.role_id = action.payload.role_id;
+            state.roleId = action.payload.roleId;
         },
         userLogout: (state) => {
-            state.id = null;
-            state.full_name = "";
+            state.userId = null;
+            state.fullName = "";
             state.email = "";
             state.phone = "";
             state.address = "";
@@ -39,7 +38,7 @@ export const userSlice = createSlice({
             state.date_of_birth = null;
             state.username = "";
             state.avatar = "images/a986302c6bb2e21c396a98aebf115ffe.png";
-            state.role_id = "";
+            state.roleId = "";
         },
     },
 });
