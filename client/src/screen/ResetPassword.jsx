@@ -1,8 +1,8 @@
+import { checkActionCode } from "firebase/auth";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { confirmPasswordReset } from "firebase/auth";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { BASE_URL } from "../config/api";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axiosClient from "../config/api";
 import auth from "../config/firebase";
 import Loading from "./Loading";
 
@@ -28,32 +28,29 @@ const ResetPassword = () => {
                 message: "Nhập lại mật khẩu không chính xác",
             });
         } else {
-            const submit = async () => {
-                setLoading(true);
-                await confirmPasswordReset(
-                    auth,
-                    searchParams.get("oobCode"),
-                    data.password,
-                )
-                    .then(() => {
-                        setLoading(false);
-                        setIsReset(true);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-                    .finally(() => {
-                        setLoading(false);
+            checkActionCode(auth, searchParams.get("oobCode"))
+                .then((info) => {
+                    const email = info.data.email;
+                    axiosClient.post("auth/reset", {
+                        email,
+                        password: data.password,
                     });
-            };
-            submit();
+                    setLoading(false);
+                    setIsReset(true);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
     };
     return (
         <div className='forgot-password__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
             <div className='forgot-password__form__heading mb-3 col-3'>
                 <img
-                    src={BASE_URL + "images/logo2.png"}
+                    src='images/logo2.png'
                     alt=''
                     className='w-100 object-fit-cover'
                 />
@@ -131,7 +128,7 @@ const ResetPassword = () => {
                         <div className='p-4 mx-auto col-3 z-3 shadow-lg rounded-3 bg-light'>
                             <div className='col-2 mx-auto mb-1 p-2'>
                                 <img
-                                    src={BASE_URL + "images/icon/check.svg"}
+                                    src='images/icon/check.svg'
                                     alt=''
                                     className='w-100 object-fit-cover'
                                 />

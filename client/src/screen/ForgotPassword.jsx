@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { sendPasswordResetEmail } from "firebase/auth";
 import auth from "../config/firebase";
-import { BASE_URL } from "../config/api";
 import Loading from "./Loading";
 
 const ForgotPassword = () => {
@@ -45,7 +44,7 @@ const ForgotPassword = () => {
         <div className='forgot-password__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
             <div className='forgot-password__form__heading mb-3 col-3'>
                 <img
-                    src={BASE_URL + "images/logo2.png"}
+                    src='images/logo2.png'
                     alt=''
                     className='w-100 object-fit-cover'
                 />

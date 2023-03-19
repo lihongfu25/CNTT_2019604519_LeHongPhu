@@ -6,6 +6,7 @@ import {
     useSearchParams,
 } from "react-router-dom";
 import "../styles/auth/auth.scss";
+
 const LoginRegisterLayout = ({ children }) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();

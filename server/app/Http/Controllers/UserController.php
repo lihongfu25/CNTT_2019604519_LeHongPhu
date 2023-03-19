@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 class UserController extends Controller
 {
     /**
@@ -15,7 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::get();
+        return view('users', compact('users'));
+
     }
 
     /**
@@ -26,7 +29,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        
     }
 
     /**
@@ -61,5 +64,9 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function export(){
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 }

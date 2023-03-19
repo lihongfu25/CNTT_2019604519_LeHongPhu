@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,7 @@ import {
 } from "firebase/auth";
 import auth from "../config/firebase";
 import Loading from "./Loading";
-import { BASE_URL } from "../config/api";
+import axiosClient from "../config/api";
 
 const Register = () => {
     const [loading, setLoading] = React.useState(false);
@@ -24,44 +25,46 @@ const Register = () => {
         navigate("/auth/login");
     };
     const onSubmit = (data) => {
-        console.log(data);
         if (data.confirm !== data.password) {
             setError("confirm", {
                 type: "invalid",
                 message: "Nhập lại mật khẩu không chính xác",
             });
         } else {
-            const submit = async () => {
+            const register = async () => {
                 setLoading(true);
-                await createUserWithEmailAndPassword(
-                    auth,
-                    data.email,
-                    data.password,
-                )
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        sendEmailVerification(user);
-                        setLoading(false);
-                        setIsRegister(true);
-                    })
-                    .catch((error) => {
-                        if (error.code === "auth/email-already-in-use") {
-                            setError("email", {
-                                type: "already-exist",
-                                message: "Email này đã được đăng ký",
-                            });
-                        }
-                    })
-                    .finally(() => setLoading(false));
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(
+                        auth,
+                        data.email,
+                        data.password,
+                    );
+                    await sendEmailVerification(userCredential.user);
+
+                    await axiosClient.post("auth/register", {
+                        userId: uuidv4(),
+                        email: data.email,
+                        password: data.password,
+                    });
+                    setIsRegister(true);
+                } catch (error) {
+                    if (error.code === "auth/email-already-in-use") {
+                        setError("email", {
+                            type: "already-exist",
+                            message: "Email này đã được đăng ký",
+                        });
+                    }
+                }
+                setLoading(false);
             };
-            submit();
+            register();
         }
     };
     return (
         <div className='register__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
             <div className='register__form__heading mb-3 col-3'>
                 <img
-                    src={BASE_URL + "images/logo2.png"}
+                    src='images/logo2.png'
                     alt=''
                     className='w-100 object-fit-cover'
                 />
@@ -200,7 +203,7 @@ const Register = () => {
                         <div className='p-4 mx-auto col-4 z-3 shadow-lg rounded-3 bg-light'>
                             <div className='col-2 mx-auto mb-1 p-2'>
                                 <img
-                                    src={BASE_URL + "images/icon/check.svg"}
+                                    src='images/icon/check.svg'
                                     alt=''
                                     className='w-100 object-fit-cover'
                                 />

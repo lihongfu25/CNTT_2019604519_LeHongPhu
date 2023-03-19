@@ -1,5 +1,4 @@
 .loading-page {
-    animation: appear 0.3s ease;
     .loader {
         width: 150px;
         height: 150px;
@@ -38,14 +37,6 @@
 
         100% {
             transform: rotate(360deg);
-        }
-    }
-    @keyframes appear {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
         }
     }
 }
