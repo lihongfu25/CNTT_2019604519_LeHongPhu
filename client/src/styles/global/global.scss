@@ -190,6 +190,9 @@
 .appear {
     animation: appear 0.3s ease;
 }
+.rotate-180 {
+    animation: rotate180 5s ease;
+}
 .transition-ease {
     transition: all 0.5s ease;
 }
@@ -226,5 +229,16 @@
     }
     100% {
         opacity: 1;
+    }
+}
+@keyframes rotate180 {
+    0% {
+        transform: rotate(-180deg);
+    }
+    50% {
+        transform: rotate(-90deg);
+    }
+    100% {
+        transform: rotate(0deg);
     }
 }

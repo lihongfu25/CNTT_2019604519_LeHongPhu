@@ -219,7 +219,19 @@ const MainLayout = ({ children }) => {
                             className='footer__btn bg-transparent border-0'
                             onClick={handleCollapseMenu}
                         >
-                            {isCollapsed ? "right" : "left"}
+                            {isCollapsed ? (
+                                <img
+                                    src='images/icon/angle-right.svg'
+                                    alt='logo'
+                                    className='rotate-180'
+                                />
+                            ) : (
+                                <img
+                                    src='images/icon/angle-left.svg'
+                                    alt='logo'
+                                    className='rotate-180'
+                                />
+                            )}
                         </button>
                     </div>
                 </div>
