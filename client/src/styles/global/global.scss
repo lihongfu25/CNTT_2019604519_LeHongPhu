@@ -10,6 +10,7 @@
     --color-8: #00a826;
     --color-9: #faad14;
     --color-10: #1a1a1a;
+    --color-11: #e5e5e5;
 
     --fs-1: 2.5rem;
     --fs-2: 2rem;
@@ -184,27 +185,10 @@
         }
     }
 }
-.fade-in {
-    animation: fadeIn 0.5s ease;
-}
-.appear {
-    animation: appear 0.3s ease;
-}
-.rotate-180 {
-    animation: rotate180 5s ease;
-}
-.transition-ease {
-    transition: all 0.5s ease;
-}
 .ratio {
     &-40x40 {
         width: 40px;
         height: 40px;
-        aspect-ratio: 1/1;
-    }
-    &-50x50 {
-        width: 50px;
-        height: 50px;
         aspect-ratio: 1/1;
     }
     &-100x100 {
@@ -212,6 +196,19 @@
         height: 100px;
         aspect-ratio: 1/1;
     }
+}
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+.appear {
+    animation: appear 0.3s ease;
+}
+.rotate-180 {
+    transform: rotate(180deg);
+    // animation: transition 0.5s ease;
+}
+.transition-ease {
+    transition: all 0.5s ease;
 }
 @keyframes fadeIn {
     0% {
@@ -231,14 +228,14 @@
         opacity: 1;
     }
 }
-@keyframes rotate180 {
-    0% {
-        transform: rotate(-180deg);
-    }
-    50% {
-        transform: rotate(-90deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
-}
+// @keyframes rotate180 {
+//     0% {
+//         transform: rotate(0deg);
+//     }
+//     50% {
+//         transform: rotate(90deg);
+//     }
+//     100% {
+//         transform: rotate(180deg);
+//     }
+// }

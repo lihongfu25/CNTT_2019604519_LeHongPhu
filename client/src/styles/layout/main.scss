@@ -8,14 +8,17 @@
         }
     }
     &__header {
-        height: 80px;
+        height: 66px;
     }
     .nav__btn {
         height: 50px;
         background-color: transparent;
         color: var(--color-3);
+        &:hover {
+            background-color: var(--color-11);
+        }
         &.active {
-            background-color: var(--color-2);
+            background-color: var(--color-1);
             color: var(--color-5);
         }
         &__text {

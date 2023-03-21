@@ -28,7 +28,7 @@ const MainLayout = ({ children }) => {
                     }`}
                     id='main-nav'
                 >
-                    <div className='main-layout__header border-bottom d-flex justify-content-center align-items-center'>
+                    <div className='main-layout__header d-flex justify-content-center align-items-center'>
                         <div className='d-flex align-items-center justify-content-center'>
                             <Link
                                 to='/'
@@ -43,18 +43,18 @@ const MainLayout = ({ children }) => {
                                     />
                                 ) : (
                                     <img
-                                        src='images/logo2.png'
+                                        src='images/Group 1.svg'
                                         alt='logo'
-                                        className='main-nav__header__logo__expand col-2 mx-auto appear'
+                                        className='main-nav__header__logo__expand mx-auto appear'
                                     />
                                 )}
                             </Link>
                         </div>
                     </div>
-                    <div className='flex-column px-4 flex-grow-1 overflow-hidden'>
+                    <div className='px-4 flex-grow-1 overflow-hidden'>
                         <Link
                             to='/'
-                            className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-3 transition-ease ${
+                            className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 mb-2 transition-ease ${
                                 currentTab === "dashboard" && "active"
                             }`}
                             onClick={() => changeCurrentTab("dashboard")}
@@ -74,13 +74,13 @@ const MainLayout = ({ children }) => {
                                     />
                                 )}
                             </div>
-                            <div className='nav__btn__text appear ms-3'>
+                            <div className='nav__btn__text appear ms-4'>
                                 Trang chủ
                             </div>
                         </Link>
                         <Link
                             to='/project'
-                            className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-3 transition-ease ${
+                            className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-2 transition-ease ${
                                 currentTab === "project" && "active"
                             }`}
                             onClick={() => changeCurrentTab("project")}
@@ -100,13 +100,13 @@ const MainLayout = ({ children }) => {
                                     />
                                 )}
                             </div>
-                            <div className='nav__btn__text appear ms-3'>
+                            <div className='nav__btn__text appear ms-4'>
                                 Dự án
                             </div>
                         </Link>
                         <Link
                             to='/task'
-                            className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-3 transition-ease ${
+                            className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-2 transition-ease ${
                                 currentTab === "task" && "active"
                             }`}
                             onClick={() => changeCurrentTab("task")}
@@ -126,14 +126,14 @@ const MainLayout = ({ children }) => {
                                     />
                                 )}
                             </div>
-                            <div className='nav__btn__text appear ms-3'>
+                            <div className='nav__btn__text appear ms-4'>
                                 Công việc
                             </div>
                         </Link>
                         {user.roleId === ADMIN_ROLE && (
                             <Link
                                 to='/user'
-                                className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-3 transition-ease ${
+                                className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-2 transition-ease ${
                                     currentTab === "users" && "active"
                                 }`}
                                 onClick={() => changeCurrentTab("users")}
@@ -153,14 +153,14 @@ const MainLayout = ({ children }) => {
                                         />
                                     )}
                                 </div>
-                                <div className='nav__btn__text appear ms-3'>
+                                <div className='nav__btn__text appear ms-4'>
                                     Nhân viên
                                 </div>
                             </Link>
                         )}
                         <Link
                             to='/report'
-                            className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-3 transition-ease ${
+                            className={`nav__btn d-flex align-items-center text-decoration-none overflow-hidden border-0 rounded-pill w-100 p-3 my-2 transition-ease ${
                                 currentTab === "report" && "active"
                             }`}
                             onClick={() => changeCurrentTab("report")}
@@ -180,43 +180,14 @@ const MainLayout = ({ children }) => {
                                     />
                                 )}
                             </div>
-                            <div className='nav__btn__text appear ms-3'>
+                            <div className='nav__btn__text appear ms-4'>
                                 Thống kê
                             </div>
                         </Link>
                     </div>
-                    <div className='main-layout__nav__profile'>
-                        <Link
-                            to='/my-profile'
-                            className='text-decoration-none'
-                            onClick={() => changeCurrentTab("profile")}
-                        >
-                            <div className='d-flex align-items-center flex-column mb-3'>
-                                <div className='ratio ratio-50x50 rounded-circle overflow-hidden transition-ease'>
-                                    <img
-                                        src='images/demo.jpg'
-                                        alt=''
-                                        className='w-100 object-fit-cover'
-                                    />
-                                </div>
-                                <div
-                                    className={`appear text-center mt-2 ${
-                                        isCollapsed ? "d-none" : "d-block"
-                                    }`}
-                                >
-                                    <p className='color-10 fs-5 fw-semibold mb-1'>
-                                        {user.fullName}
-                                    </p>
-                                    <p className='color-3 fs-7 mb-0'>
-                                        {user.email}
-                                    </p>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                    <div className='footer text-center border-top p-3'>
+                    <div className='footer text-center border-top'>
                         <button
-                            className='footer__btn bg-transparent border-0'
+                            className='footer__btn bg-transparent border-0 w-100 h-100 p-2'
                             onClick={handleCollapseMenu}
                         >
                             {isCollapsed ? (
@@ -240,7 +211,7 @@ const MainLayout = ({ children }) => {
                         <div className='main-layout__header d-flex align-items-center justify-content-end shadow-sm border-bottom'>
                             <div className='d-flex me-4'>
                                 <button
-                                    className='bg-transparent border-0'
+                                    className='bg-transparent border-0 d-flex align-items-center'
                                     data-bs-toggle='dropdown'
                                     aria-expanded='false'
                                 >
@@ -251,8 +222,19 @@ const MainLayout = ({ children }) => {
                                             className='w-100 object-fit-cover'
                                         />
                                     </div>
+                                    <div className='mx-2'>
+                                        <p className='color-10 fw-semibold mb-0'>
+                                            {user?.fullName}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <img
+                                            src='/images/icon/angle-down.svg'
+                                            alt=''
+                                            className={`transition-ease`}
+                                        />
+                                    </div>
                                 </button>
-
                                 <ul className='dropdown-menu'>
                                     <li>
                                         <Link
