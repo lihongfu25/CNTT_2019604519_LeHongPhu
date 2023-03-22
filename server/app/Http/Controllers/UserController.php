@@ -16,8 +16,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::get();
-        return view('users', compact('users'));
+        $keyword = request()->keyword;
+        $memberFilterKeyword = Member::where('role_id', '<>', 'r0')->where("id", "like", "%" . $keyword . "%")
+                    ->orWhere('full_name', 'LIKE', "%" . $keyword . "%")
+                    ->orWhere('email', 'LIKE', "%" . $keyword . "%")
+                    ->orWhere('phone', 'LIKE', "%" . $keyword . "%")
+                    ->orWhere('address', 'LIKE', "%" . $keyword . "%")->get()->pluck('id')->toArray();
+        $member = Member::where('role_id', '<>', 'r0')->whereIn('id', $memberFilterKeyword)->paginate(10);
+        return response()->json(['data' => $member], 200);
 
     }
 

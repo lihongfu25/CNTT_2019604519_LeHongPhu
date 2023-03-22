@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use \Firebase\JWT\JWT;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -19,21 +21,30 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $user = User::where('email', $request->get('email'))->first();
+        // $user = User::where('email', $request->get('email'))->first();
 
-        if (!$user || !Hash::check($request->get('password'),$user->password)) {
-            return response([
-                'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
-            ], 401);
+        // if (!$user || !Hash::check($request->get('password'),$user->password)) {
+        //     return response([
+        //         'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
+        //     ], 401);
+        // }
+
+        // // $token = $user->createToken($user['userId'])->accessToken;
+
+        // return response()->json([
+        //     'data' =>$user,
+        //     // 'access_token' => $token,
+        //     'message' => 'Đăng nhập thành công!'
+        // ], 200);
+        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
+            // Nếu thông tin đăng nhập đúng, tạo JWT token cho người dùng
+            $user = Auth::user();
+            $token = JWTAuth::fromUser($user);
+            return response()->json(compact('token'));
+        } else {
+            // Nếu thông tin đăng nhập sai, trả về thông báo lỗi
+            return response()->json(['error' => 'Invalid credentials'], 401);
         }
-
-        // $token = $user->createToken($user['userId'])->accessToken;
-
-        return response()->json([
-            'data' =>$user,
-            // 'access_token' => $token,
-            'message' => 'Đăng nhập thành công!'
-        ], 200);
     }
 
     /**
