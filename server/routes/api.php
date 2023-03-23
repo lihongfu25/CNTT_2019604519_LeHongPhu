@@ -15,13 +15,14 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/verify', [AuthController::class, 'verify']);
 Route::post('/auth/reset', [AuthController::class, 'reset']);
 
-Route::get('/users', [UserController::class, 'getUsers']);
-Route::get('/users/{userId}', [UserController::class, 'getUser']);
+// Route::get('/user', [UserController::class, 'getUsers']);
+Route::get('/user/{userId}', [UserController::class, 'getUser']);
+Route::get('/user', function () {
+    $user = auth()->user();
+    return response()->json(['user' => $user]);
+})->middleware('jwt.auth');

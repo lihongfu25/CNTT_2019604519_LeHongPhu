@@ -166,6 +166,11 @@ return [
     |
     */
 
+    'auth' => [
+        'user' => 'App\Models\User', 
+        'user_id' => 'userId', 
+    ],
+
     'persistent_claims' => [
         // 'foo',
         // 'bar',

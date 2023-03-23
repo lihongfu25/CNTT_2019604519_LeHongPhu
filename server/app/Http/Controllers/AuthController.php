@@ -36,14 +36,19 @@ class AuthController extends Controller
         //     // 'access_token' => $token,
         //     'message' => 'Đăng nhập thành công!'
         // ], 200);
-        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
+        $user = User::where('email', $request->get('email'))->first();
             // Nếu thông tin đăng nhập đúng, tạo JWT token cho người dùng
-            $user = Auth::user();
+        if (!$user || !Hash::check($request->get('password'),$user->password)) {
+            return response([
+                'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
+            ], 401);
+        }
+        else
+        {
             $token = JWTAuth::fromUser($user);
-            return response()->json(compact('token'));
-        } else {
-            // Nếu thông tin đăng nhập sai, trả về thông báo lỗi
-            return response()->json(['error' => 'Invalid credentials'], 401);
+            return response()->json([
+                'data' => $token,
+            ]);
         }
     }
 
