@@ -7,7 +7,10 @@ const initialState = {
     phone: null,
     gender: null,
     date_of_birth: null,
-    username: "",
+    username: null,
+    provinceCode: "30",
+    districtCode: "295",
+    wardCode: "10927",
     avatar: "images/a986302c6bb2e21c396a98aebf115ffe.png",
     roleId: "r0",
 };
