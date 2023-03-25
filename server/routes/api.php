@@ -21,8 +21,5 @@ Route::post('/auth/verify', [AuthController::class, 'verify']);
 Route::post('/auth/reset', [AuthController::class, 'reset']);
 
 // Route::get('/user', [UserController::class, 'getUsers']);
-Route::get('/user/{userId}', [UserController::class, 'getUser']);
-Route::get('/user', function () {
-    $user = auth()->user();
-    return response()->json(['user' => $user]);
-})->middleware('jwt.auth');
+Route::middleware('jwt.auth', 'role:admin')->get('/user', [UserController::class, 'index']);
+Route::middleware('jwt.auth')->get('/user/{userId}', [UserController::class, 'show']);

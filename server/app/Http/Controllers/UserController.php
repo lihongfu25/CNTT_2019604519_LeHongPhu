@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
 use App\Exports\UsersExport;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Maatwebsite\Excel\Facades\Excel;
+
 class UserController extends Controller
 {
     /**
@@ -17,50 +18,35 @@ class UserController extends Controller
     public function index()
     {
         $keyword = request()->keyword;
-        $memberFilterKeyword = Member::where('role_id', '<>', 'r0')->where("id", "like", "%" . $keyword . "%")
-                    ->orWhere('full_name', 'LIKE', "%" . $keyword . "%")
+        $userFilterKeyword = User::where('fullName', 'LIKE', "%" . $keyword . "%")
                     ->orWhere('email', 'LIKE', "%" . $keyword . "%")
-                    ->orWhere('phone', 'LIKE', "%" . $keyword . "%")
-                    ->orWhere('address', 'LIKE', "%" . $keyword . "%")->get()->pluck('id')->toArray();
-        $member = Member::where('role_id', '<>', 'r0')->whereIn('id', $memberFilterKeyword)->paginate(10);
-        return response()->json(['data' => $member], 200);
+                    ->orWhere('username', 'LIKE', "%" . $keyword . "%")->get()->pluck('userId')->toArray();
+        $users = User::whereIn('userId', $userFilterKeyword)->paginate(10);
 
+        return response()->json([
+            'data' => $users,
+        ], 200);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreUserRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUserRequest $request)
-    {
-        
-    }
-
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($userId)
     {
-        //
-    }
+        $user = User::where('userId', $userId)->first();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateUserRequest  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        //
-    }
+        if (!$user) {
+            return response()->json([
+                'message' => "Không tìm thấy người dùng!",
+            ], 410);
+        }
 
+        return response()->json([
+            'data' => $user
+        ], 201);
+    }
     /**
      * Remove the specified resource from storage.
      *

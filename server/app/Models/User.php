@@ -23,10 +23,16 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'fullName',
         'username',
         'email',
-        'phoneNumber',
-        'photoUrl',
         'emailVerified',
+        'gender',
+        'dob',
+        'phoneNumber',
         'password',
+        'photoUrl',
+        'provinceCode',
+        'districtCode',
+        'wardCode',
+        'roleId',
     ];
 
     /**
@@ -43,9 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
     public function getJWTIdentifier()
     {
@@ -60,5 +63,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

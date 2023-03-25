@@ -18,13 +18,17 @@ return new class extends Migration
             $table->string('fullName')->nullable()->default(null);
             $table->string('username')->nullable()->default(null);
             $table->string('email')->unique();
-            $table->string('phoneNumber')->nullable()->default(null);
-            $table->string('photoUrl')->default("");
             $table->boolean('emailVerified')->default(false);
+            $table->boolean('gender')->nullable()->default(null);
+            $table->date('dob')->nullable()->default(null);
+            $table->string('phoneNumber')->nullable()->default(null);
+            $table->string('photoUrl')->nullable()->default(null);
             $table->string('password');
+            $table->string('provinceCode')->nullable()->default(null);
+            $table->string('districtCode')->nullable()->default(null);
+            $table->string('wardCode')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
-
             $table->string('roleId')->default('r1');
             $table->foreign('roleId')->references('roleId')->on('roles');
         });

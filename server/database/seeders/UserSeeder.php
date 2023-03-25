@@ -21,7 +21,8 @@ class UserSeeder extends Seeder
                     'userId' => 'b5145732-c572-11ed-a7fb-00e04c2ca3a6',
                     'fullName' => 'Lê Hồng Phú',
                     'email' => 'phulh@vmms.com.vn',
-                    'password' => bcrypt('phu123456')
+                    'password' => bcrypt('phu123456'),
+                    'roleId' => 'r0'
                 ]
             ]
         );

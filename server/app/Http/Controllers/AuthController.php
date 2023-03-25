@@ -21,23 +21,8 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // $user = User::where('email', $request->get('email'))->first();
-
-        // if (!$user || !Hash::check($request->get('password'),$user->password)) {
-        //     return response([
-        //         'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
-        //     ], 401);
-        // }
-
-        // // $token = $user->createToken($user['userId'])->accessToken;
-
-        // return response()->json([
-        //     'data' =>$user,
-        //     // 'access_token' => $token,
-        //     'message' => 'Đăng nhập thành công!'
-        // ], 200);
+        
         $user = User::where('email', $request->get('email'))->first();
-            // Nếu thông tin đăng nhập đúng, tạo JWT token cho người dùng
         if (!$user || !Hash::check($request->get('password'),$user->password)) {
             return response([
                 'message' => 'Tài khoản hoặc mật khẩu không chính xác!'

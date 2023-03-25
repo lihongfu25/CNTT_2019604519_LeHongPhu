@@ -19,11 +19,13 @@ class RoleSeeder extends Seeder
             [
                 [
                     'roleId' => 'r0',
-                    'roleName' => 'Quản Trị Viên',
+                    'roleName' => 'Quản trị viên',
+                    'roleSlug' => 'admin',
                 ],
                 [
                     'roleId' => 'r1',
-                    'roleName' => 'Nhân Viên',
+                    'roleName' => 'Nhân viên',
+                    'roleSlug' => 'user',
                 ]
             ]
         );
