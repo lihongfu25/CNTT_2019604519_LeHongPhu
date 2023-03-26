@@ -13,4 +13,12 @@ class ProjectStatus extends Model
         'projectId',
         'statusId',
     ];
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'projectId', 'projectId');
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'statusId', 'statusId');
+    }
 }

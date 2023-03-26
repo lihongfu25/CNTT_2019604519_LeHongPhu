@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('projectId')->references('projectId')->on('projects')->onDelete('restrict');
             $table->string('userId');
             $table->foreign('userId')->references('userId')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

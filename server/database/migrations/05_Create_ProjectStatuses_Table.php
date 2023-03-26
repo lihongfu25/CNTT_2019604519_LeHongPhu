@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('projectId')->references('projectId')->on('projects')->onDelete('restrict');
             $table->string('statusId');
             $table->foreign('statusId')->references('statusId')->on('statuses')->onDelete('restrict');
+            $table->timestamps();
         });
     }
 

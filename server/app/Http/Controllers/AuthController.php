@@ -51,7 +51,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => "Đăng ký tài khoản thành công!",
-        ], 201);
+        ], 204);
     }
 
     public function verify(Request $request)
@@ -72,7 +72,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => "Xác thực tài khoản thành công!",
-        ], 201);
+        ], 204);
     }
 
     public function reset(Request $request)
@@ -89,9 +89,7 @@ class AuthController extends Controller
         DB::table('users')->where('email', $email)
         ->update(['password' => bcrypt($request->get('password')), 'updated_at' => now()]);
 
-        return response()->json([
-            'message' => "Đặt lại mật khẩu thành công!",
-        ], 201);
+        return response()->json([], 204);
     }
     /**
      * Display the specified resource.

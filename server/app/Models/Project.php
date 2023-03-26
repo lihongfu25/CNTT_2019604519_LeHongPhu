@@ -17,4 +17,16 @@ class Project extends Model
         'active',
         'leaderId',
     ];
+    public function statuses()
+    {
+        return $this->hasMany(ProjectStatus::class, 'projectId', 'projectId')->with('status');
+    }
+    public function users()
+    {
+        return $this->hasMany(ProjectUser::class, 'projectId', 'projectId')->with('user');
+    }
+    public function issues()
+    {
+        return $this->hasMany(Issue::class, 'projectId', 'projectId');
+    }
 }

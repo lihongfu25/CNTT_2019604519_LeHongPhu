@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('projectId')->primary();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('description')->nullable()->default(null);
             $table->date('dueDate')->nullable()->default(null);
             $table->boolean('active')->default(true);
