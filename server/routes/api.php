@@ -46,4 +46,5 @@ Route::middleware('jwt.auth', 'role:admin')->post('/project-status', [ProjectSta
 Route::middleware('jwt.auth')->get('/project-user', [ProjectUserController::class, 'index']);
 Route::middleware('jwt.auth', 'role:admin')->post('/project-user', [ProjectUserController::class, 'store']);
 
+Route::middleware('jwt.auth')->get('/issue/{issueId}', [IssueController::class, 'show']);
 Route::middleware('jwt.auth')->post('/issue', [IssueController::class, 'store']);

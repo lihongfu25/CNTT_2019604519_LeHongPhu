@@ -9,7 +9,6 @@ class Issue extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'issueId',
         'name',
         'description',
         'dueDate',
@@ -19,4 +18,19 @@ class Issue extends Model
         'reporterId',
         'assigneeId',
     ];
+    public function status()
+    {
+        return $this->hasOne(Status::class, 'statusId', 'statusId');
+
+    }
+    public function assignee()
+    {
+        return $this->hasOne(User::class, 'userId', 'assigneeId');
+
+    }
+    public function reporter()
+    {
+        return $this->hasOne(User::class, 'userId', 'reporterId');
+
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Issue;
+use App\Models\Status;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,9 @@ class ProjectController extends Controller
         $projects = Project::where('name', 'LIKE', "%" . $keyword . "%")->paginate(12);
         foreach ($projects as $key => $value) {
             $totalIssue = Issue::where('projectId', $value->projectId)->count();
+            $doneStatus = Status::where('name', 'DONE')->first();
+            $doneIssue = Issue::with('status')->where('projectId', $value->projectId)->where('statusId', $doneStatus->statusId)->count();
+            $value->doneIssue = $doneIssue;
             $value->totalIssue = $totalIssue;
         }
         return response()->json([
@@ -53,14 +57,24 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($projectId)
     {
-        //
+        $project = Project::with('issues.assignee', 'issues.status')->where('projectId', $projectId)->first();
+
+        if (!$project) {
+            return response()->json([
+                'message' => "Không tìm thấy dự án!",
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $project
+        ], 200);
     }
 
     public function getUsers($projectId)
     {
-        $project = Project::with('users')->where('projectId', $projectId)->first();
+        $project = Project::with('users.user')->where('projectId', $projectId)->first();
         
         if (!$project) {
             return response()->json([

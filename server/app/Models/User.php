@@ -72,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     }
     public function projects()
     {
-        return $this->hasMany(ProjectUser::class, 'userId', 'userId')->with('project');
+        return $this->hasMany(ProjectUser::class, 'userId', 'userId');
 
     }
 }

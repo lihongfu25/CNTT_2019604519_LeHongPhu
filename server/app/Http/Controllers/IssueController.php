@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Issue;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class IssueController extends Controller
@@ -26,6 +27,9 @@ class IssueController extends Controller
     public function store(Request $request)
     {
         $body = $request->all();
+        $project = Project::where('projectId', $body['projectId'])->first();
+        $countByProjectId = Issue::where('projectId', $body['projectId'])->count();
+        $body['issueId'] = $project->slug . "-" . ($countByProjectId + 1);
         Issue::create($body);
         return response()->json([], 204);
     }
@@ -36,9 +40,19 @@ class IssueController extends Controller
      * @param  \App\Models\Issue  $issue
      * @return \Illuminate\Http\Response
      */
-    public function show(Issue $issue)
+    public function show($issueId)
     {
-        //
+        $issue = Issue::with('assignee', 'status', 'reporter')->where('issueId', $issueId)->first();
+
+        if (!$issue) {
+            return response()->json([
+                'message' => "Không tìm thấy công việc!",
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $issue
+        ], 200);
     }
 
     /**

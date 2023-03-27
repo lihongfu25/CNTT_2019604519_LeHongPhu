@@ -12,6 +12,7 @@ class Project extends Model
     protected $fillable = [
         'projectId',
         'name',
+        'slug',
         'description',
         'dueDate',
         'active',
@@ -19,11 +20,11 @@ class Project extends Model
     ];
     public function statuses()
     {
-        return $this->hasMany(ProjectStatus::class, 'projectId', 'projectId')->with('status');
+        return $this->hasMany(ProjectStatus::class, 'projectId', 'projectId');
     }
     public function users()
     {
-        return $this->hasMany(ProjectUser::class, 'projectId', 'projectId')->with('user');
+        return $this->hasMany(ProjectUser::class, 'projectId', 'projectId');
     }
     public function issues()
     {
