@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectUserController;
 use App\Http\Controllers\ProjectStatusController;
@@ -48,3 +49,5 @@ Route::middleware('jwt.auth', 'role:admin')->post('/project-user', [ProjectUserC
 
 Route::middleware('jwt.auth')->get('/issue/{issueId}', [IssueController::class, 'show']);
 Route::middleware('jwt.auth')->post('/issue', [IssueController::class, 'store']);
+
+Route::middleware('jwt.auth')->post('/comment', [CommentController::class, 'store']);

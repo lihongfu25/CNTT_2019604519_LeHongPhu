@@ -42,7 +42,7 @@ class IssueController extends Controller
      */
     public function show($issueId)
     {
-        $issue = Issue::with('assignee', 'status', 'reporter')->where('issueId', $issueId)->first();
+        $issue = Issue::with('assignee', 'status', 'reporter', 'comments.user')->where('issueId', $issueId)->first();
 
         if (!$issue) {
             return response()->json([

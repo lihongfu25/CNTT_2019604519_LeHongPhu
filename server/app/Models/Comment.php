@@ -14,4 +14,12 @@ class Comment extends Model
         'userId',
         'content',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userId', 'userId');
+    }
+    public function issue()
+    {
+        return $this->belongsTo(Issue::class, 'issueId', 'issueId');
+    }
 }

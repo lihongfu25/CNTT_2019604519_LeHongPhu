@@ -33,4 +33,8 @@ class Issue extends Model
         return $this->hasOne(User::class, 'userId', 'reporterId');
 
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'issueId', 'issueId');
+    }
 }
