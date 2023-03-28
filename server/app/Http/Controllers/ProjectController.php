@@ -18,7 +18,7 @@ class ProjectController extends Controller
     public function index()
     {
         $keyword = request()->keyword;
-        $projects = Project::where('name', 'LIKE', "%" . $keyword . "%")->paginate(12);
+        $projects = Project::with('users.user')->where('name', 'LIKE', "%" . $keyword . "%")->paginate(12);
         foreach ($projects as $key => $value) {
             $totalIssue = Issue::where('projectId', $value->projectId)->count();
             $doneStatus = Status::where('name', 'DONE')->first();
@@ -59,7 +59,7 @@ class ProjectController extends Controller
      */
     public function show($projectId)
     {
-        $project = Project::with('issues.assignee', 'issues.status')->where('projectId', $projectId)->first();
+        $project = Project::with('issues.assignee', 'issues.status', 'users.user')->where('projectId', $projectId)->first();
 
         if (!$project) {
             return response()->json([

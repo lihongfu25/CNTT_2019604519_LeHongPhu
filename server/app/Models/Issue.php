@@ -9,6 +9,7 @@ class Issue extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'issueId',
         'name',
         'description',
         'dueDate',

@@ -35,7 +35,7 @@ Route::middleware('jwt.auth', 'role:admin')->delete('/user/{userId}', [UserContr
 Route::middleware('jwt.auth')->get('/status', [StatusController::class, 'index']);
 
 Route::middleware('jwt.auth')->get('/project', [ProjectController::class, 'index']);
-Route::middleware('jwt.auth', 'role:admin')->get('/project/{projectId}', [ProjectController::class, 'show']);
+Route::middleware('jwt.auth')->get('/project/{projectId}', [ProjectController::class, 'show']);
 Route::middleware('jwt.auth', 'role:admin')->get('/project/{projectId}/user', [ProjectController::class, 'getUsers']);
 Route::middleware('jwt.auth', 'role:admin')->post('/project', [ProjectController::class, 'store']);
 Route::middleware('jwt.auth', 'role:admin')->put('/project/{projectId}', [ProjectController::class, 'update']);
