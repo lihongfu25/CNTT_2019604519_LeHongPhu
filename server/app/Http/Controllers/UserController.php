@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Issue;
+use App\Models\Project;
+use App\Models\ProjectUser;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Exports\UsersExport;
 use Illuminate\Support\Facades\DB;
@@ -51,16 +55,22 @@ class UserController extends Controller
 
     public function getProjects($userId)
     {
-        $user = User::with('projects')->where('userId', $userId)->first();
+        $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
+        $projects = Project::whereIn('projectId', $projectIds)->get();
         
-        if (!$user) {
-            return response()->json([
-                'message' => "Không tìm thấy người dùng!",
-            ], 404);
-        }
-
         return response()->json([
-            'data' => $user
+            'data' => $projects
+        ], 200);
+    }
+
+    public function getNotifications($userId)
+    {
+        $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
+        $issueIds = Issue::whereIn('projectId', $projectIds)->get()->pluck('issueId')->toArray();
+        $notifications = Notification::whereIn('issueId', $issueIds)->orderBy('created_at', 'desc')->limit(8)->get();
+    
+        return response()->json([
+            'data' => $notifications
         ], 200);
     }
 
