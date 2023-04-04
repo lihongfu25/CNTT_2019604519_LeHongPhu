@@ -25,6 +25,10 @@ class DatabaseSeeder extends Seeder
                 RoleSeeder::class,
                 UserSeeder::class,
                 StatusSeeder::class,
+                ProjectSeeder::class,
+                ProjectStatusSeeder::class,
+                ProjectUserSeeder::class,
+                IssueSeeder::class,
                 
                 // ScheduleSeeder::class,
             ]
