@@ -1,7 +1,7 @@
 .main-layout {
     &__nav {
         &.expand {
-            width: 272px;
+            width: 222px;
         }
         &.collapse {
             width: 100px;
@@ -13,13 +13,18 @@
     .nav__btn {
         height: 50px;
         background-color: transparent;
-        color: var(--color-3);
+        color: var(--color-4);
         &:hover {
             background-color: var(--color-11);
         }
         &.active {
             background-color: var(--color-1);
             color: var(--color-5);
+            .nav__btn__icon__svg {
+                path {
+                    fill: var(--color-5);
+                }
+            }
         }
         &__text {
             white-space: nowrap;
