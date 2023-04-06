@@ -9,6 +9,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectUserController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjectStatusController;
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::post('/auth/reset', [AuthController::class, 'reset']);
 Route::middleware('jwt.auth', 'role:admin')->get('/user', [UserController::class, 'index']);
 Route::middleware('jwt.auth')->get('/user/{userId}', [UserController::class, 'show']);
 Route::middleware('jwt.auth')->get('/user/{userId}/project', [UserController::class, 'getProjects']);
+Route::middleware('jwt.auth')->get('/user/{userId}/notification', [UserController::class, 'getNotifications']);
 Route::middleware('jwt.auth')->put('/user/{userId}', [UserController::class, 'update']);
 Route::middleware('jwt.auth', 'role:admin')->delete('/user/{userId}', [UserController::class, 'destroy']);
 
@@ -51,3 +53,5 @@ Route::middleware('jwt.auth')->get('/issue/{issueId}', [IssueController::class, 
 Route::middleware('jwt.auth')->post('/issue', [IssueController::class, 'store']);
 
 Route::middleware('jwt.auth')->post('/comment', [CommentController::class, 'store']);
+
+Route::middleware('jwt.auth')->post('/notification', [NotificationController::class, 'store']);

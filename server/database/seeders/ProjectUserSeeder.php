@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserSeeder extends Seeder
+class ProjectUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,22 +15,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert(
+        DB::table('project_users')->insert(
             [
                 [
+                    'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'userId' => 'b5145732-c572-11ed-a7fb-00e04c2ca3a6',
-                    'fullName' => 'Lê Hồng Phú',
-                    'email' => 'phulh@vmms.com.vn',
-                    'password' => bcrypt('phu123456'),
-                    'roleId' => 'r0'
                 ],
                 [
+                    'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'userId' => 'b1245733-c572-11ed-a7fb-00e04c2ca3a6',
-                    'fullName' => 'Phú nè',
-                    'email' => 'phune@vmms.com.vn',
-                    'password' => bcrypt('phu123456'),
-                    'roleId' => 'r1'
-                ]
+                ],
+                [
+                    'projectId' => 'b91a2b34-c572-11ed-a7fb-00e04c2ca3a6',
+                    'userId' => 'b5145732-c572-11ed-a7fb-00e04c2ca3a6',
+                ],
             ]
         );
     }
