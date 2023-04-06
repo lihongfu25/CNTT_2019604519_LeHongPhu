@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17" height="17" viewBox="0 0 17 17">
   <defs>
     <clipPath id="clip-path">
-      <rect id="Rectangle_1" data-name="Rectangle 1" width="20" height="20" transform="translate(816 532)" fill="#fff" stroke="#707070" stroke-width="1"/>
+      <rect id="Rectangle_48" data-name="Rectangle 48" width="17" height="17" transform="translate(24 229)" stroke="#76797e" stroke-width="1"/>
     </clipPath>
   </defs>
-  <g id="Mask_Group_1" data-name="Mask Group 1" transform="translate(-816 -532)" clip-path="url(#clip-path)">
-    <g id="project" transform="translate(815.981 532)">
-      <path id="Path_1" data-name="Path 1" d="M19.587,9.3,16.375,7.7l3.212-1.606a.782.782,0,0,0,0-1.4L10.368.082a.782.782,0,0,0-.7,0L.451,4.692a.782.782,0,0,0,0,1.4L3.662,7.7.451,9.3a.782.782,0,0,0,0,1.4L3.662,12.3.451,13.911a.782.782,0,0,0,0,1.4l9.219,4.609a.782.782,0,0,0,.7,0l9.219-4.609a.782.782,0,0,0,0-1.4L16.375,12.3,19.587,10.7a.782.782,0,0,0,0-1.4ZM10.019,1.655l7.472,3.736L10.019,9.126,2.547,5.391Zm7.472,12.955-7.472,3.736L2.547,14.609l2.862-1.431,4.26,2.13a.782.782,0,0,0,.7,0l4.26-2.13Zm-7.472-.874L2.547,10,5.409,8.569l4.26,2.13a.782.782,0,0,0,.7,0l4.26-2.13L17.491,10Zm0,0" fill="#777"/>
+  <g id="Mask_Group_21" data-name="Mask Group 21" transform="translate(-24 -229)" clip-path="url(#clip-path)">
+    <g id="project" transform="translate(23.984 229)">
+      <path id="Path_587" data-name="Path 587" d="M16.649,7.906l-2.73-1.365,2.73-1.365a.665.665,0,0,0,0-1.188L8.813.07a.665.665,0,0,0-.594,0L.383,3.988a.665.665,0,0,0,0,1.188l2.73,1.365L.383,7.906a.665.665,0,0,0,0,1.188l2.73,1.365L.383,11.824a.665.665,0,0,0,0,1.188L8.219,16.93a.664.664,0,0,0,.594,0l7.836-3.918a.665.665,0,0,0,0-1.188l-2.73-1.365,2.73-1.365a.665.665,0,0,0,0-1.188Zm-8.133-6.5,6.351,3.176L8.516,7.758,2.165,4.582Zm6.351,11.012L8.516,15.593,2.165,12.418,4.6,11.2l3.621,1.81a.664.664,0,0,0,.594,0L12.434,11.2Zm-6.351-.743L2.165,8.5,4.6,7.283l3.621,1.81a.664.664,0,0,0,.594,0l3.621-1.811L14.867,8.5Zm0,0"/>
     </g>
   </g>
 </svg>

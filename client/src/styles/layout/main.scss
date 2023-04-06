@@ -4,7 +4,7 @@
             width: 222px;
         }
         &.collapse {
-            width: 100px;
+            width: 66px;
         }
     }
     &__header {
@@ -28,6 +28,13 @@
         }
         &__text {
             white-space: nowrap;
+        }
+        &__icon {
+            &__svg {
+                div {
+                    display: flex;
+                }
+            }
         }
     }
 }

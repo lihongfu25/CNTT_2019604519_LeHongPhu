@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axiosClient from "../config/api";
 import auth from "../config/firebase";
 import Loading from "./Loading";
+import { ReactSVG } from "react-svg";
 
 const VerifyEmail = () => {
     const [loading, setLoading] = React.useState(false);
@@ -55,11 +56,7 @@ const VerifyEmail = () => {
                 {verified ? (
                     <div className='col-4 p-4 shadow-lg rounded-3 mx-auto fade-in'>
                         <div className='col-4 mx-auto mb-4'>
-                            <img
-                                src='images/icon/check.svg'
-                                alt=''
-                                className='w-100 object-fit-cover'
-                            />
+                            <ReactSVG src='/images/icon/check.svg' />
                         </div>
                         <div className='text-center'>
                             <p className='fs-3 color-1'>
@@ -83,11 +80,7 @@ const VerifyEmail = () => {
                 ) : (
                     <div className='col-4 p-4 shadow-lg rounded-3 mx-auto'>
                         <div className='col-4 mx-auto mb-4'>
-                            <img
-                                src='images/icon/email.svg'
-                                alt=''
-                                className='w-100 object-fit-cover'
-                            />
+                            <ReactSVG src='/images/icon/email.svg' />
                         </div>
                         <div className='text-center'>
                             <p className='fs-3 color-1'>

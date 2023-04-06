@@ -17,6 +17,10 @@ const routes = [
                 element: <Dashboard />,
             },
             {
+                path: "calendar",
+                element: <Task />,
+            },
+            {
                 path: "project",
                 element: <Project />,
             },

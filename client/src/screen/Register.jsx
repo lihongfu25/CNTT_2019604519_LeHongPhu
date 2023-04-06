@@ -10,6 +10,7 @@ import {
 import auth from "../config/firebase";
 import Loading from "./Loading";
 import axiosClient from "../config/api";
+import { ReactSVG } from "react-svg";
 
 const Register = () => {
     const [loading, setLoading] = React.useState(false);
@@ -63,11 +64,7 @@ const Register = () => {
     return (
         <div className='register__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
             <div className='register__form__heading mb-3 col-3'>
-                <img
-                    src='images/logo2.png'
-                    alt=''
-                    className='w-100 object-fit-cover'
-                />
+                <ReactSVG src='/images/logo.svg' />
             </div>
             <form className='w-100' onSubmit={handleSubmit(onSubmit)}>
                 <div className='mb-3'>
@@ -202,11 +199,7 @@ const Register = () => {
                     <div className='container z-2'>
                         <div className='p-4 mx-auto col-4 z-3 shadow-lg rounded-3 bg-light'>
                             <div className='col-2 mx-auto mb-1 p-2'>
-                                <img
-                                    src='images/icon/check.svg'
-                                    alt=''
-                                    className='w-100 object-fit-cover'
-                                />
+                                <ReactSVG src='/images/icon/check.svg' />
                             </div>
                             <div className='text-center'>
                                 <p className='color-1 fs-4'>

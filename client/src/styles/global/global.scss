@@ -1,4 +1,8 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap");
+body {
+    font-family: "Roboto";
+}
 :root {
     --color-1: #4890ff;
     --color-2: #2e5f80;
@@ -59,7 +63,6 @@
         font-size: var(--fs-9);
     }
 }
-
 .fw {
     &-1 {
         font-weight: var(--fw-1);
@@ -204,10 +207,6 @@
 .appear {
     animation: appear 0.3s ease;
 }
-.rotate-180 {
-    transform: rotate(180deg);
-    // animation: transition 0.5s ease;
-}
 .transition-ease {
     transition: all 0.5s ease;
 }
@@ -229,14 +228,3 @@
         opacity: 1;
     }
 }
-// @keyframes rotate180 {
-//     0% {
-//         transform: rotate(0deg);
-//     }
-//     50% {
-//         transform: rotate(90deg);
-//     }
-//     100% {
-//         transform: rotate(180deg);
-//     }
-// }

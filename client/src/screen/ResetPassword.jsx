@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axiosClient from "../config/api";
 import auth from "../config/firebase";
 import Loading from "./Loading";
+import { ReactSVG } from "react-svg";
 
 const ResetPassword = () => {
     const [loading, setLoading] = React.useState(false);
@@ -49,11 +50,7 @@ const ResetPassword = () => {
     return (
         <div className='forgot-password__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
             <div className='forgot-password__form__heading mb-3 col-3'>
-                <img
-                    src='images/logo2.png'
-                    alt=''
-                    className='w-100 object-fit-cover'
-                />
+                <ReactSVG src='/images/logo.svg' />
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='w-100'>
                 <div className='mb-4'>
@@ -127,11 +124,7 @@ const ResetPassword = () => {
                     <div className='container z-2'>
                         <div className='p-4 mx-auto col-3 z-3 shadow-lg rounded-3 bg-light'>
                             <div className='col-2 mx-auto mb-1 p-2'>
-                                <img
-                                    src='images/icon/check.svg'
-                                    alt=''
-                                    className='w-100 object-fit-cover'
-                                />
+                                <ReactSVG src='/images/icon/check.svg' />
                             </div>
                             <div className='text-center'>
                                 <p className='color-3'>
