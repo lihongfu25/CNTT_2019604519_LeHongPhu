@@ -26,6 +26,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/verify', [AuthController::class, 'verify']);
 Route::post('/auth/reset', [AuthController::class, 'reset']);
+Route::middleware('jwt.auth')->get('/auth/token', [AuthController::class, 'show']);
 
 Route::middleware('jwt.auth', 'role:admin')->get('/user', [UserController::class, 'index']);
 Route::middleware('jwt.auth')->get('/user/{userId}', [UserController::class, 'show']);

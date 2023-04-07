@@ -32,7 +32,8 @@ class AuthController extends Controller
         {
             $token = JWTAuth::fromUser($user);
             return response()->json([
-                'data' => $token,
+                'token' => $token,
+                'user' => $user
             ]);
         }
     }
@@ -46,12 +47,18 @@ class AuthController extends Controller
     public function register(StoreUserRequest $request)
     {
         $body = $request->all();
+
+        $user = User::where('email', $request->get('email'))->first();
+        if ($user) {
+            return response([
+                'message' => 'Email này đã được đăng ký!'
+            ], 409);
+        }
+
         $body['password'] = bcrypt($body['password']);
         $user = User::create($body);
 
-        return response()->json([
-            'message' => "Đăng ký tài khoản thành công!",
-        ], 204);
+        return response()->json([], 204);
     }
 
     public function verify(Request $request)
@@ -64,15 +71,13 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json([
                 'message' => "Xác thực tài khoản không thành công!",
-            ], 410);
+            ], 409);
         }
 
         DB::table('users')->where('email', $email)
         ->update(['emailVerified' => true, 'updated_at' => now()]);
 
-        return response()->json([
-            'message' => "Xác thực tài khoản thành công!",
-        ], 204);
+        return response()->json([], 204);
     }
 
     public function reset(Request $request)
@@ -97,9 +102,14 @@ class AuthController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request)
     {
-        //
+        $token = $request->header('Authorization');
+        $user = JWTAuth::user();
+
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
