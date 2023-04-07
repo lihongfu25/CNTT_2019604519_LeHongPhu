@@ -49,8 +49,8 @@ const ResetPassword = () => {
     };
     return (
         <div className='forgot-password__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
-            <div className='forgot-password__form__heading mb-3 col-3'>
-                <ReactSVG src='/images/logo.svg' />
+            <div className='forgot-password__form__heading mb-3'>
+                <ReactSVG src='/images/logo@2x.svg' />
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='w-100'>
                 <div className='mb-4'>
@@ -123,7 +123,7 @@ const ResetPassword = () => {
                     <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-25 z-2'></div>
                     <div className='container z-2'>
                         <div className='p-4 mx-auto col-3 z-3 shadow-lg rounded-3 bg-light'>
-                            <div className='col-2 mx-auto mb-1 p-2'>
+                            <div className='text-center mb-2'>
                                 <ReactSVG src='/images/icon/check.svg' />
                             </div>
                             <div className='text-center'>

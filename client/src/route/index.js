@@ -21,19 +21,23 @@ const routes = [
                 element: <Task />,
             },
             {
-                path: "project",
+                path: "projects",
                 element: <Project />,
             },
             {
-                path: "task",
+                path: "tasks",
                 element: <Task />,
             },
             {
-                path: "user",
+                path: "users",
                 element: <User />,
             },
             {
-                path: "report",
+                path: "statistics",
+                element: <Report />,
+            },
+            {
+                path: "notifications",
                 element: <Report />,
             },
             {

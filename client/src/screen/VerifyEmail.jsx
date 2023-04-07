@@ -54,9 +54,9 @@ const VerifyEmail = () => {
         <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-secondary-subtle d-flex justify-content-center align-items-center'>
             <div className='container'>
                 {verified ? (
-                    <div className='col-4 p-4 shadow-lg rounded-3 mx-auto fade-in'>
-                        <div className='col-4 mx-auto mb-4'>
-                            <ReactSVG src='/images/icon/check.svg' />
+                    <div className='col-4 p-4 shadow-lg rounded-3 mx-auto fade-in bg-color-5'>
+                        <div className='text-center mb-4'>
+                            <ReactSVG src='/images/icon/check@2x.svg' />
                         </div>
                         <div className='text-center'>
                             <p className='fs-3 color-1'>
@@ -78,8 +78,8 @@ const VerifyEmail = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className='col-4 p-4 shadow-lg rounded-3 mx-auto'>
-                        <div className='col-4 mx-auto mb-4'>
+                    <div className='col-4 p-4 shadow-lg rounded-3 mx-auto bg-color-5'>
+                        <div className='text-center mb-4'>
                             <ReactSVG src='/images/icon/email.svg' />
                         </div>
                         <div className='text-center'>

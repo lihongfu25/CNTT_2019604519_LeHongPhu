@@ -40,16 +40,22 @@ const Register = () => {
                         data.email,
                         data.password,
                     );
-                    await sendEmailVerification(userCredential.user);
 
                     await axiosClient.post("auth/register", {
                         userId: uuidv4(),
                         email: data.email,
                         password: data.password,
                     });
+
+                    await sendEmailVerification(userCredential.user);
                     setIsRegister(true);
                 } catch (error) {
                     if (error.code === "auth/email-already-in-use") {
+                        setError("email", {
+                            type: "already-exist",
+                            message: "Email này đã được đăng ký",
+                        });
+                    } else if (error.response.status === 409) {
                         setError("email", {
                             type: "already-exist",
                             message: "Email này đã được đăng ký",
@@ -63,8 +69,8 @@ const Register = () => {
     };
     return (
         <div className='register__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
-            <div className='register__form__heading mb-3 col-3'>
-                <ReactSVG src='/images/logo.svg' />
+            <div className='register__form__heading mb-3'>
+                <ReactSVG src='/images/logo@2x.svg' />
             </div>
             <form className='w-100' onSubmit={handleSubmit(onSubmit)}>
                 <div className='mb-3'>
@@ -198,8 +204,11 @@ const Register = () => {
                     <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-25 z-2'></div>
                     <div className='container z-2'>
                         <div className='p-4 mx-auto col-4 z-3 shadow-lg rounded-3 bg-light'>
-                            <div className='col-2 mx-auto mb-1 p-2'>
-                                <ReactSVG src='/images/icon/check.svg' />
+                            <div className='text-center mb-2'>
+                                <ReactSVG
+                                    src='/images/icon/check.svg'
+                                    className='object-fit-cover'
+                                />
                             </div>
                             <div className='text-center'>
                                 <p className='color-1 fs-4'>
