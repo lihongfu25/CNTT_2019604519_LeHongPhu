@@ -1,18 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    userId: "12312",
-    fullName: "Lê Hồng Phú",
-    email: "phulh@vmms.com.vn",
-    phone: null,
-    gender: null,
-    date_of_birth: null,
+    userId: null,
+    fullName: null,
     username: null,
-    provinceCode: "30",
-    districtCode: "295",
-    wardCode: "10927",
-    avatar: "images/a986302c6bb2e21c396a98aebf115ffe.png",
-    roleId: "r0",
+    email: null,
+    emailVerified: null,
+    gender: null,
+    dob: null,
+    phoneNumber: null,
+    photoUrl: null,
+    provinceCode: null,
+    districtCode: null,
+    wardCode: null,
+    created_at: null,
+    updated_at: null,
+    deleted_at: null,
+    roleId: null,
 };
 
 export const userSlice = createSlice({
@@ -24,24 +28,30 @@ export const userSlice = createSlice({
             state.fullName = action.payload.fullName;
             state.username = action.payload.username;
             state.email = action.payload.email;
-            state.phone = action.payload.phone;
-            state.address = action.payload.address;
+            state.emailVerified = action.payload.emailVerified;
             state.gender = action.payload.gender;
-            state.date_of_birth = action.payload.date_of_birth;
-            state.avatar = action.payload.avatar;
+            state.dob = action.payload.dob;
+            state.phoneNumber = action.payload.phoneNumber;
+            state.photoUrl = action.payload.photoUrl;
+            state.provinceCode = action.payload.provinceCode;
+            state.districtCode = action.payload.districtCode;
+            state.wardCode = action.payload.wardCode;
             state.roleId = action.payload.roleId;
         },
         userLogout: (state) => {
             state.userId = null;
-            state.fullName = "";
-            state.email = "";
-            state.phone = "";
-            state.address = "";
+            state.fullName = null;
+            state.username = null;
+            state.email = null;
+            state.emailVerified = null;
             state.gender = null;
-            state.date_of_birth = null;
-            state.username = "";
-            state.avatar = "images/a986302c6bb2e21c396a98aebf115ffe.png";
-            state.roleId = "";
+            state.dob = null;
+            state.phoneNumber = null;
+            state.photoUrl = null;
+            state.provinceCode = null;
+            state.districtCode = null;
+            state.wardCode = null;
+            state.roleId = null;
         },
     },
 });

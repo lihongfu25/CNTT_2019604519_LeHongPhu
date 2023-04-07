@@ -1,12 +1,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../config/api";
 import Loading from "./Loading";
 import { ReactSVG } from "react-svg";
+import { useDispatch } from "react-redux";
+import { userUpdateProfile } from "../redux/store/userSlice";
 
 const Login = () => {
     const [loading, setLoading] = React.useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
@@ -18,13 +23,17 @@ const Login = () => {
             setLoading(true);
             try {
                 const response = await axiosClient.post(`auth/login`, data);
-                // localStorage.setItem("token", response.data.token);
-                if (response.data.data.emailVerified === 0) {
+                if (response.data.user.emailVerified === 0) {
                     setError("email", {
                         type: "verification",
                     });
+                } else {
+                    localStorage.setItem("token", response.data.token);
+                    dispatch(userUpdateProfile(response.data.user));
+                    navigate("/");
                 }
             } catch (error) {
+                console.log(error);
                 setError("password", {
                     type: "invalid",
                 });
@@ -35,8 +44,8 @@ const Login = () => {
     };
     return (
         <div className='login__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
-            <div className='login__form__heading mb-3 col-3'>
-                <ReactSVG src='/images/logo.svg' />
+            <div className='login__form__heading mb-3'>
+                <ReactSVG src='/images/logo@2x.svg' />
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='w-100'>
                 <div className='mb-3'>
