@@ -53,27 +53,6 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function getProjects($userId)
-    {
-        $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
-        $projects = Project::whereIn('projectId', $projectIds)->get();
-        
-        return response()->json([
-            'data' => $projects
-        ], 200);
-    }
-
-    public function getNotifications($userId)
-    {
-        $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
-        $issueIds = Issue::whereIn('projectId', $projectIds)->get()->pluck('issueId')->toArray();
-        $notifications = Notification::whereIn('issueId', $issueIds)->orderBy('created_at', 'desc')->limit(8)->get();
-    
-        return response()->json([
-            'data' => $notifications
-        ], 200);
-    }
-
     public function update(Request $request, $userId)
     {
         $user = User::where('userId', $userId)->first();

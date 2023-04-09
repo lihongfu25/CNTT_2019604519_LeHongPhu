@@ -1,0 +1,35 @@
+.project__list {
+    &__item {
+        min-width: 360px;
+        &__progress {
+            &__progress-bar {
+                height: 10px;
+                border-radius: 5px;
+            }
+            &__base {
+                width: 100%;
+                background-color: var(--color-11);
+            }
+            &__active {
+                background-color: var(--color-1);
+            }
+        }
+        &__user {
+            &__list {
+                &__item {
+                    position: relative;
+                    &:not(:first-child) {
+                        margin-left: -8px;
+                    }
+                    &.more {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        bottom: 0;
+                        z-index: -1;
+                    }
+                }
+            }
+        }
+    }
+}

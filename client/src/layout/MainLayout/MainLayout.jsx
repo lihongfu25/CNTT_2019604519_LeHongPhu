@@ -1,11 +1,13 @@
 import React from "react";
+import moment from "moment";
+import { ReactSVG } from "react-svg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { ReactSVG } from "react-svg";
 import { changeCurrentTab } from "../../redux/store/tabSlice";
+import { userLogout } from "../../redux/store/userSlice";
+import { BASE_URL } from "../../config/api";
 import "../../styles/layout/main.scss";
 import Tab from "./Tab";
-import { userLogout } from "../../redux/store/userSlice";
 
 const ADMIN_ROLE = "r0";
 
@@ -82,14 +84,14 @@ const MainLayout = ({ children }) => {
                             isCollapsed={isCollapsed}
                         />
                         <Tab
-                            label='Tasks'
+                            label='Task'
                             iconSrc='/images/icon/task.svg'
                             currentTab={currentTab}
                             changeCurrentTab={changeTab}
                             isCollapsed={isCollapsed}
                         />
                         <Tab
-                            label='Projects'
+                            label='Project'
                             iconSrc='/images/icon/project.svg'
                             currentTab={currentTab}
                             changeCurrentTab={changeTab}
@@ -97,7 +99,7 @@ const MainLayout = ({ children }) => {
                         />
                         {user.roleId === ADMIN_ROLE && (
                             <Tab
-                                label='Users'
+                                label='User'
                                 iconSrc='/images/icon/users.svg'
                                 currentTab={currentTab}
                                 changeCurrentTab={changeTab}
@@ -105,14 +107,14 @@ const MainLayout = ({ children }) => {
                             />
                         )}
                         <Tab
-                            label='Statistics'
+                            label='Statistical'
                             iconSrc='/images/icon/report.svg'
                             currentTab={currentTab}
                             changeCurrentTab={changeTab}
                             isCollapsed={isCollapsed}
                         />
                         <Tab
-                            label='Notifications'
+                            label='Notification'
                             iconSrc='/images/icon/notification.svg'
                             currentTab={currentTab}
                             changeCurrentTab={changeTab}
@@ -121,19 +123,26 @@ const MainLayout = ({ children }) => {
                     </div>
                 </div>
                 <div className='main-layout__content flex-grow-1'>
-                    <div className='d-flex flex-column'>
+                    <div className='d-flex flex-column h-100'>
                         <div className='main-layout__header d-flex align-items-center justify-content-between shadow-sm border-bottom'>
-                            <div className='footer text-center'>
-                                <button
-                                    className='footer__btn bg-transparent border-0 w-100 h-100 ps-4'
-                                    onClick={handleCollapseMenu}
-                                >
-                                    {isCollapsed ? (
-                                        <ReactSVG src='/images/icon/angle-right.svg' />
-                                    ) : (
-                                        <ReactSVG src='/images/icon/expand.svg' />
-                                    )}
-                                </button>
+                            <div className='d-flex align-items-center'>
+                                <div className=''>
+                                    <button
+                                        className='bg-transparent border-0 w-100 h-100 ps-4'
+                                        onClick={handleCollapseMenu}
+                                    >
+                                        {isCollapsed ? (
+                                            <ReactSVG src='/images/icon/angle-right.svg' />
+                                        ) : (
+                                            <ReactSVG src='/images/icon/expand.svg' />
+                                        )}
+                                    </button>
+                                </div>
+                                <div className='date-now ms-5'>
+                                    <p className='color-3 fs-5 mb-0'>
+                                        {moment().format("dddd, Do MMMM")}
+                                    </p>
+                                </div>
                             </div>
                             <div className='d-flex me-4'>
                                 <button
@@ -141,16 +150,16 @@ const MainLayout = ({ children }) => {
                                     data-bs-toggle='dropdown'
                                     aria-expanded='false'
                                 >
-                                    <div className='ratio ratio-40x40 rounded-circle overflow-hidden transition-ease'>
+                                    <div className='ratio ratio-40x40 rounded-circle overflow-hidden'>
                                         <img
-                                            src='images/demo.jpg'
+                                            src={BASE_URL + user?.photoUrl}
                                             alt=''
                                             className='w-100 object-fit-cover'
                                         />
                                     </div>
                                     <div className='mx-2'>
                                         <p className='color-10 fw-4 mb-0'>
-                                            {user?.fullName}
+                                            {user?.fullName || user?.email}
                                         </p>
                                     </div>
                                     <div>
@@ -161,7 +170,7 @@ const MainLayout = ({ children }) => {
                                         />
                                     </div>
                                 </button>
-                                <ul className='dropdown-menu'>
+                                <ul className='dropdown-menu dropdown-menu-end'>
                                     <li>
                                         <Link
                                             className='dropdown-item text-decoration-none'
@@ -185,7 +194,7 @@ const MainLayout = ({ children }) => {
                                 </ul>
                             </div>
                         </div>
-                        <div className='py-3 px-4'>
+                        <div className='py-3 px-4 flex-grow-1 bg-color-12'>
                             <Outlet />
                         </div>
                     </div>

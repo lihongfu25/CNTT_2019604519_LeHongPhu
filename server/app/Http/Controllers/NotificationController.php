@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
+use App\Models\Issue;
+use App\Models\ProjectUser;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -14,7 +16,14 @@ class NotificationController extends Controller
      */
     public function index()
     {
+        $userId = request()->userId;
+        $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
+        $issueIds = Issue::whereIn('projectId', $projectIds)->get()->pluck('issueId')->toArray();
+        $notifications = Notification::with('user', 'issue')->whereIn('issueId', $issueIds)->get();
         
+        return response()->json([
+            'data' => $notifications
+        ], 200);
     }
 
     /**

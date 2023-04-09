@@ -6,6 +6,9 @@ import Loading from "./Loading";
 import { ReactSVG } from "react-svg";
 import { useDispatch } from "react-redux";
 import { userUpdateProfile } from "../redux/store/userSlice";
+import { setIssues } from "../redux/store/issueSlice";
+import { setNotifications } from "../redux/store/notificationSlice";
+import { setProjects } from "../redux/store/projectSlice";
 
 const Login = () => {
     const [loading, setLoading] = React.useState(false);
@@ -30,6 +33,20 @@ const Login = () => {
                 } else {
                     localStorage.setItem("token", response.data.token);
                     dispatch(userUpdateProfile(response.data.user));
+                    const resData = await Promise.all([
+                        axiosClient.get(
+                            `issue?userId=${response.data.user.userId}`,
+                        ),
+                        axiosClient.get(
+                            `project?userId=${response.data.user.userId}`,
+                        ),
+                        axiosClient.get(
+                            `notification?userId=${response.data.user.userId}`,
+                        ),
+                    ]);
+                    dispatch(setIssues(resData[0].data.data));
+                    dispatch(setProjects(resData[1].data.data));
+                    dispatch(setNotifications(resData[2].data.data));
                     navigate("/");
                 }
             } catch (error) {

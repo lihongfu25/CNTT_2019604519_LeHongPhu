@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Issue;
 use App\Models\Project;
+use App\Models\ProjectUser;
 use Illuminate\Http\Request;
 
 class IssueController extends Controller
@@ -15,7 +16,13 @@ class IssueController extends Controller
      */
     public function index()
     {
+        $userId = request()->userId;
+        $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
+        $issues = Issue::with('assignee', 'status')->whereIn('projectId', $projectIds)->get();
         
+        return response()->json([
+            'data' => $issues
+        ], 200);
     }
 
     /**

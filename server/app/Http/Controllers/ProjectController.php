@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Issue;
 use App\Models\Status;
 use App\Models\Project;
+use App\Models\ProjectUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,8 +18,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $keyword = request()->keyword;
-        $projects = Project::with('users.user')->where('name', 'LIKE', "%" . $keyword . "%")->paginate(12);
+        $userId = request()->userId;
+        $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
+        $projects = Project::with('users.user')->whereIn('projectId', $projectIds)->get();
         foreach ($projects as $key => $value) {
             $totalIssue = Issue::where('projectId', $value->projectId)->count();
             $doneStatus = Status::where('name', 'DONE')->first();

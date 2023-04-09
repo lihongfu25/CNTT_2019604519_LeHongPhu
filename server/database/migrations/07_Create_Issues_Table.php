@@ -17,8 +17,8 @@ return new class extends Migration
             $table->uuid('issueId')->primary();
             $table->string('name');
             $table->text('description')->nullable()->default(null);
-            $table->date('dueDate')->nullable()->default(null);
-            $table->string('priority');
+            $table->date('dueDate');
+            $table->int('priority');
             $table->timestamps();
             $table->softDeletes();
             $table->string('projectId');

@@ -1,0 +1,7 @@
+.notification__list {
+    &__item {
+        &:hover {
+            background-color: var(--color-11);
+        }
+    }
+}

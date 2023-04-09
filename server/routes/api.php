@@ -30,8 +30,6 @@ Route::middleware('jwt.auth')->get('/auth/token', [AuthController::class, 'show'
 
 Route::middleware('jwt.auth', 'role:admin')->get('/user', [UserController::class, 'index']);
 Route::middleware('jwt.auth')->get('/user/{userId}', [UserController::class, 'show']);
-Route::middleware('jwt.auth')->get('/user/{userId}/project', [UserController::class, 'getProjects']);
-Route::middleware('jwt.auth')->get('/user/{userId}/notification', [UserController::class, 'getNotifications']);
 Route::middleware('jwt.auth')->put('/user/{userId}', [UserController::class, 'update']);
 Route::middleware('jwt.auth', 'role:admin')->delete('/user/{userId}', [UserController::class, 'destroy']);
 
@@ -50,9 +48,11 @@ Route::middleware('jwt.auth', 'role:admin')->post('/project-status', [ProjectSta
 Route::middleware('jwt.auth')->get('/project-user', [ProjectUserController::class, 'index']);
 Route::middleware('jwt.auth', 'role:admin')->post('/project-user', [ProjectUserController::class, 'store']);
 
+Route::middleware('jwt.auth')->get('/issue', [IssueController::class, 'index']);
 Route::middleware('jwt.auth')->get('/issue/{issueId}', [IssueController::class, 'show']);
 Route::middleware('jwt.auth')->post('/issue', [IssueController::class, 'store']);
 
 Route::middleware('jwt.auth')->post('/comment', [CommentController::class, 'store']);
 
+Route::middleware('jwt.auth')->get('/notification', [NotificationController::class, 'index']);
 Route::middleware('jwt.auth')->post('/notification', [NotificationController::class, 'store']);
