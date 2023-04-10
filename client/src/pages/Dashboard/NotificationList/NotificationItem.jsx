@@ -22,7 +22,7 @@ const NotificationItem = ({ data }) => {
     };
     return (
         <Link to={`/issue/${data.issueId}`} className='text-decoration-none'>
-            <div className='d-flex p-2 rounded-6 notification__list__item'>
+            <div className='d-flex gap-2 p-2 rounded-6 notification__list__item'>
                 <div className='ratio ratio-40x40 rounded-circle overflow-hidden'>
                     <img
                         src={BASE_URL + data.user.photoUrl}
@@ -30,13 +30,13 @@ const NotificationItem = ({ data }) => {
                         className='w-100 object-fit-cover'
                     />
                 </div>
-                <div className='d-flex flex-column align-items-start flex-grow-1 ms-2'>
-                    <p className='fs-7 mb-0'>
+                <div className='d-flex flex-column align-items-start'>
+                    <p className='fs-7 mb-0 text-wrap'>
                         <span className='color-1'>{data.user.fullName}</span>
                         <span className='color-10'>
                             {" " + data.content + " on "}
                         </span>
-                        <span className='color-1'>
+                        <span className='color-1 text-wrap'>
                             {data.issueId + " - " + data.issue.name}
                         </span>
                     </p>

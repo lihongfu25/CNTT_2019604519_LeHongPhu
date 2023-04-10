@@ -13,6 +13,7 @@ class Notification extends Model
         'issueId',
         'userId',
         'content',
+        'created_at',
     ];
     public function user()
     {

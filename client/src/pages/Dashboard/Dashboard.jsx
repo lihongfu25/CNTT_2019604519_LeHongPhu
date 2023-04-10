@@ -12,13 +12,13 @@ const Dashboard = () => {
     React.useEffect(() => {}, []);
     return (
         <div className='dashboard h-100'>
-            <div className='row flex-column g-4 h-100'>
-                <div className='col'>
+            <div className='d-flex flex-column g-4 h-100'>
+                <div className='h-50'>
                     <div className='shadow-sm h-100 rounded-10 p-3 text-center bg-color-5'>
                         <IssueList data={issues} />
                     </div>
                 </div>
-                <div className='col'>
+                <div className='h-50 mt-4 mb-3 sizing-border'>
                     <div className='row row-cols-1 row-cols-md-2 h-100'>
                         <div className='col'>
                             <div className='shadow-sm h-100 rounded-10 p-3 text-center bg-color-5'>

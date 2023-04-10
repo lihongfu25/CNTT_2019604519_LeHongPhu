@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
                 ProjectStatusSeeder::class,
                 ProjectUserSeeder::class,
                 IssueSeeder::class,
+                NotificationSeeder::class,
                 
                 // ScheduleSeeder::class,
             ]

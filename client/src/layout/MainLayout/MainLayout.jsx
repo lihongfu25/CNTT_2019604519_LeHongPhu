@@ -194,7 +194,7 @@ const MainLayout = ({ children }) => {
                                 </ul>
                             </div>
                         </div>
-                        <div className='py-3 px-4 flex-grow-1 bg-color-12'>
+                        <div className='p-4 flex-grow-1 bg-color-12'>
                             <Outlet />
                         </div>
                     </div>

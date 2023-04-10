@@ -5,7 +5,7 @@ const USER_SHOW = 4;
 const ProjectUser = ({ data }) => {
     return (
         <div className='project__list__item__user__list d-flex justify-content-end position-relative'>
-            {data.map((user, index) =>
+            {data?.map((user, index) =>
                 index === USER_SHOW ? (
                     <div
                         className='project__list__item__user__list__item ratio ratio-30x30 rounded-circle overflow-hidden border border-2 border-color-5'

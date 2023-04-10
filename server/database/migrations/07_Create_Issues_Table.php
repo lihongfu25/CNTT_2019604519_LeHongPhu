@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable()->default(null);
             $table->date('dueDate');
-            $table->int('priority');
+            $table->integer('priority');
             $table->timestamps();
             $table->softDeletes();
             $table->string('projectId');

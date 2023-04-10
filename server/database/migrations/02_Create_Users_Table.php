@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('gender')->nullable()->default(null);
             $table->date('dob')->nullable()->default(null);
             $table->string('phoneNumber')->nullable()->default(null);
-            $table->string('photoUrl')->nullable()->default(null);
+            $table->string('photoUrl')->default('images/default.svg');
             $table->string('password');
             $table->string('provinceCode')->nullable()->default(null);
             $table->string('districtCode')->nullable()->default(null);

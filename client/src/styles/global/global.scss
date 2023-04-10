@@ -315,20 +315,27 @@ body {
         }
     }
 }
+.sizing {
+    &-border {
+        box-sizing: border-box !important;
+    }
+}
 .ratio {
     &-30x30 {
-        width: 30px;
-        height: 30px;
+        width: 30px !important;
+        height: 30px !important;
         aspect-ratio: 1/1;
     }
     &-40x40 {
-        width: 40px;
-        height: 40px;
+        min-height: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        max-height: 40px !important;
         aspect-ratio: 1/1;
     }
     &-100x100 {
-        width: 100px;
-        height: 100px;
+        width: 100px !important;
+        height: 100px !important;
         aspect-ratio: 1/1;
     }
 }
