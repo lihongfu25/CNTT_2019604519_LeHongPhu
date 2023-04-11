@@ -1,14 +1,17 @@
 .main-layout {
     &__nav {
         &.expand {
-            width: 222px;
+            width: 222px !important;
+            min-width: 222px !important;
         }
         &.collapse {
-            width: 66px;
+            width: 66px !important;
+            min-width: 66px !important;
         }
     }
     &__header {
         height: 66px;
+        min-width: 66px !important;
     }
     .nav__btn {
         height: 50px;

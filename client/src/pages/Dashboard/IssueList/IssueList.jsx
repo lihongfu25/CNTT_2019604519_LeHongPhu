@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import IssueItem from "./IssueItem";
 import "./issue.scss";
 
-const IssueList = ({ data }) => {
+const IssueList = () => {
+    const issues = useSelector((state) => state.issue);
     return (
         <table className='table table-hover table-task'>
             <thead>
@@ -25,7 +27,7 @@ const IssueList = ({ data }) => {
                 </tr>
             </thead>
             <tbody>
-                {data.map((item) => (
+                {issues.map((item) => (
                     <IssueItem issue={item} key={item.issueId} />
                 ))}
             </tbody>
@@ -33,4 +35,4 @@ const IssueList = ({ data }) => {
     );
 };
 
-export default React.memo(IssueList);
+export default IssueList;

@@ -1,5 +1,5 @@
 import React from "react";
-import { BASE_URL } from "../../../config/api";
+import { BASE_URL } from "../../config/api";
 
 const USER_SHOW = 4;
 const ProjectUser = ({ data }) => {

@@ -19,7 +19,7 @@ class NotificationController extends Controller
         $userId = request()->userId;
         $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
         $issueIds = Issue::whereIn('projectId', $projectIds)->get()->pluck('issueId')->toArray();
-        $notifications = Notification::with('user', 'issue')->whereIn('issueId', $issueIds)->orderBy('notifications.created_at', 'desc')->limit(4)->get();
+        $notifications = Notification::with('user', 'issue')->whereIn('issueId', $issueIds)->orderBy('notifications.created_at', 'desc')->limit(1)->get();
         
         return response()->json([
             'data' => $notifications

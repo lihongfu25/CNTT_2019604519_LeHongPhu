@@ -39,8 +39,8 @@ const MainLayout = ({ children }) => {
     };
 
     return (
-        <div className='main-layout position-fixed top-0 bottom-0 start-0 end-0'>
-            <div className='d-flex h-100'>
+        <div className='position-fixed top-0 bottom-0 start-0 end-0'>
+            <div className='main-layout h-100 d-flex'>
                 <div
                     className={`main-layout__nav d-flex flex-column shadow-sm border-end transition-ease ${
                         isCollapsed ? "collapse" : "expand"
@@ -122,8 +122,8 @@ const MainLayout = ({ children }) => {
                         />
                     </div>
                 </div>
-                <div className='main-layout__content flex-grow-1'>
-                    <div className='d-flex flex-column h-100'>
+                <div className='main-layout__content h-100 flex-grow-1'>
+                    <div className='d-flex flex-column h-100 w-100'>
                         <div className='main-layout__header d-flex align-items-center justify-content-between shadow-sm border-bottom'>
                             <div className='d-flex align-items-center'>
                                 <div className=''>
@@ -194,7 +194,7 @@ const MainLayout = ({ children }) => {
                                 </ul>
                             </div>
                         </div>
-                        <div className='p-4 flex-grow-1 bg-color-12'>
+                        <div className='p-4 flex-grow-1 h-100 bg-color-12'>
                             <Outlet />
                         </div>
                     </div>

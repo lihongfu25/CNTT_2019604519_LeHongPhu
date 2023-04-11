@@ -7,21 +7,25 @@ const dueDate = {
     URGENT: 3,
     NEAR_DUE: 7,
 };
-const ProjectItem = ({ data }) => {
+const ProjectItem = ({ data, className }) => {
     return (
-        <div className='project__list__item col-3 h-100 bg-color-5 rounded-10'>
-            <div className='d-flex flex-column align-items-start p-3 h-100'>
+        <div
+            className={`project__list__item shadow-sm bg-color-5 rounded-10 ${className}`}
+        >
+            <div className='d-flex flex-column align-items-start px-3 py-2 w-100 h-100'>
                 <div className='project__list__item__heading'>
-                    <p className='fs-5 color-1 mb-2'>
+                    <p className='fs-5 color-1 mb-1'>
                         {data?.name + " - " + data?.shortName}
                     </p>
                 </div>
                 <div className='project__list__item__desc flex-grow-1'>
-                    <p className='fs-7 color-1 mb-2'>{data?.description}</p>
+                    <p className='fs-6 color-10 mb-0 text-truncate-2'>
+                        {data?.description}
+                    </p>
                 </div>
-                <div className='project__list__item__progress w-100 mb-3'>
+                <div className='project__list__item__progress w-100 mb-2'>
                     <div className='text-end'>
-                        <p className='fs-7 mb-1'>
+                        <p className='fs-7 mb-0'>
                             {Math.floor(
                                 (data?.doneIssue / data?.totalIssue) * 100,
                             ) + "%"}

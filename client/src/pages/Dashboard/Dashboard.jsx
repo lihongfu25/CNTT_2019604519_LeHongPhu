@@ -1,33 +1,33 @@
 import React from "react";
-
-import { useSelector } from "react-redux";
 import IssueList from "./IssueList/IssueList";
 import "./dashboard.scss";
 import NotificationList from "./NotificationList/NotificationList";
 import ProjectList from "./ProjectList/ProjectList";
 const Dashboard = () => {
-    const issues = useSelector((state) => state.issue);
-    const projects = useSelector((state) => state.project);
-    const notifications = useSelector((state) => state.notification);
     React.useEffect(() => {}, []);
     return (
         <div className='dashboard h-100'>
             <div className='d-flex flex-column g-4 h-100'>
-                <div className='h-50'>
-                    <div className='shadow-sm h-100 rounded-10 p-3 text-center bg-color-5'>
-                        <IssueList data={issues} />
+                <div className='h-50 mb-4'>
+                    <div className='shadow-sm h-100 rounded-10 p-3 bg-color-5'>
+                        <IssueList />
                     </div>
                 </div>
-                <div className='h-50 mt-4 mb-3 sizing-border'>
-                    <div className='row row-cols-1 row-cols-md-2 h-100'>
-                        <div className='col'>
-                            <div className='shadow-sm h-100 rounded-10 p-3 text-center bg-color-5'>
-                                <NotificationList data={notifications} />
+                <div className='flex-grow-1 mb-3'>
+                    <div className='row h-100'>
+                        <div className='col-12 col-md-6'>
+                            <div className='shadow-sm rounded-10 p-3 h-100 bg-color-5'>
+                                <NotificationList />
                             </div>
                         </div>
-                        <div className='col'>
-                            <div className='shadow-sm h-100 rounded-10 p-3 text-center bg-color-2'>
-                                <ProjectList data={projects} />
+                        <div className='col-12 col-md-6'>
+                            <div className='shadow-sm d-flex flex-column rounded-10 p-3 h-100 bg-color-2'>
+                                <div className=''>
+                                    <p className='fs-5 color-5 mb-0'>
+                                        Projects in progress
+                                    </p>
+                                </div>
+                                <ProjectList />
                             </div>
                         </div>
                     </div>

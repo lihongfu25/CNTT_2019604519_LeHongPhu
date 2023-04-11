@@ -294,6 +294,11 @@ body {
         width: 0 !important;
     }
 }
+.h {
+    &-320 {
+        height: 320px !important;
+    }
+}
 .btn {
     height: 38px !important;
     &--color-1 {
@@ -340,7 +345,8 @@ body {
     }
 }
 .text-truncate {
-    &-2 {
+    &-2,
+    &-3 {
         -webkit-box-orient: vertical;
         display: -webkit-box;
         overflow: hidden;
@@ -348,6 +354,9 @@ body {
     }
     &-2 {
         -webkit-line-clamp: 2;
+    }
+    &-3 {
+        -webkit-line-clamp: 3;
     }
 }
 .priority {
