@@ -10,8 +10,11 @@
         }
     }
     &__header {
-        height: 66px;
+        height: 66px !important;
         min-width: 66px !important;
+    }
+    &__content {
+        height: 100vh;
     }
     .nav__btn {
         height: 50px;

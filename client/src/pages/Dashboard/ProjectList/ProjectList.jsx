@@ -1,16 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 const ProjectList = () => {
-    const [currentSlide, setCurrentSlide] = React.useState(0);
-    const projects = useSelector((state) => state.project);
-    const handleNextSlide = () => {
-        setCurrentSlide((prevSlide) => {
-            if (prevSlide === projects.length - 1) {
-                return 0;
-            } else return prevSlide + 1;
-        });
-    };
-    console.log(currentSlide);
+    // const [currentSlide, setCurrentSlide] = React.useState(0);
+    // const projects = useSelector((state) => state.project);
+    // const handleNextSlide = () => {
+    //     setCurrentSlide((prevSlide) => {
+    //         if (prevSlide === projects.length - 1) {
+    //             return 0;
+    //         } else return prevSlide + 1;
+    //     });
+    // };
     return (
         <div className='project__list d-flex flex-column align-items-start h-100 position-relative'>
             {/* <div className='d-flex flex-grow-1 p-3'>
