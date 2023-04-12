@@ -1,44 +1,64 @@
-.project__list {
-    &__item {
-        height: 165px !important;
-        transition: all 0.5s ease;
-        &__progress {
-            &__progress-bar {
-                height: 8px;
-                border-radius: 5px;
+.project {
+    &__list {
+        &__item {
+            height: 165px !important;
+            transition: all 0.5s ease;
+            &__progress {
+                &__progress-bar {
+                    height: 8px;
+                    border-radius: 5px;
+                }
+                &__base {
+                    width: 100%;
+                    background-color: var(--color-11);
+                }
+                &__active {
+                    background-color: var(--color-1);
+                }
             }
-            &__base {
-                width: 100%;
-                background-color: var(--color-11);
-            }
-            &__active {
-                background-color: var(--color-1);
-            }
-        }
-        &__user {
-            &__list {
-                &__item {
-                    position: relative;
-                    &:not(:first-child) {
-                        margin-left: -8px;
-                    }
-                    &.more {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        bottom: 0;
-                        z-index: -1;
+            &__user {
+                &__list {
+                    &__item {
+                        position: relative;
+                        &:not(:first-child) {
+                            margin-left: -8px;
+                        }
+                        &.more {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            bottom: 0;
+                            z-index: -1;
+                        }
                     }
                 }
             }
         }
+        &__btn {
+            &__next {
+                position: absolute !important;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+            }
+        }
     }
-    &__btn {
-        &__next {
-            position: absolute !important;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
+    .form__status {
+        min-height: 38px;
+        padding: 0 16px 4px 12px;
+        flex-wrap: wrap;
+        background-color: var(--color-5);
+        &--selected {
+            display: flex;
+            align-items: center;
+            color: var(--color-1);
+            background-color: rgba($color: #4890ff, $alpha: 0.25);
+            padding: 0px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+        &__select {
+            z-index: 1;
         }
     }
 }

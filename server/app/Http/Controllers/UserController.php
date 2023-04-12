@@ -22,14 +22,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $keyword = request()->keyword;
-        $userFilterKeyword = User::where('fullName', 'LIKE', "%" . $keyword . "%")
-                    ->orWhere('email', 'LIKE', "%" . $keyword . "%")
-                    ->orWhere('username', 'LIKE', "%" . $keyword . "%")->get()->pluck('userId')->toArray();
-        $users = User::whereIn('userId', $userFilterKeyword)->paginate(10);
+        
+        $users = User::all();
 
         return response()->json([
-            'data' => $users,
+            'users' => $users,
         ], 200);
     }
     /**
