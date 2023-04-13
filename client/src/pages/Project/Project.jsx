@@ -7,10 +7,12 @@ import { useForm } from "react-hook-form";
 import axiosClient from "../../config/api";
 import { setUsers } from "../../redux/store/usersSlice";
 import SelectStatus from "./SelectStatus";
+import SelectUser from "./SelectUser";
 const Project = () => {
     const [isCreate, setIsCreate] = React.useState(false);
     const [isNext, setIsNext] = React.useState(false);
     const [statusSelecteds, setStatusSelecteds] = React.useState([]);
+    const [userSelecteds, setUserSelecteds] = React.useState([]);
     const [statuses, setStatuses] = React.useState(null);
     const [userList, setUserList] = React.useState(null);
     const projects = useSelector((state) => state.project);
@@ -30,7 +32,7 @@ const Project = () => {
         const getData = async () => {
             setIsCreate(true);
             setValue("name", "");
-            setValue("summary", "");
+            setValue("shortName", "");
             setValue("dueDate", null);
             setValue("description", "");
             try {
@@ -68,7 +70,13 @@ const Project = () => {
         if (statusSelecteds.length === 0) {
             setError("status", {
                 type: "required",
-                message: "Please select the usage status in your project",
+                message: "Vui lòng chọn trạng thái sử dụng trong dự án của bạn",
+            });
+        }
+        if (userSelecteds.length === 0) {
+            setError("user", {
+                type: "required",
+                message: "Vui lòng chọn người tham gia vào dự án của bạn",
             });
         }
     };
@@ -89,11 +97,21 @@ const Project = () => {
         });
     };
 
+    const handleSelectUser = (user, type) => {
+        clearErrors("user");
+        if (type === "REMOVE")
+            setUserSelecteds((prev) =>
+                prev.filter((item) => item.userId !== user.userId),
+            );
+        else if (type === "ADD") setUserSelecteds((prev) => [...prev, user]);
+    };
+
     const onSubmitProject = () => {
         handleOpenSelectStatusAndUserModal();
     };
     const onSubmitStatusAndUser = (data) => {
         data.statuses = statusSelecteds;
+        data.users = userSelecteds;
         console.log(data);
     };
 
@@ -132,8 +150,8 @@ const Project = () => {
                                     className='d-flex flex-column'
                                 >
                                     <div className='modal__heading position-relative'>
-                                        <p className='color-1 fs-4'>
-                                            Create new project
+                                        <p className='color-1 fs-3 text-center'>
+                                            Thêm dự án
                                         </p>
                                         <button
                                             className='position-absolute top-0 end-0 border-0 bg-transparent'
@@ -150,7 +168,7 @@ const Project = () => {
                                                 htmlFor='name'
                                                 className='form-label'
                                             >
-                                                Name:
+                                                Tên dự án:
                                             </label>
                                             <input
                                                 type='text'
@@ -158,7 +176,7 @@ const Project = () => {
                                                     errors.name && "is-invalid"
                                                 }`}
                                                 id='name'
-                                                placeholder='Enter project name'
+                                                placeholder='Nhập tên dự án...'
                                                 {...register("name", {
                                                     required: true,
                                                 })}
@@ -166,33 +184,33 @@ const Project = () => {
                                             {errors.name?.type ===
                                                 "required" && (
                                                 <div className='form-text text-danger'>
-                                                    This field is required
+                                                    Vui lòng nhập trường này
                                                 </div>
                                             )}
                                         </div>
                                         <div className='mb-3'>
                                             <label
-                                                htmlFor='summary'
+                                                htmlFor='shortName'
                                                 className='form-label'
                                             >
-                                                Summary:
+                                                Tên rút gọn:
                                             </label>
                                             <input
                                                 type='text'
                                                 className={`form-control ${
-                                                    errors.summary &&
+                                                    errors.shortName &&
                                                     "is-invalid"
                                                 }`}
-                                                id='summary'
-                                                placeholder='Enter summary'
-                                                {...register("summary", {
+                                                id='shortName'
+                                                placeholder='Nhập tên rút gọn...'
+                                                {...register("shortName", {
                                                     required: true,
                                                 })}
                                             />
-                                            {errors.summary?.type ===
+                                            {errors.shortName?.type ===
                                                 "required" && (
                                                 <div className='form-text text-danger'>
-                                                    This field is required
+                                                    Vui lòng nhập trường này
                                                 </div>
                                             )}
                                         </div>
@@ -201,7 +219,7 @@ const Project = () => {
                                                 htmlFor='dueDate'
                                                 className='form-label'
                                             >
-                                                Due date:
+                                                Ngày đáo hạn:
                                             </label>
                                             <input
                                                 type='date'
@@ -215,13 +233,13 @@ const Project = () => {
                                                 htmlFor='description'
                                                 className='form-label'
                                             >
-                                                Description:
+                                                Mô tả:
                                             </label>
                                             <textarea
                                                 type='text'
                                                 className={`form-control`}
                                                 id='description'
-                                                placeholder='Enter text'
+                                                placeholder='Nhập nội dung...'
                                                 {...register("description", {})}
                                                 rows={4}
                                             />
@@ -235,10 +253,10 @@ const Project = () => {
                                                 handleCloseCreateProjectModal
                                             }
                                         >
-                                            Cancel
+                                            Hủy
                                         </button>
                                         <button className='btn btn--color-1 px-5 ms-3'>
-                                            Create
+                                            Tiếp tục
                                         </button>
                                     </div>
                                 </form>
@@ -260,9 +278,9 @@ const Project = () => {
                                     )}
                                     className='d-flex flex-column'
                                 >
-                                    <div className='modal__heading position-relative'>
-                                        <p className='color-1 fs-4'>
-                                            Choose status and user
+                                    <div className='modal__heading text-center position-relative'>
+                                        <p className='color-1 fs-3'>
+                                            Thêm dự án
                                         </p>
                                         <button
                                             className='position-absolute top-0 end-0 border-0 bg-transparent'
@@ -279,7 +297,7 @@ const Project = () => {
                                                 htmlFor='dueDate'
                                                 className='form-label'
                                             >
-                                                Choose status:
+                                                Trạng thái
                                             </label>
                                             <SelectStatus
                                                 data={statuses}
@@ -292,6 +310,25 @@ const Project = () => {
                                             />
                                         </div>
                                     </div>
+                                    <div className='modal__content'>
+                                        <div className='mb-3'>
+                                            <label
+                                                htmlFor='dueDate'
+                                                className='form-label'
+                                            >
+                                                Người tham gia
+                                            </label>
+                                            <SelectUser
+                                                data={userList}
+                                                selected={userSelecteds}
+                                                onChange={handleSelectUser}
+                                                error={errors?.user}
+                                                errorMessage={
+                                                    errors.user?.message
+                                                }
+                                            />
+                                        </div>
+                                    </div>
                                     <div className='modal__action text-end'>
                                         <button
                                             className='btn btn--color-1--outline px-5'
@@ -300,13 +337,13 @@ const Project = () => {
                                                 handleCloseSelectStatusAndUserModal
                                             }
                                         >
-                                            Cancel
+                                            Hủy
                                         </button>
                                         <button
                                             className='btn btn--color-1 px-5 ms-3'
                                             onClick={handleValidateValue}
                                         >
-                                            Submit
+                                            Thêm dự án
                                         </button>
                                     </div>
                                 </form>

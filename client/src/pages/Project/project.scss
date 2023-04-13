@@ -43,9 +43,10 @@
             }
         }
     }
+    .form__user,
     .form__status {
         min-height: 38px;
-        padding: 0 16px 4px 12px;
+        padding: 8px 16px 8px 12px;
         flex-wrap: wrap;
         background-color: var(--color-5);
         &--selected {
@@ -53,12 +54,39 @@
             align-items: center;
             color: var(--color-1);
             background-color: rgba($color: #4890ff, $alpha: 0.25);
-            padding: 0px 8px;
+            padding: 4px 12px;
             border-radius: 4px;
-            margin-top: 4px;
+            margin-top: 2px;
+            margin-bottom: 2px;
         }
         &__select {
             z-index: 1;
+        }
+    }
+    .form__user {
+        &--selected {
+            &__btn {
+                margin-right: -12px;
+            }
+        }
+        &__search {
+            width: unset !important;
+        }
+        &__select {
+            min-height: 120px;
+            max-height: 200px;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            &__item {
+                &:hover {
+                    background-color: var(--color-11) !important;
+                }
+                &__email {
+                    margin-top: -4px;
+                }
+            }
         }
     }
 }

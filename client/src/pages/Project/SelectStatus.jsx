@@ -48,7 +48,7 @@ const SelectStatus = ({
                 {selected.length !== 0 &&
                     selected.map((status) => (
                         <p
-                            className='form__status--selected mb-0 me-2'
+                            className='form__status--selected me-2'
                             key={status.statusId}
                         >
                             <span className='fs-7'>{status.name}</span>
