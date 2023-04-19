@@ -4,11 +4,21 @@ export const usersSlice = createSlice({
     name: "users",
     initialState: [],
     reducers: {
-        setUsers: (action) => {
+        setUsers: (state, action) => {
             return action.payload;
+        },
+        setUserRole: (state, action) => {
+            return state.map((user) => {
+                if (user.userId === action.payload.userId)
+                    return { ...user, roleId: action.payload.roleId };
+                else return user;
+            });
+        },
+        removeUser: (state, action) => {
+            return state.filter((user) => user.userId !== action.payload);
         },
     },
 });
 
-export const { setUsers } = usersSlice.actions;
+export const { setUsers, setUserRole, removeUser } = usersSlice.actions;
 export default usersSlice.reducer;

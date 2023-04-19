@@ -203,7 +203,7 @@ const Register = () => {
                 <div className='position-absolute top-0 bottom-0 start-0 end-0 d-flex justify-content-center align-items-center fade-in'>
                     <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-25 z-2'></div>
                     <div className='container z-2'>
-                        <div className='p-4 mx-auto col-4 z-3 shadow-lg rounded-3 bg-light'>
+                        <div className='p-4 mx-auto col-4 z-3 shadow-lg rounded-3 bg-color-5'>
                             <div className='text-center mb-2'>
                                 <ReactSVG
                                     src='/images/icon/check.svg'

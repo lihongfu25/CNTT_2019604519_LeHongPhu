@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\StatusController;
@@ -28,9 +29,12 @@ Route::post('/auth/verify', [AuthController::class, 'verify']);
 Route::post('/auth/reset', [AuthController::class, 'reset']);
 Route::middleware('jwt.auth')->get('/auth/token', [AuthController::class, 'show']);
 
+Route::middleware('jwt.auth', 'role:admin')->get('/role', [RoleController::class, 'index']);
+
 Route::middleware('jwt.auth', 'role:admin')->get('/user', [UserController::class, 'index']);
 Route::middleware('jwt.auth')->get('/user/{userId}', [UserController::class, 'show']);
 Route::middleware('jwt.auth')->put('/user/{userId}', [UserController::class, 'update']);
+Route::middleware('jwt.auth', 'role:admin')->put('/user/{userId}/role', [UserController::class, 'update_role']);
 Route::middleware('jwt.auth', 'role:admin')->delete('/user/{userId}', [UserController::class, 'destroy']);
 
 Route::middleware('jwt.auth')->get('/status', [StatusController::class, 'index']);
@@ -52,7 +56,9 @@ Route::middleware('jwt.auth')->get('/issue', [IssueController::class, 'index']);
 Route::middleware('jwt.auth')->get('/issue/{issueId}', [IssueController::class, 'show']);
 Route::middleware('jwt.auth')->post('/issue', [IssueController::class, 'store']);
 
+Route::middleware('jwt.auth')->get('/comment', [CommentController::class, 'index']);
 Route::middleware('jwt.auth')->post('/comment', [CommentController::class, 'store']);
 
 Route::middleware('jwt.auth')->get('/notification', [NotificationController::class, 'index']);
 Route::middleware('jwt.auth')->post('/notification', [NotificationController::class, 'store']);
+Route::middleware('jwt.auth')->put('/notification/{notificationId}', [NotificationController::class, 'update']);

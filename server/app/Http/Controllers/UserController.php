@@ -66,6 +66,23 @@ class UserController extends Controller
 
         return response()->json([], 204);
     }
+
+    public function update_role(Request $request, $userId)
+    {
+        $user = User::where('userId', $userId)->first();
+
+        if (!$user)
+        {
+            return response()->json([
+                'message' => 'Không tìm thấy người dùng!'
+            ], 404);
+        }
+
+        $newUser = DB::table('users')->where('userId', $userId)
+        ->update(['roleId' => $request->get('roleId'), 'updated_at' => now()]);
+
+        return response()->json([], 204);
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -78,8 +95,14 @@ class UserController extends Controller
 
         if (!$user) {
             return response()->json([
-                'message' => 'Không tìm thấy người dùng!'
+                'message' => 'Không tìm thấy người dùng'
             ], 404);
+        }
+
+        if ($user->roleId === 'r0') {
+            return response()->json([
+                'message' => 'Bạn không có quyền thực hiện thao tác này'
+            ], 403);
         }
 
         User::where('userId', $userId)->delete();

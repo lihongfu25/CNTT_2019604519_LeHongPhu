@@ -1,11 +1,13 @@
-import React from "react";
 import moment from "moment";
-import { ReactSVG } from "react-svg";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { ReactSVG } from "react-svg";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "../../config/api";
 import { changeCurrentTab } from "../../redux/store/tabSlice";
 import { userLogout } from "../../redux/store/userSlice";
-import { BASE_URL } from "../../config/api";
 import "../../styles/layout/main.scss";
 import Tab from "./Tab";
 
@@ -23,7 +25,7 @@ const MainLayout = ({ children }) => {
     React.useEffect(() => {
         const currentTab = location.pathname.split("/").pop().replace(/$/, "");
         dispatch(changeCurrentTab(currentTab));
-    }, []);
+    }, [dispatch, location.pathname]);
 
     const handleCollapseMenu = () => {
         setIsCollapsed(!isCollapsed);
@@ -37,7 +39,6 @@ const MainLayout = ({ children }) => {
         dispatch(userLogout());
         localStorage.removeItem("token");
     };
-
     return (
         <div className='position-fixed top-0 bottom-0 start-0 end-0'>
             <div className='main-layout h-100 d-flex'>
@@ -196,6 +197,7 @@ const MainLayout = ({ children }) => {
                         </div>
                         <div className='p-4 flex-grow-1 bg-color-12'>
                             <Outlet />
+                            <ToastContainer />
                         </div>
                     </div>
                 </div>

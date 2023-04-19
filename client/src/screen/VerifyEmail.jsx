@@ -39,7 +39,6 @@ const VerifyEmail = () => {
                 axiosClient.post("auth/verify", {
                     email,
                 });
-                console.log(email);
                 setLoading(false);
                 setVerified(true);
             })

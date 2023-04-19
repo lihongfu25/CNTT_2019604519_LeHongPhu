@@ -6,6 +6,7 @@ use App\Models\Issue;
 use App\Models\Status;
 use App\Models\Project;
 use App\Models\ProjectUser;
+use App\Models\ProjectStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,7 @@ class ProjectController extends Controller
     {
         $userId = request()->userId;
         $projectIds = ProjectUser::where('userId', $userId)->get()->pluck('projectId')->toArray();
-        $projects = Project::with('users.user')->whereIn('projectId', $projectIds)->get();
+        $projects = Project::with('users.user')->whereIn('projectId', $projectIds)->orderBy('created_at', 'desc')->get();
         foreach ($projects as $key => $value) {
             $totalIssue = Issue::where('projectId', $value->projectId)->count();
             $doneStatus = Status::where('name', 'DONE')->first();
@@ -49,8 +50,38 @@ class ProjectController extends Controller
                 'message' => 'Dự án đã tồn tại!'
             ],  409);
         }
-        Project::create($body);
-        return response()->json([], 204);
+
+        try {
+            DB::beginTransaction();
+            $project = Project::create($body);
+            $projectUser['projectId'] = $project->projectId;
+            $projectStatus['projectId'] = $project->projectId;
+            if ($request->has('statuses')) {
+                $statuses = $request->statuses;
+                foreach ($statuses as $key => $value) {
+                    $projectStatus['statusId'] = $value;
+                    ProjectStatus::where('projectId', $request->projectId)->where('statusId', $value)->delete();
+                    ProjectStatus::create($projectStatus);
+                }
+            }
+            if ($request->has('users')) {
+                $users = $request->users;
+                foreach ($users as $key => $value) {
+                    $projectUser['userId'] = $value;
+                    ProjectUser::where('projectId', $request->projectId)->where('userId', $value)->delete();
+                    ProjectUser::create($projectUser);
+                }
+            }
+            DB::commit();
+            return response()->json([], 204);
+        } catch (\Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'message' => 'Có lỗi trong quá trình tạo dự án!',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

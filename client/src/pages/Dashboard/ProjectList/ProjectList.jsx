@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 const ProjectList = () => {
     // const [currentSlide, setCurrentSlide] = React.useState(0);
     // const projects = useSelector((state) => state.project);

@@ -33,6 +33,7 @@ class ProjectStatusController extends Controller
             $statuses = $request->statuses;
             foreach ($statuses as $key => $value) {
                 $body['statusId'] = $value;
+                ProjectStatus::where('projectId', $request->projectId)->where('statusId', $value)->delete();
                 ProjectStatus::create($body);
             }
             return response()->json([], 204);

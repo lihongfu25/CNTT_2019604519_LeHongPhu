@@ -1,0 +1,27 @@
+.users {
+    &__export {
+        &:hover {
+            .react-svg {
+                path {
+                    fill: var(--color-5);
+                }
+            }
+        }
+    }
+    &__select-role {
+        &__icon {
+            margin-top: -4px;
+            svg {
+                width: 10px;
+                height: 10px;
+            }
+        }
+        &__form {
+            &__item {
+            }
+        }
+    }
+    .border-dashed {
+        border-top: 1px dashed var(--color-3);
+    }
+}

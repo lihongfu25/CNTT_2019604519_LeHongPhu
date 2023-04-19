@@ -1,21 +1,27 @@
 import React from "react";
-import { ReactSVG } from "react-svg";
 import { useDispatch, useSelector } from "react-redux";
-import ProjectItem from "./ProjectItem";
-import "./project.scss";
+import { ReactSVG } from "react-svg";
+import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
 import axiosClient from "../../config/api";
+import notify from "../../config/toast";
+import { setProjects } from "../../redux/store/projectSlice";
 import { setUsers } from "../../redux/store/usersSlice";
+import Loading from "../../screen/Loading";
+import ProjectItem from "./ProjectItem";
 import SelectStatus from "./SelectStatus";
 import SelectUser from "./SelectUser";
+import "./project.scss";
 const Project = () => {
     const [isCreate, setIsCreate] = React.useState(false);
     const [isNext, setIsNext] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
     const [statusSelecteds, setStatusSelecteds] = React.useState([]);
     const [userSelecteds, setUserSelecteds] = React.useState([]);
     const [statuses, setStatuses] = React.useState(null);
     const [userList, setUserList] = React.useState(null);
     const projects = useSelector((state) => state.project);
+    const user = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
 
@@ -64,6 +70,7 @@ const Project = () => {
         setIsNext(false);
         clearErrors();
         setStatusSelecteds([]);
+        setUserSelecteds([]);
     };
 
     const handleValidateValue = () => {
@@ -110,16 +117,35 @@ const Project = () => {
         handleOpenSelectStatusAndUserModal();
     };
     const onSubmitStatusAndUser = (data) => {
-        data.statuses = statusSelecteds;
-        data.users = userSelecteds;
-        console.log(data);
+        data.statuses = statusSelecteds.map((status) => status.statusId);
+        data.users = userSelecteds.map((user) => user.userId);
+        const createProject = async () => {
+            setIsLoading(true);
+            try {
+                await axiosClient.post("project", {
+                    projectId: uuidv4(),
+                    ...data,
+                    leaderId: user.userId,
+                });
+                const fetchData = await axiosClient.get(
+                    `project?userId=${user.userId}`,
+                );
+                dispatch(setProjects(fetchData.data.data));
+                notify("success", "Thêm dự án thành công!");
+                setIsNext(false);
+            } catch (error) {
+                notify("error", error.response.data.message);
+            }
+            setIsLoading(false);
+        };
+        createProject();
     };
 
     return (
         <div className='project h-100'>
             <div className='project__heading d-flex justify-content-between mb-3'>
                 <div className='project__heading__title'>
-                    <p className='fs-3 fw-3 color-10 mb-0'>Projects</p>
+                    <p className='fs-3 fw-3 color-10 mb-0'>Dự án của bạn</p>
                 </div>
                 <div className='project__heading__btn'>
                     <button
@@ -127,13 +153,13 @@ const Project = () => {
                         onClick={handleOpenCreateProjectModal}
                     >
                         <ReactSVG src='/images/icon/add.svg' />
-                        <span className='ms-2 fs-7'>Create</span>
+                        <span className='ms-2 fs-7'>Thêm</span>
                     </button>
                 </div>
             </div>
             <div className='row g-3'>
                 {projects.map((project) => (
-                    <div className='col-4' key={project.id}>
+                    <div className='col-4' key={project.projectId}>
                         <ProjectItem data={project} />
                     </div>
                 ))}
@@ -143,7 +169,7 @@ const Project = () => {
                     <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-50 z-2 appear'></div>
                     <div className='d-flex justify-content-center my-5'>
                         <div className='container fade-in z-2 my-3'>
-                            <div className='px-4 py-3 mx-auto col-6 z-3 shadow-lg rounded-3 bg-light'>
+                            <div className='px-4 py-3 mx-auto col-6 z-3 shadow-lg rounded-3 bg-color-5'>
                                 <form
                                     action=''
                                     onSubmit={handleSubmit(onSubmitProject)}
@@ -270,7 +296,7 @@ const Project = () => {
                     <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-50 z-2 appear'></div>
                     <div className='d-flex justify-content-center my-5'>
                         <div className='container fade-in z-2 my-3'>
-                            <div className='px-4 py-3 mx-auto col-6 z-3 shadow-lg rounded-3 bg-light'>
+                            <div className='px-4 py-3 mx-auto col-6 z-3 shadow-lg rounded-3 bg-color-5'>
                                 <form
                                     action=''
                                     onSubmit={handleSubmit(
@@ -333,17 +359,18 @@ const Project = () => {
                                         <button
                                             className='btn btn--color-1--outline px-5'
                                             type='button'
-                                            onClick={
-                                                handleCloseSelectStatusAndUserModal
-                                            }
+                                            onClick={() => {
+                                                setIsNext(false);
+                                                setIsCreate(true);
+                                            }}
                                         >
-                                            Hủy
+                                            Trở lại
                                         </button>
                                         <button
                                             className='btn btn--color-1 px-5 ms-3'
                                             onClick={handleValidateValue}
                                         >
-                                            Thêm dự án
+                                            Thêm
                                         </button>
                                     </div>
                                 </form>
@@ -352,6 +379,7 @@ const Project = () => {
                     </div>
                 </div>
             )}
+            {isLoading && <Loading />}
         </div>
     );
 };

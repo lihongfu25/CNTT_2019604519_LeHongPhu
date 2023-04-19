@@ -1,6 +1,7 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
 import { BASE_URL } from "../../config/api";
+import { toVietnameseLowerCase } from "../../styles/global";
 
 const SelectUser = ({
     data,
@@ -15,13 +16,6 @@ const SelectUser = ({
 
     const inputSearchRef = React.useRef(null);
 
-    const toVietnameseLowerCase = (string) => {
-        const stringConvert = string
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^\w\s]/gi, "");
-        return stringConvert.toLowerCase();
-    };
     React.useEffect(() => {
         setSuggestion(
             data
@@ -59,6 +53,7 @@ const SelectUser = ({
     const handleChange = (user, type) => {
         onChange(user, type);
         inputSearchRef.current.focus();
+        setIsOpen(true);
     };
 
     return (
@@ -110,7 +105,7 @@ const SelectUser = ({
                         ) : (
                             suggestion.map((user) => (
                                 <button
-                                    className='form__user__select__item border-0 bg-transparent d-flex align-items-center px-3 py-2 w-100'
+                                    className='form__user__select__item hover-bg-color-12 border-0 bg-transparent d-flex align-items-center px-3 py-2 w-100'
                                     key={user.userId}
                                     type='button'
                                     onClick={() => {

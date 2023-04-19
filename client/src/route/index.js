@@ -6,7 +6,16 @@ import {
     ResetPassword,
     VerifyEmail,
 } from "../screen";
-import { Dashboard, Project, Task, User, Report, Profile } from "../pages";
+import {
+    Dashboard,
+    Project,
+    Task,
+    User,
+    Report,
+    Profile,
+    Calendar,
+    Notification,
+} from "../pages";
 const routes = [
     {
         path: "/",
@@ -18,11 +27,20 @@ const routes = [
             },
             {
                 path: "calendar",
-                element: <Task />,
+                element: <Calendar />,
             },
             {
                 path: "project",
-                element: <Project />,
+                children: [
+                    {
+                        index: true,
+                        element: <Project />,
+                    },
+                    {
+                        path: ":projectId",
+                        element: <Project />,
+                    },
+                ],
             },
             {
                 path: "task",
@@ -47,7 +65,7 @@ const routes = [
             },
             {
                 path: "notification",
-                element: <Report />,
+                element: <Notification />,
             },
             {
                 path: "my-profile",

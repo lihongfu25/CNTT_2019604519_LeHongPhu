@@ -33,6 +33,7 @@ class ProjectUserController extends Controller
             $users = $request->users;
             foreach ($users as $key => $value) {
                 $body['userId'] = $value;
+                ProjectUser::where('projectId', $request->projectId)->where('userId', $value)->delete();
                 ProjectUser::create($body);
             }
             return response()->json([], 204);

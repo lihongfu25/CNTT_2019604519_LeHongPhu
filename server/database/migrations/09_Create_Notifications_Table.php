@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->text('content');
+            $table->boolean('isSeen')->default(false);
             $table->timestamps();
             $table->string('issueId');
             $table->foreign('issueId')->references('issueId')->on('issues');

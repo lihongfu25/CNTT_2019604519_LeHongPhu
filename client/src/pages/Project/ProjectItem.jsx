@@ -19,25 +19,34 @@ const ProjectItem = ({ data, className }) => {
                     </p>
                 </div>
                 <div className='project__list__item__desc flex-grow-1'>
-                    <p className='fs-6 color-10 mb-0 text-truncate-2'>
+                    <p className='fs-7 color-10 mb-0 text-truncate-2'>
                         {data?.description}
                     </p>
                 </div>
                 <div className='project__list__item__progress w-100 mb-2'>
                     <div className='text-end'>
                         <p className='fs-7 mb-0'>
-                            {Math.floor(
-                                (data?.doneIssue / data?.totalIssue) * 100,
-                            ) + "%"}
+                            {data?.totalIssue !== 0
+                                ? Math.floor(
+                                      (data?.doneIssue / data?.totalIssue) *
+                                          100,
+                                  ) + "%"
+                                : "0"}
                         </p>
                     </div>
                     <div className='project__list__item__progress__progress-bar project__list__item__progress__base position-relative'>
                         <div
                             className='project__list__item__progress__progress-bar project__list__item__progress__active position-absolute top-0 bottom-0 start-0'
                             style={{
-                                width: `${Math.floor(
-                                    (data?.doneIssue / data?.totalIssue) * 100,
-                                )}%`,
+                                width: `${
+                                    data?.totalIssue !== 0
+                                        ? Math.floor(
+                                              (data?.doneIssue /
+                                                  data?.totalIssue) *
+                                                  100,
+                                          )
+                                        : 0
+                                }%`,
                             }}
                         ></div>
                     </div>
