@@ -11,9 +11,9 @@ import { userLogout } from "../../redux/store/userSlice";
 import "../../styles/layout/main.scss";
 import Tab from "./Tab";
 
-const ADMIN_ROLE = "r0";
+const USER_ROLE = "r2";
 
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
     const [isCollapsed, setIsCollapsed] = React.useState(false);
 
     const currentTab = useSelector((state) => state.tab.currentTab);
@@ -98,7 +98,7 @@ const MainLayout = ({ children }) => {
                             changeCurrentTab={changeTab}
                             isCollapsed={isCollapsed}
                         />
-                        {user.roleId === ADMIN_ROLE && (
+                        {user.roleId !== USER_ROLE && (
                             <Tab
                                 label='User'
                                 iconSrc='/images/icon/users.svg'

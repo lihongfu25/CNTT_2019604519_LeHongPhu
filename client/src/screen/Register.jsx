@@ -87,11 +87,18 @@ const Register = () => {
                         placeholder='Nhập email đăng ký tài khoản'
                         {...register("email", {
                             required: true,
+                            pattern:
+                                /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
                         })}
                     />
                     {errors.email?.type === "required" && (
                         <div className='form-text text-danger'>
                             Vui lòng nhập trường này
+                        </div>
+                    )}
+                    {errors.email?.type === "pattern" && (
+                        <div className='form-text text-danger'>
+                            Vui lòng nhập vào email hợp lệ
                         </div>
                     )}
                     {errors.email?.type === "already-exist" && (
