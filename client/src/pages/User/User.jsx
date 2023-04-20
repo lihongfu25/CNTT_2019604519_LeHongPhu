@@ -1,6 +1,8 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactSVG } from "react-svg";
+import { Spinner } from "../../components";
 import axiosClient, { BASE_URL } from "../../config/api";
 import notify from "../../config/toast";
 import { setRoles } from "../../redux/store/roleSlice";
@@ -8,8 +10,7 @@ import { removeUser, setUsers } from "../../redux/store/usersSlice";
 import Loading from "../../screen/Loading";
 import { toVietnameseLowerCase } from "../../styles/global";
 import "./users.scss";
-import { Spinner } from "../../components";
-import { useForm } from "react-hook-form";
+import axios from "axios";
 const User = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isShow, setIsShow] = React.useState(false);
@@ -18,6 +19,15 @@ const User = () => {
     const [currentTarget, setCurrentTarget] = React.useState(null);
     const [userList, setUserList] = React.useState([]);
     const [roleList, setRoleList] = React.useState([]);
+    const [provinces, setProvinces] = React.useState();
+    const [districts, setDistricts] = React.useState();
+    const [wards, setWards] = React.useState();
+    const [addressSelected, setAddressSelected] = React.useState({
+        province: null,
+        district: null,
+        ward: null,
+    });
+
     const users = useSelector((state) => state.users);
     const roles = useSelector((state) => state.role);
     const dispatch = useDispatch();
@@ -53,6 +63,37 @@ const User = () => {
         }
     }, [users, dispatch, roles]);
 
+    React.useEffect(() => {
+        if (!provinces) {
+            axios
+                .get("https://provinces.open-api.vn/api/?depth=1")
+                .then((response) => {
+                    setProvinces(response.data);
+                })
+                .catch((error) => console.log(error));
+        }
+        if (addressSelected.province) {
+            axios
+                .get(
+                    `https://provinces.open-api.vn/api/p/${addressSelected.province}?depth=2`,
+                )
+                .then((response) => {
+                    setDistricts(response.data.districts);
+                })
+                .catch((error) => console.log(error));
+        }
+        if (addressSelected.district) {
+            axios
+                .get(
+                    `https://provinces.open-api.vn/api/d/${addressSelected.district}?depth=2`,
+                )
+                .then((response) => {
+                    setWards(response.data.wards);
+                })
+                .catch((error) => console.log(error));
+        }
+    }, [addressSelected, provinces]);
+
     const handleOpenDeleteForm = (user) => {
         setIsDelete(true);
         setCurrentTarget(user);
@@ -74,6 +115,17 @@ const User = () => {
     const handleOpenInfoForm = async (user) => {
         try {
             await setCurrentTarget(user);
+            setAddressSelected({
+                province: user.provinceCode,
+                district: user.districtCode,
+                ward: user.wardCode,
+            });
+            setValue("fullName", user.fullName);
+            setValue("username", user.username);
+            setValue("email", user.email);
+            setValue("dob", user.dob);
+            setValue("gender", user.gender);
+            setValue("phoneNumber", user.phoneNumber);
             setIsShow(true);
         } catch (error) {
             console.log(error);
@@ -103,7 +155,7 @@ const User = () => {
                                         type='text'
                                         name=''
                                         id=''
-                                        className='form-control'
+                                        className='form-control fs-7'
                                         placeholder='Tìm kiếm'
                                         value={search}
                                         onChange={(e) =>
@@ -321,42 +373,25 @@ const User = () => {
                                     </p>
                                 </div>
                                 <form className='w-100'>
-                                    <div className='mb-3'>
-                                        <label
-                                            htmlFor='fullName'
-                                            className='form-label'
-                                        >
-                                            Họ và Tên:
-                                        </label>
-                                        <input
-                                            type='text'
-                                            className={`form-control ${
-                                                errors.fullName && "is-invalid"
-                                            }`}
-                                            id='fullName'
-                                            placeholder='Họ và Tên'
-                                            {...register("fullName", {})}
-                                        />
-                                    </div>
                                     <div className='row mb-3'>
                                         <div className='col'>
                                             <div className=''>
                                                 <label
-                                                    htmlFor='username'
-                                                    className='form-label'
+                                                    htmlFor='fullName'
+                                                    className='form-label fs-7'
                                                 >
-                                                    Username:
+                                                    Họ và tên:
                                                 </label>
                                                 <input
                                                     type='text'
-                                                    className={`form-control ${
-                                                        errors.username &&
+                                                    className={`form-control fs-7 ${
+                                                        errors.fullName &&
                                                         "is-invalid"
                                                     }`}
-                                                    id='username'
-                                                    placeholder='Username'
+                                                    id='fullName'
+                                                    placeholder='Họ và Tên'
                                                     {...register(
-                                                        "username",
+                                                        "fullName",
                                                         {},
                                                     )}
                                                 />
@@ -365,14 +400,46 @@ const User = () => {
                                         <div className='col'>
                                             <div className=''>
                                                 <label
+                                                    htmlFor='username'
+                                                    className='form-label fs-7'
+                                                >
+                                                    Username:
+                                                </label>
+                                                <input
+                                                    type='text'
+                                                    className={`form-control fs-7 ${
+                                                        errors.username &&
+                                                        "is-invalid"
+                                                    }`}
+                                                    id='username'
+                                                    placeholder='Username'
+                                                    {...register("username", {
+                                                        pattern:
+                                                            /^[a-zA-Z0-9-]*$/,
+                                                    })}
+                                                />
+                                                {errors.email?.type ===
+                                                    "pattern" && (
+                                                    <div className='form-text text-danger fs-7'>
+                                                        Username chỉ chứa chữ
+                                                        cái, số và (-)
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='row mb-3'>
+                                        <div className='col'>
+                                            <div className=''>
+                                                <label
                                                     htmlFor='email'
-                                                    className='form-label'
+                                                    className='form-label fs-7'
                                                 >
                                                     Email:
                                                 </label>
                                                 <input
                                                     type='text'
-                                                    className={`form-control ${
+                                                    className={`form-control fs-7 ${
                                                         errors.email &&
                                                         "is-invalid"
                                                     }`}
@@ -405,19 +472,17 @@ const User = () => {
                                                 )}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className='row mb-3'>
                                         <div className='col'>
                                             <div className=''>
                                                 <label
                                                     htmlFor='dob'
-                                                    className='form-label'
+                                                    className='form-label fs-7'
                                                 >
                                                     Ngày sinh:
                                                 </label>
                                                 <input
                                                     type='date'
-                                                    className={`form-control ${
+                                                    className={`form-control fs-7 ${
                                                         errors.dob &&
                                                         "is-invalid"
                                                     }`}
@@ -427,17 +492,19 @@ const User = () => {
                                                 />
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className='row mb-3'>
                                         <div className='col'>
                                             <div className=''>
                                                 <label
                                                     htmlFor='gender'
-                                                    className='form-label'
+                                                    className='form-label fs-7'
                                                 >
                                                     Giới tính:
                                                 </label>
                                                 <select
                                                     type='text'
-                                                    className={`form-control ${
+                                                    className={`form-control fs-7 ${
                                                         errors.gender &&
                                                         "is-invalid"
                                                     }`}
@@ -449,53 +516,163 @@ const User = () => {
                                                 </select>
                                             </div>
                                         </div>
+                                        <div className='col'>
+                                            <div className=''>
+                                                <label
+                                                    htmlFor='phoneNumber'
+                                                    className='form-label fs-7'
+                                                >
+                                                    Số điện thoại:
+                                                </label>
+                                                <input
+                                                    type='text'
+                                                    className={`form-control fs-7 ${
+                                                        errors.phoneNumber &&
+                                                        "is-invalid"
+                                                    }`}
+                                                    id='phoneNumber'
+                                                    placeholder='Số điện thoại'
+                                                    {...register(
+                                                        "phoneNumber",
+                                                        {
+                                                            pattern: /^[0-9]*$/,
+                                                            minLength: 10,
+                                                            maxLength: 10,
+                                                        },
+                                                    )}
+                                                />
+                                                {errors.email?.type ===
+                                                    "pattern" && (
+                                                    <div className='form-text text-danger'>
+                                                        Số điện thoại chỉ chứa
+                                                        số
+                                                    </div>
+                                                )}
+                                                {(errors.email?.type ===
+                                                    "minLength" ||
+                                                    errors.email?.type ===
+                                                        "maxLength") && (
+                                                    <div className='form-text text-danger'>
+                                                        Vui lòng nhập vào số
+                                                        điện thoại hợp lệ
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className='row mb-3'>
                                         <div className='col'>
-                                            <div className=''>
-                                                <label
-                                                    htmlFor='fullName'
-                                                    className='form-label'
-                                                >
-                                                    Họ và Tên:
-                                                </label>
-                                                <input
-                                                    type='text'
-                                                    className={`form-control ${
-                                                        errors.fullName &&
-                                                        "is-invalid"
-                                                    }`}
-                                                    id='fullName'
-                                                    placeholder='Họ và Tên'
-                                                    {...register(
-                                                        "fullName",
-                                                        {},
-                                                    )}
-                                                />
-                                            </div>
+                                            <label
+                                                htmlFor='provinces'
+                                                className='form-label fs-7'
+                                            >
+                                                Tỉnh/Thành phố
+                                            </label>
+                                            <select
+                                                id='provinces'
+                                                className='form-select mb-3'
+                                                aria-label='example'
+                                                value={
+                                                    addressSelected.province ||
+                                                    ""
+                                                }
+                                                onChange={(e) => {
+                                                    setAddressSelected({
+                                                        province:
+                                                            e.target.value,
+                                                    });
+                                                    setDistricts();
+                                                    setWards();
+                                                }}
+                                            >
+                                                <option value=''>
+                                                    Tỉnh/Thành phố
+                                                </option>
+                                                {provinces?.map((province) => (
+                                                    <option
+                                                        key={province.code}
+                                                        value={province.code}
+                                                    >
+                                                        {province.name}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                         <div className='col'>
-                                            <div className=''>
-                                                <label
-                                                    htmlFor='username'
-                                                    className='form-label'
-                                                >
-                                                    Username:
-                                                </label>
-                                                <input
-                                                    type='text'
-                                                    className={`form-control ${
-                                                        errors.username &&
-                                                        "is-invalid"
-                                                    }`}
-                                                    id='username'
-                                                    placeholder='Username'
-                                                    {...register(
-                                                        "username",
-                                                        {},
-                                                    )}
-                                                />
-                                            </div>
+                                            <label
+                                                htmlFor='districts'
+                                                className='form-label fs-7'
+                                            >
+                                                Quận/Huyện
+                                            </label>
+                                            <select
+                                                id='districts'
+                                                className='form-select mb-3'
+                                                aria-label='example'
+                                                value={
+                                                    addressSelected.district ||
+                                                    ""
+                                                }
+                                                onChange={(e) => {
+                                                    setAddressSelected(
+                                                        (prevAddress) => ({
+                                                            ...prevAddress,
+                                                            district:
+                                                                e.target.value,
+                                                        }),
+                                                    );
+                                                    setWards();
+                                                }}
+                                            >
+                                                <option value=''>
+                                                    Quận/Huyện
+                                                </option>
+                                                {districts?.map((district) => (
+                                                    <option
+                                                        key={district.code}
+                                                        value={district.code}
+                                                    >
+                                                        {district.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className='col'>
+                                            <label
+                                                htmlFor='wards'
+                                                className='form-label fs-7'
+                                            >
+                                                Phường/Xã
+                                            </label>
+                                            <select
+                                                id='wards'
+                                                className='form-select mb-3'
+                                                aria-label='example'
+                                                value={
+                                                    addressSelected.ward || ""
+                                                }
+                                                onChange={(e) =>
+                                                    setAddressSelected(
+                                                        (prevAddress) => ({
+                                                            ...prevAddress,
+                                                            ward: e.target
+                                                                .value,
+                                                        }),
+                                                    )
+                                                }
+                                            >
+                                                <option value=''>
+                                                    Phường/Xã
+                                                </option>
+                                                {wards?.map((ward) => (
+                                                    <option
+                                                        key={ward.code}
+                                                        value={ward.code}
+                                                    >
+                                                        {ward.name}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
                                 </form>
