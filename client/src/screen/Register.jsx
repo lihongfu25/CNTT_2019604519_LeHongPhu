@@ -135,7 +135,7 @@ const Register = () => {
                     )}
                 </div>
                 <div className='mb-3'>
-                    <label htmlFor='password' className='form-label'>
+                    <label htmlFor='confirm-password' className='form-label'>
                         Xác nhận mật khẩu
                     </label>
                     <input
@@ -143,7 +143,7 @@ const Register = () => {
                         className={`form-control ${
                             errors.confirm && "is-invalid"
                         }`}
-                        id='confirm'
+                        id='confirm-password'
                         placeholder='Nhập mật khẩu'
                         {...register("confirm", {
                             required: true,

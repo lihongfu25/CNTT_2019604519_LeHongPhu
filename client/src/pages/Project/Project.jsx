@@ -12,6 +12,7 @@ import ProjectItem from "./ProjectItem";
 import SelectStatus from "./SelectStatus";
 import SelectUser from "./SelectUser";
 import "./project.scss";
+import { Link } from "react-router-dom";
 const Project = () => {
     const [isCreate, setIsCreate] = React.useState(false);
     const [isNext, setIsNext] = React.useState(false);
@@ -145,7 +146,7 @@ const Project = () => {
         <div className='project h-100'>
             <div className='project__heading d-flex justify-content-between mb-3'>
                 <div className='project__heading__title'>
-                    <p className='fs-3 fw-3 color-10 mb-0'>Dự án của bạn</p>
+                    <p className='fs-4 fw-2 color-10 mb-2'>Dự án</p>
                 </div>
                 <div className='project__heading__btn'>
                     <button
@@ -160,7 +161,12 @@ const Project = () => {
             <div className='row g-3'>
                 {projects.map((project) => (
                     <div className='col-4' key={project.projectId}>
-                        <ProjectItem data={project} />
+                        <Link
+                            to={`/project/${project.projectId}`}
+                            className='text-decoration-none'
+                        >
+                            <ProjectItem data={project} />
+                        </Link>
                     </div>
                 ))}
             </div>

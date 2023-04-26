@@ -7,7 +7,7 @@ const Notification = () => {
     return (
         <div className='notification__list h-100 d-flex flex-column'>
             <div className='mb-3'>
-                <p className='fs-5 fw-3 color-10 mb-0'>Hoạt động gần đây</p>
+                <p className='fs-4 fw-2 color-10 mb-2'>Hoạt động gần đây</p>
             </div>
             <div className='h-vh-70 overflow-y-scroll hidden-scrollBar'>
                 {notifications.map((item) => (

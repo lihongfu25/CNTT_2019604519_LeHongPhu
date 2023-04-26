@@ -18,13 +18,22 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(
             [
                 [
+                    'userId' => 'c9045732-c572-11ed-a7fb-00e04c2ca3a6',
+                    'fullName' => 'Admin',
+                    'email' => 'admin@vmms.com.vn',
+                    'emailVerified' => true,
+                    'photoUrl' => 'images/avatar.jpg',
+                    'password' => bcrypt('phu123456'),
+                    'roleId' => 'r0'
+                ],
+                [
                     'userId' => 'b5145732-c572-11ed-a7fb-00e04c2ca3a6',
                     'fullName' => 'Lê Hồng Phú',
                     'email' => 'phulh@vmms.com.vn',
                     'emailVerified' => true,
                     'photoUrl' => 'images/avatar.jpg',
                     'password' => bcrypt('phu123456'),
-                    'roleId' => 'r0'
+                    'roleId' => 'r1'
                 ],
                 [
                     'userId' => 'b1245733-c572-11ed-a7fb-00e04c2ca3a6',
@@ -33,7 +42,7 @@ class UserSeeder extends Seeder
                     'emailVerified' => false,
                     'photoUrl' => 'images/default.svg',
                     'password' => bcrypt('phu123456'),
-                    'roleId' => 'r1'
+                    'roleId' => 'r2'
                 ]
             ]
         );

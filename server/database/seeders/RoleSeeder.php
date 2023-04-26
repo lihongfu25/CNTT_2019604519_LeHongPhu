@@ -19,11 +19,16 @@ class RoleSeeder extends Seeder
             [
                 [
                     'roleId' => 'r0',
+                    'roleName' => 'SuperAdmin',
+                    'roleSlug' => 'superadmin',
+                ],
+                [
+                    'roleId' => 'r1',
                     'roleName' => 'Admin',
                     'roleSlug' => 'admin',
                 ],
                 [
-                    'roleId' => 'r1',
+                    'roleId' => 'r2',
                     'roleName' => 'User',
                     'roleSlug' => 'user',
                 ]

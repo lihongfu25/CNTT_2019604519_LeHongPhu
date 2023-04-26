@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $role = Role::all();
+        $role = Role::where('roleId', '<>', 'r0')->get();
 
         return response()->json([
             'data' => $role

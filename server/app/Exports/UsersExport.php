@@ -12,10 +12,11 @@ class UsersExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return User::select('userId', "fullName", 'email', 'username','phoneNumber', 'password')->get();
+        return User::select('fullName', 'username', 'email', 'gender', 'dob', 'phoneNumber')
+                    ->where('roleId', '<>', 'r0')->get();
     }
 
     public function headings():array{
-        return ['Mã Nhân Viên', "Họ Tên", "Email", "Username", "Số Điện Thoại", "Mật Khẩu"];
+        return ["Họ và Tên", "Username", "Email", "Giới tính", "Ngày sinh", "Số điện thoại"];
     }
 }

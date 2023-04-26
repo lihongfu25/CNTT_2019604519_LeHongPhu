@@ -16,12 +16,13 @@
                 height: 10px;
             }
         }
-        &__form {
-            &__item {
-            }
-        }
     }
     .border-dashed {
         border-top: 1px dashed var(--color-3);
+    }
+}
+.control-password {
+    &:hover {
+        cursor: pointer;
     }
 }

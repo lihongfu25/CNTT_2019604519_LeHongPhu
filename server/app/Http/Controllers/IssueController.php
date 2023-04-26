@@ -6,6 +6,7 @@ use App\Models\Issue;
 use App\Models\Project;
 use App\Models\ProjectUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class IssueController extends Controller
 {
@@ -60,6 +61,33 @@ class IssueController extends Controller
         return response()->json([
             'data' => $issue
         ], 200);
+    }
+
+    public function getIssueByStatus($statusId)
+    {
+        $issues = Issue::where('statusId', $statusId)
+                        ->where('projectId', request()->projectId)->get();
+
+        return response()->json([
+            'data' => $issues
+        ], 201);
+    }
+
+    public function changeIssueStatus(Request $request, $issueId)
+    {
+        $issue = Issue::where('issueId', $issueId)->first();
+
+        if (!$issue)
+        {
+            return response()->json([
+                'message' => 'Không tìm thấy công việc'
+            ], 409);
+        }
+
+        DB::table('issues')->where('issueId', $issueId)
+        ->update(['statusId' => $request->get('statusId'), 'updated_at' => now()]);
+
+        return response()->json([], 204);
     }
 
     /**

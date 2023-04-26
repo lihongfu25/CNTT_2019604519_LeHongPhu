@@ -92,7 +92,7 @@ class ProjectController extends Controller
      */
     public function show($projectId)
     {
-        $project = Project::with('issues.assignee', 'issues.status', 'users.user')->where('projectId', $projectId)->first();
+        $project = Project::with('statuses.status', 'issues.assignee', 'issues.status', 'users.user')->where('projectId', $projectId)->first();
 
         if (!$project) {
             return response()->json([

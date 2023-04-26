@@ -16,6 +16,7 @@ import {
     Calendar,
     Notification,
 } from "../pages";
+import ProjectDetail from "../pages/Project/ProjectDetail/ProjectDetail";
 const routes = [
     {
         path: "/",
@@ -38,7 +39,7 @@ const routes = [
                     },
                     {
                         path: ":projectId",
-                        element: <Project />,
+                        element: <ProjectDetail />,
                     },
                 ],
             },
