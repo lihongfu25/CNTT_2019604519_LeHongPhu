@@ -82,7 +82,6 @@ const User = () => {
                 ]);
                 dispatch(setUsers(response[0].data.users));
                 dispatch(setRoles(response[1].data.data));
-                console.log(response[1].data.data);
                 setUserList(response[0].data.users);
                 setRoleList(response[1].data.data);
             } catch (error) {

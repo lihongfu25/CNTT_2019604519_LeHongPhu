@@ -9,6 +9,7 @@ use App\Http\Controllers\IssueController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StatisticalController;
 use App\Http\Controllers\ProjectUserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjectStatusController;
@@ -43,26 +44,34 @@ Route::middleware('jwt.auth')->get('/status', [StatusController::class, 'index']
 
 Route::middleware('jwt.auth')->get('/project', [ProjectController::class, 'index']);
 Route::middleware('jwt.auth')->get('/project/{projectId}', [ProjectController::class, 'show']);
-Route::middleware('jwt.auth', 'role:admin')->get('/project/{projectId}/user', [ProjectController::class, 'getUsers']);
-Route::middleware('jwt.auth', 'role:admin')->post('/project', [ProjectController::class, 'store']);
-Route::middleware('jwt.auth', 'role:admin')->put('/project/{projectId}', [ProjectController::class, 'update']);
-Route::middleware('jwt.auth', 'role:admin')->delete('/project/{projectId}', [ProjectController::class, 'destroy']);
+Route::middleware('jwt.auth', 'role:superadmin,admin')->get('/project/{projectId}/complete', [ProjectController::class, 'complete']);
+Route::middleware('jwt.auth')->get('/project/{projectId}/issue', [ProjectController::class, 'getIssues']);
+Route::middleware('jwt.auth')->get('/project/{projectId}/user', [ProjectController::class, 'getUsers']);
+Route::middleware('jwt.auth', 'role:superadmin,admin')->post('/project', [ProjectController::class, 'store']);
+Route::middleware('jwt.auth', 'role:superadmin,admin')->put('/project/{projectId}', [ProjectController::class, 'update']);
+Route::middleware('jwt.auth', 'role:superadmin,admin')->delete('/project/{projectId}', [ProjectController::class, 'destroy']);
 
 Route::middleware('jwt.auth')->get('/project-status', [ProjectStatusController::class, 'index']);
-Route::middleware('jwt.auth', 'role:admin')->post('/project-status', [ProjectStatusController::class, 'store']);
+Route::middleware('jwt.auth', 'role:superadmin,admin')->post('/project-status', [ProjectStatusController::class, 'store']);
 
 Route::middleware('jwt.auth')->get('/project-user', [ProjectUserController::class, 'index']);
-Route::middleware('jwt.auth', 'role:admin')->post('/project-user', [ProjectUserController::class, 'store']);
+Route::middleware('jwt.auth', 'role:superadmin,admin')->post('/project-user', [ProjectUserController::class, 'store']);
 
 Route::middleware('jwt.auth')->get('/issue', [IssueController::class, 'index']);
 Route::middleware('jwt.auth')->get('/issue/{issueId}', [IssueController::class, 'show']);
 Route::middleware('jwt.auth')->get('/issue/status/{statusId}', [IssueController::class, 'getIssueByStatus']);
 Route::middleware('jwt.auth')->post('/issue', [IssueController::class, 'store']);
 Route::middleware('jwt.auth')->post('/issue/{issueId}/status', [IssueController::class, 'changeIssueStatus']);
+Route::middleware('jwt.auth')->put('/issue/{issueId}', [IssueController::class, 'update']);
+Route::middleware('jwt.auth', 'role:superadmin,admin')->delete('/issue/{issueId}', [IssueController::class, 'destroy']);
 
 Route::middleware('jwt.auth')->get('/comment', [CommentController::class, 'index']);
 Route::middleware('jwt.auth')->post('/comment', [CommentController::class, 'store']);
+Route::middleware('jwt.auth')->delete('/comment/{commentId}', [CommentController::class, 'destroy']);
 
 Route::middleware('jwt.auth')->get('/notification', [NotificationController::class, 'index']);
 Route::middleware('jwt.auth')->post('/notification', [NotificationController::class, 'store']);
 Route::middleware('jwt.auth')->put('/notification/{notificationId}', [NotificationController::class, 'update']);
+
+Route::middleware('jwt.auth')->post('/statistical', [StatisticalController::class, 'index']);
+

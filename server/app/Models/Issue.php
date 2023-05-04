@@ -34,6 +34,11 @@ class Issue extends Model
         return $this->hasOne(User::class, 'userId', 'reporterId');
 
     }
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'projectId', 'projectId');
+
+    }
     public function comments()
     {
         return $this->hasMany(Comment::class, 'issueId', 'issueId');

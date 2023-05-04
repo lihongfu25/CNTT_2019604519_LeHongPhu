@@ -1,3 +1,9 @@
 .dashboard {
-    
+    .h-280 {
+        min-height: 280px !important;
+        max-height: 280px !important;
+    }
+    .h-mh-210 {
+        max-height: 210px !important;
+    }
 }

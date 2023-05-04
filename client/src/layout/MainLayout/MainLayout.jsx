@@ -78,13 +78,6 @@ const MainLayout = () => {
                             isCollapsed={isCollapsed}
                         />
                         <Tab
-                            label='Calendar'
-                            iconSrc='/images/icon/calendar.svg'
-                            currentTab={currentTab}
-                            changeCurrentTab={changeTab}
-                            isCollapsed={isCollapsed}
-                        />
-                        <Tab
                             label='Task'
                             iconSrc='/images/icon/task.svg'
                             currentTab={currentTab}
@@ -195,7 +188,7 @@ const MainLayout = () => {
                                 </ul>
                             </div>
                         </div>
-                        <div className='p-4 flex-grow-1 bg-color-12'>
+                        <div className='p-3 flex-grow-1 bg-color-12'>
                             <Outlet />
                             <ToastContainer />
                         </div>

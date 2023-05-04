@@ -52,7 +52,7 @@ const NotificationItem = ({ data }) => {
                                 {data.user.fullName}
                             </span>
                             <span className='color-10'>
-                                {" " + data.content + " on "}
+                                {" " + data.content + " cho "}
                             </span>
                             <span className='color-1 text-wrap'>
                                 {data.issueId + " - " + data.issue.name}

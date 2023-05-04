@@ -59,8 +59,17 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy($commentId)
     {
-        //
+        $comment = Comment::find($commentId);
+
+        if (!$comment) {
+            return response()->json([
+                'message' => "Không tìm thấy bình luận"
+            ], 409);
+        }
+
+        $comment->delete();
+        return response()->json([],204);
     }
 }

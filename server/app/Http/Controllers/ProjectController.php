@@ -105,6 +105,22 @@ class ProjectController extends Controller
         ], 200);
     }
 
+    public function complete($projectId)
+    {
+        $project = Project::where('projectId', $projectId)->first();
+        
+        if (!$project) {
+            return response()->json([
+                'message' => "Không tìm thấy dự án!",
+            ], 404);
+        }
+
+        DB::table('projects')->where('projectId', $projectId)
+        ->update(['active' => 0, 'updated_at' => now()]);
+
+        return response()->json([], 204);
+    }
+
     public function getUsers($projectId)
     {
         $project = Project::with('users.user')->where('projectId', $projectId)->first();
@@ -116,13 +132,13 @@ class ProjectController extends Controller
         }
 
         return response()->json([
-            'data' => $project
+            'data' => $project->users
         ], 200);
     }
 
     public function getIssues($projectId)
     {
-        $project = Project::with('issues')->where('projectId', $projectId)->first();
+        $project = Project::with('issues.assignee', 'issues.status')->where('projectId', $projectId)->first();
         
         if (!$project) {
             return response()->json([
@@ -131,7 +147,7 @@ class ProjectController extends Controller
         }
 
         return response()->json([
-            'data' => $project
+            'data' => $project->issues
         ], 200);
     }
 

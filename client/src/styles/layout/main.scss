@@ -10,8 +10,8 @@
         }
     }
     &__header {
-        height: 66px !important;
-        min-width: 66px !important;
+        min-height: 66px !important;
+        max-height: 66px !important;
     }
     &__content {
         height: 100vh;

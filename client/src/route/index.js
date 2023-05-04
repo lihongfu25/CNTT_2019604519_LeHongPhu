@@ -1,22 +1,22 @@
-import { MainLayout, LoginRegisterLayout } from "../layout";
+import { LoginRegisterLayout, MainLayout } from "../layout";
 import {
+    Dashboard,
+    Notification,
+    Profile,
+    Project,
+    Report,
+    Task,
+    User,
+} from "../pages";
+import ProjectDetail from "../pages/Project/ProjectDetail/ProjectDetail";
+import TaskDetail from "../pages/Task/TaskDetail/TaskDetail";
+import {
+    ForgotPassword,
     Login,
     Register,
-    ForgotPassword,
     ResetPassword,
     VerifyEmail,
 } from "../screen";
-import {
-    Dashboard,
-    Project,
-    Task,
-    User,
-    Report,
-    Profile,
-    Calendar,
-    Notification,
-} from "../pages";
-import ProjectDetail from "../pages/Project/ProjectDetail/ProjectDetail";
 const routes = [
     {
         path: "/",
@@ -25,10 +25,6 @@ const routes = [
             {
                 index: true,
                 element: <Dashboard />,
-            },
-            {
-                path: "calendar",
-                element: <Calendar />,
             },
             {
                 path: "project",
@@ -52,7 +48,7 @@ const routes = [
                     },
                     {
                         path: ":issueId",
-                        element: <Task />,
+                        element: <TaskDetail />,
                     },
                 ],
             },

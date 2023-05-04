@@ -5,4 +5,3 @@ export { default as User } from "./User/User";
 export { default as Report } from "./Report/Report";
 export { default as Profile } from "./Profile/Profile";
 export { default as Notification } from "./Notification/Notification";
-export { default as Calendar } from "./Calendar/Calendar";

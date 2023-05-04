@@ -177,14 +177,5 @@ class UserController extends Controller
     public function export()
     {
         return Excel::download(new UsersExport, 'users.xlsx');
-
-        // $fileName = 'users.xlsx';
-        // $usersExport = new UsersExport();
-        // $headers = [
-        //     'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        //     'Content-Disposition' => 'attachment; filename="'.$fileName.'"',
-        // ];
-
-        // return Excel::download($usersExport, $fileName, \Maatwebsite\Excel\Excel::XLSX, $headers);
     }
 }

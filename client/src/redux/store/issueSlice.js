@@ -7,8 +7,11 @@ export const issueSlice = createSlice({
         setIssues: (state, action) => {
             return action.payload;
         },
+        removeIssue: (state, action) => {
+            return state.filter((issue) => issue.issueId !== action.payload);
+        },
     },
 });
 
-export const { setIssues } = issueSlice.actions;
+export const { setIssues, removeIssue } = issueSlice.actions;
 export default issueSlice.reducer;

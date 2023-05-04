@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <g id="logo-square" transform="translate(-233 -378)">
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="48" height="48" rx="10" transform="translate(233 378)" fill="#2e5f80"/>
+    <g id="Group_36" data-name="Group 36" transform="translate(239 395)">
+      <g id="Group_33" data-name="Group 33" transform="translate(0)">
+        <path id="Union_2" data-name="Union 2" d="M177.683,620.675l-5.09-9.53a.824.824,0,1,1,1.457-.771l4.389,8.218,4.142-8.094a.824.824,0,1,1,1.47.746l-4.814,9.409a.9.9,0,0,1-1.553.024Z" transform="translate(-164.027 -607.113)" fill="#fff"/>
+        <circle id="Ellipse_17" data-name="Ellipse 17" cx="1.411" cy="1.411" r="1.411" transform="translate(12.939)" fill="#fff"/>
+        <path id="Union_1" data-name="Union 1" d="M178.431,621.125a.829.829,0,0,1-.721-.435l-5.109-9.526a.817.817,0,0,1,.344-1.11.831.831,0,0,1,1.12.339l4.408,8.222,2.112-4.111a.831.831,0,0,1,1.113-.359.818.818,0,0,1,.362,1.1l-2.792,5.433a.832.832,0,0,1-.835.442Z" transform="translate(-172.505 -607.134)" fill="#4890ff"/>
+        <circle id="Ellipse_16" data-name="Ellipse 16" cx="1.411" cy="1.411" r="1.411" transform="translate(3.412)" fill="#4890ff"/>
+      </g>
+      <text id="oFM" transform="translate(17.308 13.598)" fill="#fff" font-size="9" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">oFM</tspan></text>
+    </g>
+  </g>
+</svg>

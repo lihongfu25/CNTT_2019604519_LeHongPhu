@@ -41,13 +41,14 @@ function App() {
                         localStorage.removeItem("token");
                         navigate("/auth/login");
                     }
+                    console.log(error);
                 }
             };
             getData();
         } else if (!location.pathname.includes("auth")) {
             navigate("/auth/login");
         }
-    }, []);
+    }, [location, navigate, dispatch]);
     const appRoutes = useRoutes(routes);
     return <div>{appRoutes}</div>;
 }

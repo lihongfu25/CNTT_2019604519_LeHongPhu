@@ -1,14 +1,8 @@
-import React from "react";
 import moment from "moment";
+import React from "react";
 import { Link } from "react-router-dom";
+import { Priority } from "../../../components";
 import { BASE_URL } from "../../../config/api";
-const priorities = {
-    LOWEST: 1,
-    LOW: 2,
-    MEDIUM: 3,
-    HIGH: 4,
-    HIGHEST: 5,
-};
 const statues = {
     BACKLOG: "STT01",
     REVIEW_FAILED: "STT04",
@@ -20,61 +14,34 @@ const dueDate = {
 };
 
 const IssueItem = ({ issue }) => {
-    const renderPriority = (level) => {
-        let priority = "";
-        switch (level) {
-            case priorities.LOWEST:
-                priority = "Lowest";
-                break;
-            case priorities.LOW:
-                priority = "Low";
-                break;
-            case priorities.MEDIUM:
-                priority = "Medium";
-                break;
-            case priorities.HIGH:
-                priority = "High";
-                break;
-            case priorities.HIGHEST:
-                priority = "Highest";
-                break;
-            default:
-                priority = "Unknown";
-        }
-        return priority;
-    };
     return (
         <tr className='position-relative'>
             <td className='fs-7 align-middle text-start ps-3 color-10'>
                 {issue.issueId + " - " + issue.name}
             </td>
             <td className='align-middle'>
-                <div className='d-flex'>
-                    <div className='ratio ratio-40x40 rounded-circle overflow-hidden'>
-                        <img
-                            src={BASE_URL + issue.assignee.photoUrl}
-                            alt=''
-                            className='w-100 object-fit-cover'
-                        />
+                {issue.assignee && (
+                    <div className='d-flex'>
+                        <div className='ratio ratio-40x40 rounded-circle overflow-hidden'>
+                            <img
+                                src={BASE_URL + issue.assignee.photoUrl}
+                                alt=''
+                                className='w-100 object-fit-cover'
+                            />
+                        </div>
+                        <div className='d-flex flex-column align-items-start flex-grow-1 ms-3'>
+                            <span className='fs-7'>
+                                {issue.assignee.fullName}
+                            </span>
+                            <span className='fs-8 color-3'>
+                                {issue.assignee.email}
+                            </span>
+                        </div>
                     </div>
-                    <div className='d-flex flex-column align-items-start flex-grow-1 ms-3'>
-                        <span className='fs-7'>{issue.assignee.fullName}</span>
-                        <span className='fs-8 color-3'>
-                            {issue.assignee.email}
-                        </span>
-                    </div>
-                </div>
+                )}
             </td>
-            <td
-                className={`align-middle text-start fs-7 priority-${
-                    issue.priority < priorities.MEDIUM
-                        ? "1"
-                        : issue.priority === priorities.MEDIUM
-                        ? "2"
-                        : "3"
-                }`}
-            >
-                {renderPriority(issue.priority)}
+            <td className='align-middle text-start'>
+                <Priority level={issue.priority} />
             </td>
             <td
                 className={`align-middle text-start fs-7 status-${

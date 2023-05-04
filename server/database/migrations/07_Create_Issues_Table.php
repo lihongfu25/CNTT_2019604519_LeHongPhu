@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('statusId')->references('statusId')->on('statuses');
             $table->string('reporterId');
             $table->foreign('reporterId')->references('userId')->on('users')->onDelete('cascade');
-            $table->string('assigneeId');
+            $table->string('assigneeId')->nullable()->default(null);
             $table->foreign('assigneeId')->references('userId')->on('users')->onDelete('cascade');
         });
     }

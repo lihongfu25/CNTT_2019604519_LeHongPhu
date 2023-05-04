@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Issue;
 use App\Models\Project;
+use App\Models\Comment;
 use App\Models\ProjectUser;
+use App\Models\Notification;
+use App\Models\ProjectStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -37,9 +40,12 @@ class IssueController extends Controller
         $body = $request->all();
         $project = Project::where('projectId', $body['projectId'])->first();
         $countByProjectId = Issue::where('projectId', $body['projectId'])->count();
-        $body['issueId'] = $project->slug . "-" . ($countByProjectId + 1);
+        $projectStatus = ProjectStatus::where('projectId', $body['projectId'])->orderBy("statusId")->first();
+        $body['issueId'] = $project->shortName . "-" . ($countByProjectId + 1);
+        $body['statusId'] = $projectStatus->statusId;
         Issue::create($body);
-        return response()->json([], 204);
+        return response()->json([
+        ], 204);
     }
 
     /**
@@ -50,7 +56,7 @@ class IssueController extends Controller
      */
     public function show($issueId)
     {
-        $issue = Issue::with('assignee', 'status', 'reporter', 'comments.user')->where('issueId', $issueId)->first();
+        $issue = Issue::with('assignee', 'status', 'reporter', 'comments.user', 'project')->where('issueId', $issueId)->first();
 
         if (!$issue) {
             return response()->json([
@@ -97,9 +103,21 @@ class IssueController extends Controller
      * @param  \App\Models\Issue  $issue
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Issue $issue)
+    public function update(Request $request, $issueId)
     {
-        //
+        $issue = Issue::where('issueId', $issueId)->first();
+
+        if (!$issue)
+        {
+            return response()->json([
+                'message' => 'Không tìm thấy công việc'
+            ], 409);
+        }
+        $body = $request->all();
+        DB::table('issues')->where('issueId', $issueId)
+        ->update($body);
+
+        return response()->json([], 204);
     }
 
     /**
@@ -108,8 +126,20 @@ class IssueController extends Controller
      * @param  \App\Models\Issue  $issue
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Issue $issue)
+    public function destroy($issueId)
     {
-        //
+        $issue = Issue::where('issueId', $issueId)->first();
+
+        if (!$issue)
+        {
+            return response()->json([
+                'message' => 'Không tìm thấy công việc!'
+            ],  404);
+        }
+
+        Comment::where('issueId', $issueId)->delete();
+        Notification::where('issueId', $issueId)->delete();
+        Issue::where('issueId', $issueId)->delete();
+        return response()->json([], 204);
     }
 }

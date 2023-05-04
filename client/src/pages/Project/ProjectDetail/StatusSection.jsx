@@ -3,9 +3,13 @@ import TaskItem from "../../Task/TaskItem";
 import { useDrop } from "react-dnd";
 import axiosClient from "../../../config/api";
 import notify from "../../../config/toast";
+import { useSelector } from "react-redux";
 
-const StatusSection = ({ storage, setStorage, status }) => {
+const StatusSection = ({ storage, setStorage, status, isActive }) => {
     const [issues, setIssues] = React.useState([]);
+
+    const user = useSelector((state) => state.user);
+
     React.useEffect(() => {
         const filterIssues = storage.filter(
             (issue) => issue.statusId === status.statusId,
@@ -28,13 +32,23 @@ const StatusSection = ({ storage, setStorage, status }) => {
                 else return item;
             });
         });
-        try {
-            notify("success", `${issue.issueId} đã được cập nhật trạng thái`);
-            await axiosClient.post(`issue/${issue.issueId}/status`, {
-                statusId: status.statusId,
-            });
-        } catch (error) {
-            console.log(error);
+        if (issue.statusId !== status.statusId) {
+            try {
+                await axiosClient.post(`issue/${issue.issueId}/status`, {
+                    statusId: status.statusId,
+                });
+                notify(
+                    "success",
+                    `${issue.issueId} đã được cập nhật trạng thái`,
+                );
+                await axiosClient.post("notification", {
+                    userId: user.userId,
+                    issueId: issue.issueId,
+                    content: `đã cập nhật trạng thái ${status.status.name}`,
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
 
@@ -42,8 +56,8 @@ const StatusSection = ({ storage, setStorage, status }) => {
         <div
             className={`flex-grow-1 ${
                 isOver ? "bg-color-13" : "bg-color-11"
-            } p-1`}
-            ref={drop}
+            } px-1`}
+            ref={!isActive ? drop : null}
         >
             <div>
                 {issues.map((issue) => (
