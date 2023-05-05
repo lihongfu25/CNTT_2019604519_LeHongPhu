@@ -24,7 +24,7 @@ const Dashboard = () => {
                             <div className='shadow-sm d-flex flex-column rounded-10 p-3 h-100 bg-color-2'>
                                 <div className=''>
                                     <p className='fs-5 color-5 mb-0'>
-                                        Projects in progress
+                                        Dự án của bạn
                                     </p>
                                 </div>
                                 <ProjectList />

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import moment from "moment";
 import "./report.scss";
 import notify from "../../config/toast";
-import axiosClient from "../../config/api";
+import axiosClient, { BASE_URL } from "../../config/api";
 import { useSelector } from "react-redux";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
@@ -52,7 +52,6 @@ const Report = () => {
                 data: count,
             };
         });
-        console.log(value);
         const dataChart = {
             labels: value.map((item) => item.label),
             datasets: [
@@ -71,6 +70,13 @@ const Report = () => {
             ],
         };
         setDataChart(dataChart);
+    };
+
+    const countIssue = (userId, statusId) => {
+        const count = data.project.issues.filter(
+            (item) => item.assigneeId === userId && item.statusId === statusId,
+        ).length;
+        return count;
     };
 
     const onSubmit = async (data) => {
@@ -92,6 +98,7 @@ const Report = () => {
                     projectId: filterProject,
                 });
                 setData(res.data.data);
+                console.log(res.data.data.users);
                 getDataChart(res.data.data.project);
             } catch (error) {
                 notify("error", error.response.data.message);
@@ -119,7 +126,7 @@ const Report = () => {
                                     </label>
                                     <div className=''>
                                         <select
-                                            className='form-select w-255 fs-7'
+                                            className='form-select w-215 fs-7'
                                             value={filterProject}
                                             onChange={(e) =>
                                                 setFilterProject(e.target.value)
@@ -142,32 +149,36 @@ const Report = () => {
                                 </div>
                             </div>
                             <div className='w-50 me-3'>
-                                <div className='d-flex'>
-                                    <label
-                                        htmlFor='select-project'
-                                        className='col-form-label fs-7 me-3'
-                                    >
-                                        Từ:
-                                    </label>
-                                    <div className='flex-grow-1'>
-                                        <input
-                                            type='date'
-                                            className={`form-control w-255 fs-7 ${
-                                                errors.from && "is-invalid"
-                                            }`}
-                                            id='from'
-                                            {...register("from", {
-                                                required: true,
-                                            })}
-                                        />
+                                <div className='d-flex flex-column'>
+                                    <div className='d-flex'>
+                                        <label
+                                            htmlFor='select-project'
+                                            className='col-form-label fs-7 me-3'
+                                        >
+                                            Từ:
+                                        </label>
+                                        <div className='flex-grow-1'>
+                                            <input
+                                                type='date'
+                                                className={`form-control w-215 fs-7 ${
+                                                    errors.from && "is-invalid"
+                                                }`}
+                                                id='from'
+                                                {...register("from", {
+                                                    required: true,
+                                                })}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
                                         {errors.from?.type === "required" && (
-                                            <div className='form-text text-danger fs-7 text-nowrap'>
+                                            <div className='form-text text-danger fs-7'>
                                                 Vui lòng chọn ngày bắt đầu thống
                                                 kê
                                             </div>
                                         )}
                                         {errors.from?.type === "invalid" && (
-                                            <div className='form-text text-danger fs-7 text-nowrap'>
+                                            <div className='form-text text-danger fs-7'>
                                                 Khoảng thời gian đã chọn không
                                                 phù hợp
                                             </div>
@@ -176,33 +187,37 @@ const Report = () => {
                                 </div>
                             </div>
                             <div className='w-50'>
-                                <div className='d-flex'>
-                                    <label
-                                        htmlFor='select-priority'
-                                        className='col-form-label fs-7 me-3'
-                                    >
-                                        Đến:
-                                    </label>
-                                    <div className='flex-grow-1'>
-                                        <input
-                                            type='date'
-                                            className={`form-control w-255 fs-7 ${
-                                                errors.to && "is-invalid"
-                                            }`}
-                                            id='to'
-                                            placeholder='to'
-                                            {...register("to", {
-                                                required: true,
-                                            })}
-                                        />
+                                <div className='d-flex flex-column'>
+                                    <div className='d-flex'>
+                                        <label
+                                            htmlFor='select-priority'
+                                            className='col-form-label fs-7 me-3'
+                                        >
+                                            Đến:
+                                        </label>
+                                        <div className='flex-grow-1'>
+                                            <input
+                                                type='date'
+                                                className={`form-control w-215 fs-7 ${
+                                                    errors.to && "is-invalid"
+                                                }`}
+                                                id='to'
+                                                placeholder='to'
+                                                {...register("to", {
+                                                    required: true,
+                                                })}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
                                         {errors.to?.type === "required" && (
-                                            <div className='form-text text-danger fs-7 text-nowrap'>
+                                            <div className='form-text text-danger fs-7'>
                                                 Vui lòng chọn ngày kết thúc
                                                 thống kê
                                             </div>
                                         )}
                                         {errors.to?.type === "invalid" && (
-                                            <div className='form-text text-danger fs-7 text-nowrap'>
+                                            <div className='form-text text-danger fs-7'>
                                                 Khoảng thời gian đã chọn không
                                                 phù hợp
                                             </div>
@@ -224,45 +239,119 @@ const Report = () => {
             ) : !data ? (
                 ""
             ) : (
-                <div className='row g-4 h-vh-75 overflow-scroll hidden-scrollBar mt-1'>
-                    <div className='col-8'>
-                        <div className='row g-4'>
-                            <div className='col-6'>
-                                <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm'>
-                                    <p className='fs-5 mb-0'>Tạo mới</p>
-                                    <p className='fs-7 mb-0'>
-                                        {data?.issueCreate?.length}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className='col-6'>
-                                <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm'>
-                                    <p className='fs-5 mb-0'>Đang thực hiện</p>
-                                    <p className='fs-7 mb-0'>
-                                        {data?.issueProgress?.length}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className='col-6'>
-                                <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm'>
-                                    <p className='fs-5 mb-0'>Chờ review</p>
-                                    <p className='fs-7 mb-0'>
-                                        {data?.issueReview?.length}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className='col-6'>
-                                <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm'>
-                                    <p className='fs-5 mb-0'>Hoàn thành</p>
-                                    <p className='fs-7 mb-0'>
-                                        {data?.issueDone?.length}
-                                    </p>
+                <div className='h-vh-75 overflow-scroll hidden-scrollBar'>
+                    <div className='row g-4 mt-1'>
+                        <div className='col-8'>
+                            <div className='d-flex align-items-center h-100'>
+                                <div className='row g-4'>
+                                    <div className='col-6'>
+                                        <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm border-start border-5 border-color-new'>
+                                            <p className='fs-5 mb-0'>Tạo mới</p>
+                                            <p className='fs-7 mb-0'>
+                                                {data?.issueCreate?.length}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className='col-6'>
+                                        <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm border-start border-5 border-color-progress'>
+                                            <p className='fs-5 mb-0'>
+                                                Đang thực hiện
+                                            </p>
+                                            <p className='fs-7 mb-0'>
+                                                {data?.issueProgress?.length}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className='col-6'>
+                                        <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm border-start border-5 border-color-review'>
+                                            <p className='fs-5 mb-0'>
+                                                Chờ review
+                                            </p>
+                                            <p className='fs-7 mb-0'>
+                                                {data?.issueReview?.length}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className='col-6'>
+                                        <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm border-start border-5 border-color-done'>
+                                            <p className='fs-5 mb-0'>
+                                                Hoàn thành
+                                            </p>
+                                            <p className='fs-7 mb-0'>
+                                                {data?.issueDone?.length}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div className='col-4'>
+                            <div>{dataChart && <Pie data={dataChart} />}</div>
+                        </div>
                     </div>
-                    <div className='col-4'>
-                        <div>{dataChart && <Pie data={dataChart} />}</div>
+                    <div className='bg-color-5'>
+                        <table className='table'>
+                            <thead className='table-light'>
+                                <tr>
+                                    <th
+                                        scope='col'
+                                        className='fs-7 col-4 text-start p-3'
+                                    >
+                                        Họ và Tên
+                                    </th>
+                                    {data.project.statuses.map((item) => (
+                                        <th
+                                            key={item.id}
+                                            scope='col'
+                                            className='fs-7 col-2 text-center py-3'
+                                        >
+                                            {item.status.name}
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.users.map((item, i) => (
+                                    <tr key={i} className='align-middle'>
+                                        <td className='px-3'>
+                                            <div className='d-flex'>
+                                                <div className='ratio ratio-40x40 rounded-circle overflow-hidden'>
+                                                    <img
+                                                        src={
+                                                            BASE_URL +
+                                                            item.user.photoUrl
+                                                        }
+                                                        alt=''
+                                                        className='w-100 object-fit-cover'
+                                                    />
+                                                </div>
+                                                <div className='d-flex flex-column align-items-start justify-content-center flex-grow-1 ms-2'>
+                                                    <span className='fs-7'>
+                                                        {item.user.fullName ||
+                                                            item.user.email}
+                                                    </span>
+                                                    {item.user.username && (
+                                                        <span className='fs-8 color-3'>
+                                                            {item.user.username}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        {data.project.statuses.map(
+                                            (element) => (
+                                                <td className='text-center'>
+                                                    {countIssue(
+                                                        item.userId,
+                                                        element.statusId,
+                                                    )}
+                                                </td>
+                                            ),
+                                        )}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             )}

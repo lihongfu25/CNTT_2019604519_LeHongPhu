@@ -1,49 +1,34 @@
 import React from "react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { EffectCards } from "swiper";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import { Swiper, SwiperSlide } from "swiper/react";
+import ProjectItem from "../../Project/ProjectItem";
+import "./projectList.scss";
 const ProjectList = () => {
-    // const [currentSlide, setCurrentSlide] = React.useState(0);
-    // const projects = useSelector((state) => state.project);
-    // const handleNextSlide = () => {
-    //     setCurrentSlide((prevSlide) => {
-    //         if (prevSlide === projects.length - 1) {
-    //             return 0;
-    //         } else return prevSlide + 1;
-    //     });
-    // };
+    const projects = useSelector((state) => state.project);
+
     return (
         <div className='project__list d-flex flex-column align-items-start h-100 position-relative'>
-            {/* <div className='d-flex flex-grow-1 p-3'>
-                <ProjectItem
-                    data={projects[currentSlide]}
-                    key={projects[currentSlide].id}
-                    className='active'
-                />
-
-                <ProjectItem
-                    data={
-                        projects[
-                            currentSlide < projects.length - 1
-                                ? currentSlide + 1
-                                : 0
-                        ]
-                    }
-                    key={
-                        projects[
-                            currentSlide < projects.length - 1
-                                ? currentSlide + 1
-                                : 0
-                        ].id
-                    }
-                    className='next'
-                />
-
-                <div
-                    className='project__list__btn__next bg-color-5 ratio ratio-40x40 d-flex align-items-center justify-content-center rounded-circle'
-                    onClick={handleNextSlide}
-                >
-                    n
-                </div>
-            </div> */}
+            <Swiper
+                effect={"cards"}
+                grabCursor={true}
+                className='mySwiper'
+                modules={[EffectCards]}
+            >
+                {projects.map((project) => (
+                    <SwiperSlide key={project.projectId}>
+                        <Link
+                            to={`/project/${project.projectId}`}
+                            className='text-decoration-none d-block h-100'
+                        >
+                            <ProjectItem data={project} className={"h-215"} />
+                        </Link>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
         </div>
     );
 };

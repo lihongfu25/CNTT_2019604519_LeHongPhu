@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Issue;
 use App\Models\Project;
+use App\Models\ProjectUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -34,14 +35,18 @@ class StatisticalController extends Controller
         $issueReview = Issue::whereRaw("created_at BETWEEN '$startDate' AND '$endDate'")
                         ->whereRaw("statusId = 'STT05'")
                         ->where('issues.projectId', $request->projectId)->get();
-        $project = Project::with('statuses.status', 'issues.status')
+        $project = Project::with('statuses.status', 'issues.status', 'issues.assignee')
                         ->where('projectId', $request->projectId)->first();
+
+        $users = ProjectUser::with('user', 'project.issues')
+                        ->where('projectId', $request->projectId)->get();
 
         $result['issueCreate'] = $issueCreate;
         $result['issueDone'] = $issueDone;
         $result['issueProgress'] = $issueProgress;
         $result['issueReview'] = $issueReview;
         $result['project'] = $project;
+        $result['users'] = $users;
 
         return response()->json([
             'data' => $result
