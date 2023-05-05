@@ -354,7 +354,8 @@ const User = () => {
                                             .filter(
                                                 (user) =>
                                                     toVietnameseLowerCase(
-                                                        user.fullName,
+                                                        user.fullName ||
+                                                            user.email,
                                                     ).includes(
                                                         toVietnameseLowerCase(
                                                             search,

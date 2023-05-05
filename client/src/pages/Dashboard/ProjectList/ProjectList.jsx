@@ -24,7 +24,7 @@ const ProjectList = () => {
                             to={`/project/${project.projectId}`}
                             className='text-decoration-none d-block h-100'
                         >
-                            <ProjectItem data={project} className={"h-215"} />
+                            <ProjectItem data={project} className={"h-190"} />
                         </Link>
                     </SwiperSlide>
                 ))}
