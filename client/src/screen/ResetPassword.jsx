@@ -1,10 +1,11 @@
+import { checkActionCode } from "firebase/auth";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { confirmPasswordReset } from "firebase/auth";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { BASE_URL } from "../config/api";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axiosClient from "../config/api";
 import auth from "../config/firebase";
 import Loading from "./Loading";
+import { ReactSVG } from "react-svg";
 
 const ResetPassword = () => {
     const [loading, setLoading] = React.useState(false);
@@ -28,35 +29,28 @@ const ResetPassword = () => {
                 message: "Nhập lại mật khẩu không chính xác",
             });
         } else {
-            const submit = async () => {
-                setLoading(true);
-                await confirmPasswordReset(
-                    auth,
-                    searchParams.get("oobCode"),
-                    data.password,
-                )
-                    .then(() => {
-                        setLoading(false);
-                        setIsReset(true);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-                    .finally(() => {
-                        setLoading(false);
+            checkActionCode(auth, searchParams.get("oobCode"))
+                .then((info) => {
+                    const email = info.data.email;
+                    axiosClient.post("auth/reset", {
+                        email,
+                        password: data.password,
                     });
-            };
-            submit();
+                    setLoading(false);
+                    setIsReset(true);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
     };
     return (
-        <div className='forgot-password__form bg-light fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
-            <div className='forgot-password__form__heading mb-3 col-3'>
-                <img
-                    src={BASE_URL + "images/logo2.png"}
-                    alt=''
-                    className='w-100 object-fit-cover'
-                />
+        <div className='forgot-password__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
+            <div className='forgot-password__form__heading mb-3'>
+                <ReactSVG src='/images/logo@2x.svg' />
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='w-100'>
                 <div className='mb-4'>
@@ -128,13 +122,9 @@ const ResetPassword = () => {
                 <div className='position-absolute top-0 bottom-0 start-0 end-0 d-flex justify-content-center align-items-center fade-in'>
                     <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-25 z-2'></div>
                     <div className='container z-2'>
-                        <div className='p-4 mx-auto col-3 z-3 shadow-lg rounded-3 bg-light'>
-                            <div className='col-2 mx-auto mb-1 p-2'>
-                                <img
-                                    src={BASE_URL + "images/icon/check.svg"}
-                                    alt=''
-                                    className='w-100 object-fit-cover'
-                                />
+                        <div className='p-4 mx-auto col-3 z-3 shadow-lg rounded-3 bg-color-5'>
+                            <div className='text-center mb-2'>
+                                <ReactSVG src='/images/icon/check.svg' />
                             </div>
                             <div className='text-center'>
                                 <p className='color-3'>

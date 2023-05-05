@@ -1,0 +1,10 @@
+.notification__list {
+    &__item {
+        &:hover {
+            background-color: var(--color-11);
+        }
+    }
+    .h-vh-75 {
+        height: 75vh;
+    }
+}

@@ -1,12 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
+import issueReducer from "./store/issueSlice";
+import notificationReducer from "./store/notificationSlice";
+import projectReducer from "./store/projectSlice";
+import roleReducer from "./store/roleSlice";
+import tabReducer from "./store/tabSlice";
 import userReducer from "./store/userSlice";
-// import cartReducer from "../pages/Cart/cartSlice";
-// import managerReducer from "../layout/ManagerLayout/managerSlice";
+import usersReducer from "./store/usersSlice";
 const store = configureStore({
     reducer: {
-        // cart: cartReducer,
+        tab: tabReducer,
+        role: roleReducer,
         user: userReducer,
-        // manager: managerReducer,
+        users: usersReducer,
+        issue: issueReducer,
+        project: projectReducer,
+        notification: notificationReducer,
     },
 });
 

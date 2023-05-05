@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +20,20 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'userId',
+        'fullName',
+        'username',
         'email',
+        'emailVerified',
+        'gender',
+        'dob',
+        'phoneNumber',
         'password',
+        'photoUrl',
+        'provinceCode',
+        'districtCode',
+        'wardCode',
+        'roleId',
     ];
 
     /**
@@ -30,7 +43,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -38,7 +50,29 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->userId;
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return 'userId';
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'roleId', 'roleId');
+    }
+    public function projects()
+    {
+        return $this->hasMany(ProjectUser::class, 'userId', 'userId');
+
+    }
 }

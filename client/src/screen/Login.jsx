@@ -1,13 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import auth from "../config/firebase";
-import { BASE_URL } from "../config/api";
+import { Link, useNavigate } from "react-router-dom";
+import axiosClient from "../config/api";
 import Loading from "./Loading";
+import { ReactSVG } from "react-svg";
+import { useDispatch } from "react-redux";
+import { userUpdateProfile } from "../redux/store/userSlice";
+import { setIssues } from "../redux/store/issueSlice";
+import { setNotifications } from "../redux/store/notificationSlice";
+import { setProjects } from "../redux/store/projectSlice";
 
 const Login = () => {
     const [loading, setLoading] = React.useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
@@ -17,32 +24,45 @@ const Login = () => {
     const onSubmit = (data) => {
         const submit = async () => {
             setLoading(true);
-            await signInWithEmailAndPassword(auth, data.email, data.password)
-                .then((res) => {
-                    if (res.user.emailVerified === false) {
-                        setError("email", {
-                            type: "verification",
-                        });
-                    } else console.log(res.user);
-                })
-                .catch((error) => {
-                    console.log(error.code);
-                    setError("password", {
-                        type: "invalid",
+            try {
+                const response = await axiosClient.post(`auth/login`, data);
+                if (response.data.user.emailVerified === 0) {
+                    setError("email", {
+                        type: "verification",
                     });
+                } else {
+                    localStorage.setItem("token", response.data.token);
+                    dispatch(userUpdateProfile(response.data.user));
+                    const resData = await Promise.all([
+                        axiosClient.get(
+                            `issue?userId=${response.data.user.userId}`,
+                        ),
+                        axiosClient.get(
+                            `project?userId=${response.data.user.userId}`,
+                        ),
+                        axiosClient.get(
+                            `notification?userId=${response.data.user.userId}`,
+                        ),
+                    ]);
+                    dispatch(setIssues(resData[0].data.data));
+                    dispatch(setProjects(resData[1].data.data));
+                    dispatch(setNotifications(resData[2].data.data));
+                    navigate("/");
+                }
+            } catch (error) {
+                console.log(error);
+                setError("password", {
+                    type: "invalid",
                 });
+            }
             setLoading(false);
         };
         submit();
     };
     return (
-        <div className='login__form bg-light fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
-            <div className='login__form__heading mb-3 col-3'>
-                <img
-                    src={BASE_URL + "images/logo2.png"}
-                    alt=''
-                    className='w-100 object-fit-cover'
-                />
+        <div className='login__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
+            <div className='login__form__heading mb-3'>
+                <ReactSVG src='/images/logo@2x.svg' />
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='w-100'>
                 <div className='mb-3'>

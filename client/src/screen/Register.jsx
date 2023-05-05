@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,8 @@ import {
 } from "firebase/auth";
 import auth from "../config/firebase";
 import Loading from "./Loading";
-import { BASE_URL } from "../config/api";
+import axiosClient from "../config/api";
+import { ReactSVG } from "react-svg";
 
 const Register = () => {
     const [loading, setLoading] = React.useState(false);
@@ -24,47 +26,51 @@ const Register = () => {
         navigate("/auth/login");
     };
     const onSubmit = (data) => {
-        console.log(data);
         if (data.confirm !== data.password) {
             setError("confirm", {
                 type: "invalid",
                 message: "Nhập lại mật khẩu không chính xác",
             });
         } else {
-            const submit = async () => {
+            const register = async () => {
                 setLoading(true);
-                await createUserWithEmailAndPassword(
-                    auth,
-                    data.email,
-                    data.password,
-                )
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        sendEmailVerification(user);
-                        setLoading(false);
-                        setIsRegister(true);
-                    })
-                    .catch((error) => {
-                        if (error.code === "auth/email-already-in-use") {
-                            setError("email", {
-                                type: "already-exist",
-                                message: "Email này đã được đăng ký",
-                            });
-                        }
-                    })
-                    .finally(() => setLoading(false));
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(
+                        auth,
+                        data.email,
+                        data.password,
+                    );
+
+                    await axiosClient.post("auth/register", {
+                        userId: uuidv4(),
+                        email: data.email,
+                        password: data.password,
+                    });
+
+                    await sendEmailVerification(userCredential.user);
+                    setIsRegister(true);
+                } catch (error) {
+                    if (error.code === "auth/email-already-in-use") {
+                        setError("email", {
+                            type: "already-exist",
+                            message: "Email này đã được đăng ký",
+                        });
+                    } else if (error.response.status === 409) {
+                        setError("email", {
+                            type: "already-exist",
+                            message: "Email này đã được đăng ký",
+                        });
+                    }
+                }
+                setLoading(false);
             };
-            submit();
+            register();
         }
     };
     return (
-        <div className='register__form bg-light fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
-            <div className='register__form__heading mb-3 col-3'>
-                <img
-                    src={BASE_URL + "images/logo2.png"}
-                    alt=''
-                    className='w-100 object-fit-cover'
-                />
+        <div className='register__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
+            <div className='register__form__heading mb-3'>
+                <ReactSVG src='/images/logo@2x.svg' />
             </div>
             <form className='w-100' onSubmit={handleSubmit(onSubmit)}>
                 <div className='mb-3'>
@@ -81,11 +87,18 @@ const Register = () => {
                         placeholder='Nhập email đăng ký tài khoản'
                         {...register("email", {
                             required: true,
+                            pattern:
+                                /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
                         })}
                     />
                     {errors.email?.type === "required" && (
                         <div className='form-text text-danger'>
                             Vui lòng nhập trường này
+                        </div>
+                    )}
+                    {errors.email?.type === "pattern" && (
+                        <div className='form-text text-danger'>
+                            Vui lòng nhập vào email hợp lệ
                         </div>
                     )}
                     {errors.email?.type === "already-exist" && (
@@ -122,7 +135,7 @@ const Register = () => {
                     )}
                 </div>
                 <div className='mb-3'>
-                    <label htmlFor='password' className='form-label'>
+                    <label htmlFor='confirm-password' className='form-label'>
                         Xác nhận mật khẩu
                     </label>
                     <input
@@ -130,7 +143,7 @@ const Register = () => {
                         className={`form-control ${
                             errors.confirm && "is-invalid"
                         }`}
-                        id='confirm'
+                        id='confirm-password'
                         placeholder='Nhập mật khẩu'
                         {...register("confirm", {
                             required: true,
@@ -197,12 +210,11 @@ const Register = () => {
                 <div className='position-absolute top-0 bottom-0 start-0 end-0 d-flex justify-content-center align-items-center fade-in'>
                     <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-25 z-2'></div>
                     <div className='container z-2'>
-                        <div className='p-4 mx-auto col-4 z-3 shadow-lg rounded-3 bg-light'>
-                            <div className='col-2 mx-auto mb-1 p-2'>
-                                <img
-                                    src={BASE_URL + "images/icon/check.svg"}
-                                    alt=''
-                                    className='w-100 object-fit-cover'
+                        <div className='p-4 mx-auto col-4 z-3 shadow-lg rounded-3 bg-color-5'>
+                            <div className='text-center mb-2'>
+                                <ReactSVG
+                                    src='/images/icon/check.svg'
+                                    className='object-fit-cover'
                                 />
                             </div>
                             <div className='text-center'>

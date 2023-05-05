@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="147" height="34" viewBox="0 0 147 34">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_43" data-name="Rectangle 43" width="147" height="34" transform="translate(-694 -1842)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_18" data-name="Mask Group 18" transform="translate(694 1842)" clip-path="url(#clip-path)">
+    <g id="Group_36" data-name="Group 36" transform="translate(-675.003 -1877.324)">
+      <g id="Group_33" data-name="Group 33">
+        <path id="Union_2" data-name="Union 2" d="M183.064,631.816l-10.362-19.4a1.678,1.678,0,1,1,2.965-1.57l8.934,16.729,8.432-16.477a1.678,1.678,0,1,1,2.993,1.518l-9.8,19.154a1.824,1.824,0,0,1-3.161.048Z" transform="translate(-141.379 -569.013)" fill="#4890ff"/>
+        <circle id="Ellipse_17" data-name="Ellipse 17" cx="2.873" cy="2.873" r="2.873" transform="translate(40.225 35.197)" fill="#4890ff"/>
+        <path id="Union_1" data-name="Union 1" d="M184.569,632.692a1.687,1.687,0,0,1-1.468-.886l-10.4-19.392a1.664,1.664,0,0,1,.7-2.26,1.692,1.692,0,0,1,2.279.691l8.974,16.737,4.3-8.368a1.692,1.692,0,0,1,2.266-.73,1.665,1.665,0,0,1,.737,2.248l-5.683,11.06a1.694,1.694,0,0,1-1.7.9Z" transform="translate(-158.619 -569.013)" fill="#2e5f80"/>
+        <circle id="Ellipse_16" data-name="Ellipse 16" cx="2.873" cy="2.873" r="2.873" transform="translate(20.831 35.197)" fill="#2e5f80"/>
+      </g>
+      <text id="oFM" transform="translate(49.119 63.451)" fill="#4890ff" font-size="23" font-family="Quicksand"><tspan x="0" y="0">oFM</tspan></text>
+    </g>
+  </g>
+</svg>

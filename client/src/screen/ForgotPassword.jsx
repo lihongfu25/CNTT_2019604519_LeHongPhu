@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { sendPasswordResetEmail } from "firebase/auth";
 import auth from "../config/firebase";
-import { BASE_URL } from "../config/api";
 import Loading from "./Loading";
+import { ReactSVG } from "react-svg";
 
 const ForgotPassword = () => {
     const [loading, setLoading] = React.useState(false);
@@ -42,13 +42,9 @@ const ForgotPassword = () => {
         submit();
     };
     return (
-        <div className='forgot-password__form bg-light fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
-            <div className='forgot-password__form__heading mb-3 col-3'>
-                <img
-                    src={BASE_URL + "images/logo2.png"}
-                    alt=''
-                    className='w-100 object-fit-cover'
-                />
+        <div className='forgot-password__form bg-white fade-in rounded-3 shadow-lg p-4 d-flex flex-column align-items-center justify-content-center'>
+            <div className='forgot-password__form__heading mb-3'>
+                <ReactSVG src='/images/logo@2x.svg' />
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='w-100'>
                 <div className='mb-3'>

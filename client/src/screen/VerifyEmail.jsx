@@ -1,9 +1,10 @@
 import React from "react";
-import { applyActionCode } from "firebase/auth";
-import { BASE_URL } from "../config/api";
+import { checkActionCode } from "firebase/auth";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axiosClient from "../config/api";
 import auth from "../config/firebase";
-import { useSearchParams, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
+import { ReactSVG } from "react-svg";
 
 const VerifyEmail = () => {
     const [loading, setLoading] = React.useState(false);
@@ -31,33 +32,30 @@ const VerifyEmail = () => {
         navigate("/auth/login");
     };
     const handleSubmit = () => {
-        const verify = async () => {
-            setLoading(true);
-            await applyActionCode(auth, searchParams.get("oobCode"))
-                .then((res) => {
-                    console.log(res);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-                .finally(() => {
-                    setLoading(false);
-                    setVerified(true);
+        setLoading(true);
+        checkActionCode(auth, searchParams.get("oobCode"))
+            .then((info) => {
+                const email = info.data.email;
+                axiosClient.post("auth/verify", {
+                    email,
                 });
-        };
-        verify();
+                setLoading(false);
+                setVerified(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
     return (
         <div className='position-absolute top-0 bottom-0 start-0 end-0 bg-secondary-subtle d-flex justify-content-center align-items-center'>
             <div className='container'>
                 {verified ? (
-                    <div className='col-4 p-4 shadow-lg rounded-3 mx-auto fade-in'>
-                        <div className='col-4 mx-auto mb-4'>
-                            <img
-                                src={BASE_URL + "images/icon/check.svg"}
-                                alt=''
-                                className='w-100 object-fit-cover'
-                            />
+                    <div className='col-4 p-4 shadow-lg rounded-3 mx-auto fade-in bg-color-5'>
+                        <div className='text-center mb-4'>
+                            <ReactSVG src='/images/icon/check@2x.svg' />
                         </div>
                         <div className='text-center'>
                             <p className='fs-3 color-1'>
@@ -79,13 +77,9 @@ const VerifyEmail = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className='col-4 p-4 shadow-lg rounded-3 mx-auto'>
-                        <div className='col-4 mx-auto mb-4'>
-                            <img
-                                src={BASE_URL + "images/icon/email.svg"}
-                                alt=''
-                                className='w-100 object-fit-cover'
-                            />
+                    <div className='col-4 p-4 shadow-lg rounded-3 mx-auto bg-color-5'>
+                        <div className='text-center mb-4'>
+                            <ReactSVG src='/images/icon/email.svg' />
                         </div>
                         <div className='text-center'>
                             <p className='fs-3 color-1'>

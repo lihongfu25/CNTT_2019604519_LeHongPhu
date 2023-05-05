@@ -1,0 +1,28 @@
+.users {
+    &__export {
+        &:hover {
+            .react-svg {
+                path {
+                    fill: var(--color-5);
+                }
+            }
+        }
+    }
+    &__select-role {
+        &__icon {
+            margin-top: -4px;
+            svg {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    }
+    .border-dashed {
+        border-top: 1px dashed var(--color-3);
+    }
+}
+.control-password {
+    &:hover {
+        cursor: pointer;
+    }
+}

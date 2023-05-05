@@ -1,12 +1,22 @@
-import { MainLayout, LoginRegisterLayout } from "../layout";
+import { LoginRegisterLayout, MainLayout } from "../layout";
 import {
+    Dashboard,
+    Notification,
+    Profile,
+    Project,
+    Report,
+    Task,
+    User,
+} from "../pages";
+import ProjectDetail from "../pages/Project/ProjectDetail/ProjectDetail";
+import TaskDetail from "../pages/Task/TaskDetail/TaskDetail";
+import {
+    ForgotPassword,
     Login,
     Register,
-    ForgotPassword,
     ResetPassword,
     VerifyEmail,
 } from "../screen";
-import { Dashboard } from "../pages";
 const routes = [
     {
         path: "/",
@@ -15,6 +25,48 @@ const routes = [
             {
                 index: true,
                 element: <Dashboard />,
+            },
+            {
+                path: "project",
+                children: [
+                    {
+                        index: true,
+                        element: <Project />,
+                    },
+                    {
+                        path: ":projectId",
+                        element: <ProjectDetail />,
+                    },
+                ],
+            },
+            {
+                path: "task",
+                children: [
+                    {
+                        index: true,
+                        element: <Task />,
+                    },
+                    {
+                        path: ":issueId",
+                        element: <TaskDetail />,
+                    },
+                ],
+            },
+            {
+                path: "user",
+                element: <User />,
+            },
+            {
+                path: "statistical",
+                element: <Report />,
+            },
+            {
+                path: "notification",
+                element: <Notification />,
+            },
+            {
+                path: "my-profile",
+                element: <Profile />,
             },
         ],
     },
