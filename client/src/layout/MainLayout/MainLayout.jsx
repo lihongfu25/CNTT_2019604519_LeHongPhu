@@ -164,7 +164,7 @@ const MainLayout = () => {
                                         />
                                     </div>
                                 </button>
-                                <ul className='dropdown-menu dropdown-menu-end'>
+                                <ul className='dropdown-menu dropdown-menu-end z-1050'>
                                     <li>
                                         <Link
                                             className='dropdown-item text-decoration-none'
