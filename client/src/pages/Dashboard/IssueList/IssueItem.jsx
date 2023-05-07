@@ -15,7 +15,13 @@ const dueDate = {
 
 const IssueItem = ({ issue }) => {
     return (
-        <tr className='position-relative'>
+        <Link
+            to={`/task/${issue.issueId}`}
+            className='issue__list__item text-decoration-none border-color-11 p-0'
+            style={{
+                display: "table-row",
+            }}
+        >
             <td className='fs-7 align-middle text-start ps-3 color-10'>
                 {issue.issueId + " - " + issue.name}
             </td>
@@ -30,7 +36,7 @@ const IssueItem = ({ issue }) => {
                             />
                         </div>
                         <div className='d-flex flex-column align-items-start flex-grow-1 ms-3'>
-                            <span className='fs-7'>
+                            <span className='fs-7 color-10'>
                                 {issue.assignee.fullName}
                             </span>
                             <span className='fs-8 color-3'>
@@ -74,11 +80,7 @@ const IssueItem = ({ issue }) => {
                         : moment(issue.dueDate).format("MMM D")}
                 </span>
             </td>
-            <Link
-                to={`/task/${issue.issueId}`}
-                className='stretched-link p-0'
-            ></Link>
-        </tr>
+        </Link>
     );
 };
 

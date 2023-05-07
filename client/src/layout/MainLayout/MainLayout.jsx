@@ -23,7 +23,7 @@ const MainLayout = () => {
     const location = useLocation();
 
     React.useEffect(() => {
-        const currentTab = location.pathname.split("/").pop().replace(/$/, "");
+        const currentTab = location.pathname.split("/").splice(1, 1).join();
         dispatch(changeCurrentTab(currentTab));
     }, [dispatch, location.pathname]);
 
