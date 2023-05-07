@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Issue;
+use App\Models\Status;
 use App\Models\Project;
 use App\Models\Comment;
 use App\Models\ProjectUser;
 use App\Models\Notification;
-use App\Models\ProjectStatus;
 use Illuminate\Http\Request;
+use App\Models\ProjectStatus;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class IssueController extends Controller
 {
@@ -81,13 +84,22 @@ class IssueController extends Controller
 
     public function changeIssueStatus(Request $request, $issueId)
     {
-        $issue = Issue::where('issueId', $issueId)->first();
+        $issue = Issue::with('assignee', 'reporter')->where('issueId', $issueId)->first();
+        $requester = JWTAuth::user();
 
         if (!$issue)
         {
             return response()->json([
                 'message' => 'Không tìm thấy công việc'
             ], 409);
+        }
+
+        if ($request->get('statusId') === 'STT05' && $requester->userId !== $issue->reporterId) {
+            $status = Status::where('statusId', $request->get('statusId'))->first();
+            Mail::send('emails.reviewTask', compact('issue', 'status', 'requester'), function($email) use($issue, $status, $requester) {
+                $email->subject("WoFM - Thông báo trạng thái công việc");
+                $email->to($issue->reporter->email, $issue, $status, $requester);
+            });
         }
 
         DB::table('issues')->where('issueId', $issueId)

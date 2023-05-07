@@ -1,8 +1,9 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { v4 as uuidv4 } from "uuid";
-import { useForm } from "react-hook-form";
 import axiosClient from "../../config/api";
 import notify from "../../config/toast";
 import { setProjects } from "../../redux/store/projectSlice";
@@ -12,7 +13,8 @@ import ProjectItem from "./ProjectItem";
 import SelectStatus from "./SelectStatus";
 import SelectUser from "./SelectUser";
 import "./project.scss";
-import { Link } from "react-router-dom";
+
+const USER_ROLE = "r2";
 const Project = () => {
     const [isCreate, setIsCreate] = React.useState(false);
     const [isNext, setIsNext] = React.useState(false);
@@ -148,15 +150,17 @@ const Project = () => {
                 <div className='project__heading__title'>
                     <p className='fs-4 fw-2 color-10 mb-2'>Dự án</p>
                 </div>
-                <div className='project__heading__btn'>
-                    <button
-                        className='btn btn--color-1 px-3 d-flex align-items-center'
-                        onClick={handleOpenCreateProjectModal}
-                    >
-                        <ReactSVG src='/images/icon/add.svg' />
-                        <span className='ms-2 fs-7'>Thêm</span>
-                    </button>
-                </div>
+                {user.roleId !== USER_ROLE && (
+                    <div className='project__heading__btn'>
+                        <button
+                            className='btn btn--color-1 px-3 d-flex align-items-center'
+                            onClick={handleOpenCreateProjectModal}
+                        >
+                            <ReactSVG src='/images/icon/add.svg' />
+                            <span className='ms-2 fs-7'>Thêm</span>
+                        </button>
+                    </div>
+                )}
             </div>
             <div className='row g-3'>
                 {projects.map((project) => (

@@ -35,7 +35,7 @@ class CheckIssueDueDate extends Command
             if ($issue->assignee !== null)
                 Mail::send('emails.issueDue', compact('issue'), function($email) use($issue) {
                     $email->subject("WoFM - Thông báo công việc đến hạn hoàn thành");
-                    $email->to($issue->assignee->email, $issue->assignee->fullName, $issue);
+                    $email->to($issue->assignee->email, $issue);
                 });
         }
     }

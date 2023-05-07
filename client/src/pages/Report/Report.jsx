@@ -98,11 +98,9 @@ const Report = () => {
                     projectId: filterProject,
                 });
                 setData(res.data.data);
-                console.log(res.data.data.users);
                 getDataChart(res.data.data.project);
             } catch (error) {
                 notify("error", error.response.data.message);
-                console.log(error.response.data);
             }
             setIsLoading(false);
         }

@@ -52,7 +52,6 @@ const TaskDetail = () => {
         const callApi = async (issueId) => {
             try {
                 const response = await axiosClient.get(`issue/${issueId}`);
-                console.log(response.data.data);
                 setIssue(response.data.data);
             } catch (error) {
                 console.log(error);

@@ -229,7 +229,6 @@ const User = () => {
             setIsShow(false);
         } catch (error) {
             const errorMessage = error.response.data.message;
-            console.log(error);
             if (errorMessage.includes("Email")) {
                 setError("email", {
                     type: "already-exist",
