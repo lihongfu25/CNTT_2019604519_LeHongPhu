@@ -34,13 +34,14 @@ const StatusSection = ({ storage, setStorage, status, isActive }) => {
         });
         if (issue.statusId !== status.statusId) {
             try {
-                await axiosClient.post(`issue/${issue.issueId}/status`, {
-                    statusId: status.statusId,
-                });
                 notify(
                     "success",
                     `${issue.issueId} đã được cập nhật trạng thái`,
                 );
+                await axiosClient.post(`issue/${issue.issueId}/status`, {
+                    statusId: status.statusId,
+                });
+
                 await axiosClient.post("notification", {
                     userId: user.userId,
                     issueId: issue.issueId,

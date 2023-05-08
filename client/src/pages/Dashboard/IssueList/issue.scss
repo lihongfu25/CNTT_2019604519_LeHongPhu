@@ -1,0 +1,7 @@
+.issue__list {
+    &__item {
+        &:hover {
+            background-color: var(--color-12);
+        }
+    }
+}

@@ -41,7 +41,6 @@ function App() {
                         localStorage.removeItem("token");
                         navigate("/auth/login");
                     }
-                    console.log(error);
                 }
             };
             getData();

@@ -157,7 +157,6 @@ const Profile = () => {
                     type: "invalid",
                     message: error.response.data.message,
                 });
-                console.log(error.response.data.user);
             }
             setIsLoading(false);
         }

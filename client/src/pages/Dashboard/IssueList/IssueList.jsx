@@ -2,11 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import IssueItem from "./IssueItem";
 import "./issue.scss";
-
+const TASK_DONE = "STT06";
 const IssueList = () => {
     const issues = useSelector((state) => state.issue);
     return (
-        <table className='table table-hover table-task mb-0'>
+        <table className='table table-hover table-task issue__list mb-0'>
             <thead className='sticky-top bg-color-5 py-3'>
                 <tr>
                     <th scope='col' className='col-4 text-start ps-3 py-3'>
@@ -26,10 +26,12 @@ const IssueList = () => {
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                {issues.map((item) => (
-                    <IssueItem issue={item} key={item.issueId} />
-                ))}
+            <tbody className=''>
+                {issues
+                    .filter((item) => item.statusId !== TASK_DONE)
+                    .map((item) => (
+                        <IssueItem issue={item} key={item.issueId} />
+                    ))}
             </tbody>
         </table>
     );
