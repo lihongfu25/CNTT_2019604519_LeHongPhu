@@ -15,9 +15,7 @@ const Report = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [data, setData] = React.useState(null);
     const [dataChart, setDataChart] = React.useState(null);
-    const [filterProject, setFilterProject] = React.useState(
-        projects[0]?.projectId,
-    );
+    const [filterProject, setFilterProject] = React.useState(projects[0]?.projectId);
     const {
         register,
         handleSubmit,
@@ -58,14 +56,7 @@ const Report = () => {
                 {
                     label: "# of Count",
                     data: value.map((item) => item.data),
-                    backgroundColor: [
-                        "rgb(119, 119, 119)",
-                        "rgb(75, 192, 192)",
-                        "rgb(255, 51, 51)",
-                        "rgb(54, 162, 235)",
-                        "rgb(0, 168, 38)",
-                        "rgb(153, 102, 255)",
-                    ],
+                    backgroundColor: ["rgb(119, 119, 119)", "rgb(75, 192, 192)", "rgb(255, 51, 51)", "rgb(54, 162, 235)", "rgb(0, 168, 38)", "rgb(153, 102, 255)"],
                 },
             ],
         };
@@ -73,9 +64,7 @@ const Report = () => {
     };
 
     const countIssue = (userId, statusId) => {
-        const count = data.project.issues.filter(
-            (item) => item.assigneeId === userId && item.statusId === statusId,
-        ).length;
+        const count = data.project.issues.filter((item) => item.assigneeId === userId && item.statusId === statusId).length;
         return count;
     };
 
@@ -116,30 +105,14 @@ const Report = () => {
                         <div className='d-flex'>
                             <div className='w-50 me-3'>
                                 <div className='d-flex'>
-                                    <label
-                                        htmlFor='select-project'
-                                        className='col-form-label fs-7 me-3 text-nowrap'
-                                    >
+                                    <label htmlFor='select-project' className='col-form-label fs-7 me-3 text-nowrap'>
                                         Dự án:
                                     </label>
                                     <div className=''>
-                                        <select
-                                            className='form-select w-215 fs-7'
-                                            value={filterProject}
-                                            onChange={(e) =>
-                                                setFilterProject(e.target.value)
-                                            }
-                                            id='select-project'
-                                            name='projectId'
-                                        >
+                                        <select className='form-select w-215 fs-7' value={filterProject} onChange={(e) => setFilterProject(e.target.value)} id='select-project' name='projectId'>
                                             {projects.map((project) => (
-                                                <option
-                                                    value={project.projectId}
-                                                    key={project.projectId}
-                                                >
-                                                    {project.name +
-                                                        " - " +
-                                                        project.shortName}
+                                                <option value={project.projectId} key={project.projectId}>
+                                                    {project.name + " - " + project.shortName}
                                                 </option>
                                             ))}
                                         </select>
@@ -149,18 +122,13 @@ const Report = () => {
                             <div className='w-50 me-3'>
                                 <div className='d-flex flex-column'>
                                     <div className='d-flex'>
-                                        <label
-                                            htmlFor='select-project'
-                                            className='col-form-label fs-7 me-3'
-                                        >
+                                        <label htmlFor='select-project' className='col-form-label fs-7 me-3'>
                                             Từ:
                                         </label>
                                         <div className='flex-grow-1'>
                                             <input
                                                 type='date'
-                                                className={`form-control w-215 fs-7 ${
-                                                    errors.from && "is-invalid"
-                                                }`}
+                                                className={`form-control w-215 fs-7 ${errors.from && "is-invalid"}`}
                                                 id='from'
                                                 {...register("from", {
                                                     required: true,
@@ -169,36 +137,21 @@ const Report = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        {errors.from?.type === "required" && (
-                                            <div className='form-text text-danger fs-7'>
-                                                Vui lòng chọn ngày bắt đầu thống
-                                                kê
-                                            </div>
-                                        )}
-                                        {errors.from?.type === "invalid" && (
-                                            <div className='form-text text-danger fs-7'>
-                                                Khoảng thời gian đã chọn không
-                                                phù hợp
-                                            </div>
-                                        )}
+                                        {errors.from?.type === "required" && <div className='form-text text-danger fs-7'>Vui lòng chọn ngày bắt đầu thống kê</div>}
+                                        {errors.from?.type === "invalid" && <div className='form-text text-danger fs-7'>Khoảng thời gian đã chọn không phù hợp</div>}
                                     </div>
                                 </div>
                             </div>
                             <div className='w-50'>
                                 <div className='d-flex flex-column'>
                                     <div className='d-flex'>
-                                        <label
-                                            htmlFor='select-priority'
-                                            className='col-form-label fs-7 me-3'
-                                        >
+                                        <label htmlFor='select-priority' className='col-form-label fs-7 me-3'>
                                             Đến:
                                         </label>
                                         <div className='flex-grow-1'>
                                             <input
                                                 type='date'
-                                                className={`form-control w-215 fs-7 ${
-                                                    errors.to && "is-invalid"
-                                                }`}
+                                                className={`form-control w-215 fs-7 ${errors.to && "is-invalid"}`}
                                                 id='to'
                                                 placeholder='to'
                                                 {...register("to", {
@@ -208,18 +161,8 @@ const Report = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        {errors.to?.type === "required" && (
-                                            <div className='form-text text-danger fs-7'>
-                                                Vui lòng chọn ngày kết thúc
-                                                thống kê
-                                            </div>
-                                        )}
-                                        {errors.to?.type === "invalid" && (
-                                            <div className='form-text text-danger fs-7'>
-                                                Khoảng thời gian đã chọn không
-                                                phù hợp
-                                            </div>
-                                        )}
+                                        {errors.to?.type === "required" && <div className='form-text text-danger fs-7'>Vui lòng chọn ngày kết thúc thống kê</div>}
+                                        {errors.to?.type === "invalid" && <div className='form-text text-danger fs-7'>Khoảng thời gian đã chọn không phù hợp</div>}
                                     </div>
                                 </div>
                             </div>
@@ -245,39 +188,25 @@ const Report = () => {
                                     <div className='col-6'>
                                         <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm border-start border-5 border-color-new'>
                                             <p className='fs-5 mb-0'>Tạo mới</p>
-                                            <p className='fs-7 mb-0'>
-                                                {data?.issueCreate?.length}
-                                            </p>
+                                            <p className='fs-7 mb-0'>{data?.issueCreate?.length}</p>
                                         </div>
                                     </div>
                                     <div className='col-6'>
                                         <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm border-start border-5 border-color-progress'>
-                                            <p className='fs-5 mb-0'>
-                                                Đang thực hiện
-                                            </p>
-                                            <p className='fs-7 mb-0'>
-                                                {data?.issueProgress?.length}
-                                            </p>
+                                            <p className='fs-5 mb-0'>Đang thực hiện</p>
+                                            <p className='fs-7 mb-0'>{data?.issueProgress?.length}</p>
                                         </div>
                                     </div>
                                     <div className='col-6'>
                                         <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm border-start border-5 border-color-review'>
-                                            <p className='fs-5 mb-0'>
-                                                Chờ review
-                                            </p>
-                                            <p className='fs-7 mb-0'>
-                                                {data?.issueReview?.length}
-                                            </p>
+                                            <p className='fs-5 mb-0'>Chờ review</p>
+                                            <p className='fs-7 mb-0'>{data?.issueReview?.length}</p>
                                         </div>
                                     </div>
                                     <div className='col-6'>
                                         <div className='d-flex flex-column bg-color-5 p-3 rounded-6 shadow-sm border-start border-5 border-color-done'>
-                                            <p className='fs-5 mb-0'>
-                                                Hoàn thành
-                                            </p>
-                                            <p className='fs-7 mb-0'>
-                                                {data?.issueDone?.length}
-                                            </p>
+                                            <p className='fs-5 mb-0'>Hoàn thành</p>
+                                            <p className='fs-7 mb-0'>{data?.issueDone?.length}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -291,18 +220,11 @@ const Report = () => {
                         <table className='table'>
                             <thead className='table-light'>
                                 <tr>
-                                    <th
-                                        scope='col'
-                                        className='fs-7 col-4 text-start p-3'
-                                    >
+                                    <th scope='col' className='fs-7 col-4 text-start p-3'>
                                         Họ và Tên
                                     </th>
                                     {data.project.statuses.map((item) => (
-                                        <th
-                                            key={item.id}
-                                            scope='col'
-                                            className='fs-7 col-2 text-center py-3'
-                                        >
+                                        <th key={item.id} scope='col' className='fs-7 col-2 text-center py-3'>
                                             {item.status.name}
                                         </th>
                                     ))}
@@ -314,38 +236,19 @@ const Report = () => {
                                         <td className='px-3'>
                                             <div className='d-flex'>
                                                 <div className='ratio ratio-40x40 rounded-circle overflow-hidden'>
-                                                    <img
-                                                        src={
-                                                            BASE_URL +
-                                                            item.user.photoUrl
-                                                        }
-                                                        alt=''
-                                                        className='w-100 object-fit-cover'
-                                                    />
+                                                    <img src={BASE_URL + item.user.photoUrl} alt='' className='w-100 object-fit-cover' />
                                                 </div>
                                                 <div className='d-flex flex-column align-items-start justify-content-center flex-grow-1 ms-2'>
-                                                    <span className='fs-7'>
-                                                        {item.user.fullName ||
-                                                            item.user.email}
-                                                    </span>
-                                                    {item.user.username && (
-                                                        <span className='fs-8 color-3'>
-                                                            {item.user.username}
-                                                        </span>
-                                                    )}
+                                                    <span className='fs-7'>{item.user.fullName || item.user.email}</span>
+                                                    {item.user.username && <span className='fs-8 color-3'>{item.user.username}</span>}
                                                 </div>
                                             </div>
                                         </td>
-                                        {data.project.statuses.map(
-                                            (element) => (
-                                                <td className='text-center'>
-                                                    {countIssue(
-                                                        item.userId,
-                                                        element.statusId,
-                                                    )}
-                                                </td>
-                                            ),
-                                        )}
+                                        {data.project.statuses.map((element, index) => (
+                                            <td className='text-center' key={index}>
+                                                {countIssue(item.userId, element.statusId)}
+                                            </td>
+                                        ))}
                                     </tr>
                                 ))}
                             </tbody>

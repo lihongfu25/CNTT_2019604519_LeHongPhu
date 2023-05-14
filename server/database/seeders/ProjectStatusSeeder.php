@@ -20,46 +20,68 @@ class ProjectStatusSeeder extends Seeder
                 [
                     'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT01',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT03',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT04',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT05',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT06',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b91a2b34-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT01',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b91a2b34-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT02',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b91a2b34-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT03',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b91a2b34-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT04',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b91a2b34-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT05',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b91a2b34-c572-11ed-a7fb-00e04c2ca3a6',
                     'statusId' => 'STT06',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
             ]
         );
