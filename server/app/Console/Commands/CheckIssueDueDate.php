@@ -30,7 +30,8 @@ class CheckIssueDueDate extends Command
     public function handle()
     {
         $today = now()->format('Y-m-d');
-        $issues = Issue::with('assignee')->where('dueDate', $today)->get();
+        $issues = Issue::with('assignee')->where('dueDate', $today)
+                    ->where('statusId', '<>', 'STT06')->get();
         foreach ($issues as $issue) {
             if ($issue->assignee !== null)
                 Mail::send('emails.issueDue', compact('issue'), function($email) use($issue) {
