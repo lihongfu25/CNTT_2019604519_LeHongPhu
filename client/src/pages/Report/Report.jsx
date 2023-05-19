@@ -1,13 +1,13 @@
-import React from "react";
-import { Spinner } from "../../components";
-import { useForm } from "react-hook-form";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import moment from "moment";
-import "./report.scss";
-import notify from "../../config/toast";
-import axiosClient, { BASE_URL } from "../../config/api";
-import { useSelector } from "react-redux";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import React from "react";
 import { Pie } from "react-chartjs-2";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { Spinner } from "../../components";
+import axiosClient, { BASE_URL } from "../../config/api";
+import notify from "../../config/toast";
+import "./report.scss";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Report = () => {
@@ -31,7 +31,25 @@ const Report = () => {
         const toDate = moment().format("YYYY-MM-DD");
         setValue("from", fromDate);
         setValue("to", toDate);
-    }, [setValue, clearErrors]);
+        const getData = async () => {
+            setIsLoading(true);
+            try {
+                const projectId = projects[0].projectId;
+                const endDate = moment().add(1, "days").format("YYYY-MM-DD");
+                const res = await axiosClient.post("statistical", {
+                    from: fromDate,
+                    to: endDate,
+                    projectId,
+                });
+                setData(res.data.data);
+                getDataChart(res.data.data.project);
+            } catch (error) {
+                notify("error", error.response.data.message);
+            }
+            setIsLoading(false);
+        };
+        getData();
+    }, []);
 
     const getDataChart = (data) => {
         let value = data.statuses.map((item) => ({

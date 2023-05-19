@@ -10,6 +10,7 @@ import { changeCurrentTab } from "../../redux/store/tabSlice";
 import { userLogout } from "../../redux/store/userSlice";
 import "../../styles/layout/main.scss";
 import Tab from "./Tab";
+import { logout } from "../../redux/store/loginSlice";
 
 const USER_ROLE = "r2";
 
@@ -37,6 +38,7 @@ const MainLayout = () => {
 
     const handleLogout = () => {
         dispatch(userLogout());
+        dispatch(logout());
         localStorage.removeItem("token");
     };
     return (
