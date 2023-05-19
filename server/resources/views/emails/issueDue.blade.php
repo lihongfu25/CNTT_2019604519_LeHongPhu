@@ -25,7 +25,11 @@
             Ngày đáo hạn: {{ $issue->dueDate }}
         </li>
         <li>
-            Mô tả: {{ $issue->description || '' }}
+            Mô tả: @if ($issue->description !== null)
+                {{ $issue->description }}
+            @else
+                {{ "" }}
+            @endif
         </li>
     </ul>
 

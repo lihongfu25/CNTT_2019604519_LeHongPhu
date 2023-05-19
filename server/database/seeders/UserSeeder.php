@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                     'fullName' => 'Admin',
                     'email' => 'admin@vmms.com.vn',
                     'emailVerified' => true,
-                    'photoUrl' => 'images/avatar.jpg',
+                    'photoUrl' => 'images/default.svg',
                     'password' => bcrypt('phu123456'),
                     'roleId' => 'r0'
                 ],
@@ -37,8 +37,17 @@ class UserSeeder extends Seeder
                 ],
                 [
                     'userId' => 'b1245733-c572-11ed-a7fb-00e04c2ca3a6',
-                    'fullName' => 'Phú nè',
+                    'fullName' => 'Lê Hồng Phú',
                     'email' => 'phune@vmms.com.vn',
+                    'emailVerified' => true,
+                    'photoUrl' => 'images/default.svg',
+                    'password' => bcrypt('phu123456'),
+                    'roleId' => 'r2'
+                ],
+                [
+                    'userId' => 'hg687733-c572-11ed-a7fb-00e04c2ca3a6',
+                    'fullName' => null,
+                    'email' => 'test@vmms.com.vn',
                     'emailVerified' => false,
                     'photoUrl' => 'images/default.svg',
                     'password' => bcrypt('phu123456'),

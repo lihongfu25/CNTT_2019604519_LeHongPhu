@@ -20,14 +20,20 @@ class ProjectUserSeeder extends Seeder
                 [
                     'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'userId' => 'b5145732-c572-11ed-a7fb-00e04c2ca3a6',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b12a2b33-c572-11ed-a7fb-00e04c2ca3a6',
                     'userId' => 'b1245733-c572-11ed-a7fb-00e04c2ca3a6',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'projectId' => 'b91a2b34-c572-11ed-a7fb-00e04c2ca3a6',
                     'userId' => 'b5145732-c572-11ed-a7fb-00e04c2ca3a6',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
             ]
         );
