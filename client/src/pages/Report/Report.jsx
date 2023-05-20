@@ -249,26 +249,29 @@ const Report = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.users.map((item, i) => (
-                                    <tr key={i} className='align-middle'>
-                                        <td className='px-3'>
-                                            <div className='d-flex'>
-                                                <div className='ratio ratio-40x40 rounded-circle overflow-hidden'>
-                                                    <img src={BASE_URL + item.user.photoUrl} alt='' className='w-100 object-fit-cover' />
-                                                </div>
-                                                <div className='d-flex flex-column align-items-start justify-content-center flex-grow-1 ms-2'>
-                                                    <span className='fs-7'>{item.user.fullName || item.user.email}</span>
-                                                    {item.user.username && <span className='fs-8 color-3'>{item.user.username}</span>}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        {data.project.statuses.map((element, index) => (
-                                            <td className='text-center' key={index}>
-                                                {countIssue(item.userId, element.statusId)}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                ))}
+                                {data.users.map((item, i) => {
+                                    if (item.user)
+                                        return (
+                                            <tr key={i} className='align-middle'>
+                                                <td className='px-3'>
+                                                    <div className='d-flex'>
+                                                        <div className='ratio ratio-40x40 rounded-circle overflow-hidden'>
+                                                            <img src={BASE_URL + item.user?.photoUrl} alt='' className='w-100 object-fit-cover' />
+                                                        </div>
+                                                        <div className='d-flex flex-column align-items-start justify-content-center flex-grow-1 ms-2'>
+                                                            <span className='fs-7'>{item.user?.fullName || item.user?.email}</span>
+                                                            {item.user?.username && <span className='fs-8 color-3'>{item.user?.username}</span>}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                {data.project.statuses.map((element, index) => (
+                                                    <td className='text-center' key={index}>
+                                                        {countIssue(item.userId, element.statusId)}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        );
+                                })}
                             </tbody>
                         </table>
                     </div>

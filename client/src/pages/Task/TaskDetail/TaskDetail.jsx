@@ -211,7 +211,7 @@ const TaskDetail = () => {
                                                     <img src={BASE_URL + issue.reporter.photoUrl} alt='' className='object-fit-cover' />
                                                 </div>
                                                 <div className='ms-2'>
-                                                    <p className='fs-7 color-10 mb-0'>{issue.reporter?.fullName}</p>
+                                                    <p className='fs-7 color-10 mb-0'>{issue.reporter?.fullName || issue.reporter?.email}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,7 +227,7 @@ const TaskDetail = () => {
                                                         <img src={BASE_URL + issue.assignee.photoUrl} alt='' className='object-fit-cover' />
                                                     </div>
                                                     <div className='ms-2'>
-                                                        <p className='fs-7 color-10 mb-0'>{issue.assignee?.fullName}</p>
+                                                        <p className='fs-7 color-10 mb-0'>{issue.assignee?.fullName || issue.assignee?.email}</p>
                                                     </div>
                                                 </div>
                                             )}
