@@ -3,13 +3,7 @@ import { ReactSVG } from "react-svg";
 import { BASE_URL } from "../../config/api";
 import { toVietnameseLowerCase } from "../../styles/global";
 
-const SelectUser = ({
-    data,
-    selected,
-    onChange,
-    error = false,
-    errorMessage = null,
-}) => {
+const SelectUser = ({ data, selected, onChange, error = false, errorMessage = null }) => {
     const [suggestion, setSuggestion] = React.useState([]);
     const [search, setSearch] = React.useState("");
     const [isOpen, setIsOpen] = React.useState(false);
@@ -19,18 +13,8 @@ const SelectUser = ({
     React.useEffect(() => {
         setSuggestion(
             data
-                ?.filter(
-                    (user) =>
-                        !selected.some(
-                            (selectedItem) =>
-                                selectedItem.userId === user.userId,
-                        ),
-                )
-                .filter((user) =>
-                    toVietnameseLowerCase(user.fullName).includes(
-                        toVietnameseLowerCase(search),
-                    ),
-                ),
+                ?.filter((user) => !selected.some((selectedItem) => selectedItem.userId === user.userId))
+                .filter((user) => toVietnameseLowerCase(user.fullName || user.email).includes(toVietnameseLowerCase(search))),
         );
     }, [search, data, selected]);
 
@@ -58,28 +42,13 @@ const SelectUser = ({
 
     return (
         <>
-            <div
-                className={`form__user d-flex align-items-center rounded-6 border position-relative ${
-                    error && "is-invalid"
-                }`}
-            >
+            <div className={`form__user d-flex align-items-center rounded-6 border position-relative ${error && "is-invalid"}`}>
                 {selected.length !== 0 &&
                     selected.map((user) => (
-                        <p
-                            className='form__user--selected d-flex align-items-center me-2'
-                            key={user.userId}
-                        >
-                            <span className='fs-7 me-1'>{user.fullName}</span>
-                            <button
-                                className='form__user--selected__btn bg-transparent border-0 d-flex p-1'
-                                type='button'
-                                onClick={() => handleChange(user, "REMOVE")}
-                            >
-                                <img
-                                    src='/images/icon/close-primary.svg'
-                                    alt=''
-                                    className='object-fit-cover'
-                                />
+                        <p className='form__user--selected d-flex align-items-center me-2' key={user.userId}>
+                            <span className='fs-7 me-1'>{user.fullName || user.email}</span>
+                            <button className='form__user--selected__btn bg-transparent border-0 d-flex p-1' type='button' onClick={() => handleChange(user, "REMOVE")}>
+                                <img src='/images/icon/close-primary.svg' alt='' className='object-fit-cover' />
                             </button>
                         </p>
                     ))}
@@ -92,15 +61,11 @@ const SelectUser = ({
                     className='form__user__search form-control d-inline-block flex-grow-1 border-0 py-0 px-1'
                 />
                 {isOpen && (
-                    <div
-                        className={`form__user__select shadow position-absolute top-100 start-0 end-0 py-2 bg-color-5 rounded-6 mt-1 `}
-                    >
+                    <div className={`form__user__select shadow position-absolute top-100 start-0 end-0 py-2 bg-color-5 rounded-6 mt-1 `}>
                         {suggestion.length === 0 ? (
                             <div className='d-flex flex-column align-items-center justify-content-center my-3'>
                                 <ReactSVG src='/images/icon/empty.svg' />
-                                <p className='mb-0 color-3 fs-7'>
-                                    Không tìm thấy dữ liệu
-                                </p>
+                                <p className='mb-0 color-3 fs-7'>Không tìm thấy dữ liệu</p>
                             </div>
                         ) : (
                             suggestion.map((user) => (
@@ -113,21 +78,11 @@ const SelectUser = ({
                                     }}
                                 >
                                     <div className='ratio ratio-40x40 overflow-hidden rounded-circle'>
-                                        <img
-                                            src={BASE_URL + user.photoUrl}
-                                            alt=''
-                                            className='object-fit-cover'
-                                        />
+                                        <img src={BASE_URL + user.photoUrl} alt='' className='object-fit-cover' />
                                     </div>
                                     <div className='d-flex flex-column align-items-start ms-2'>
-                                        <span className='form__user__select__item__name fs-6 color-10'>
-                                            {user.fullName || user.email}
-                                        </span>
-                                        {user.fullName && (
-                                            <span className='form__user__select__item__email fs-8 color-3'>
-                                                {user.email}
-                                            </span>
-                                        )}
+                                        <span className='form__user__select__item__name fs-6 color-10'>{user.fullName || user.email}</span>
+                                        {user.fullName && <span className='form__user__select__item__email fs-8 color-3'>{user.email}</span>}
                                     </div>
                                 </button>
                             ))
@@ -138,9 +93,7 @@ const SelectUser = ({
                     <ReactSVG src='/images/icon/angle-down.svg' />
                 </div>
             </div>
-            {error && (
-                <div className='form-text text-danger'>{errorMessage}</div>
-            )}
+            {error && <div className='form-text text-danger'>{errorMessage}</div>}
         </>
     );
 };

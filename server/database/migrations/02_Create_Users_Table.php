@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('wardCode')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
-            $table->string('roleId')->default('r1');
+            $table->string('roleId')->default('r2');
             $table->foreign('roleId')->references('roleId')->on('roles');
         });
     }
